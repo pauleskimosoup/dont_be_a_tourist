@@ -63,4 +63,3 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
 
 end
-CalendarDateSelect.format = :euro_24hr
