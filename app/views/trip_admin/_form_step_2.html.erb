@@ -182,7 +182,7 @@
 </fieldset>
 
 <fieldset>
-  <legend>Promotional Data</legend>
+  <legend>Promotional Data (displayed when trip is promoted)</legend>
   <p>
     <%= f.label :youtube_embed_code %>
     <%= f.text_area :youtube_embed_code %>
@@ -192,10 +192,14 @@
     <%= f.label :promotional_phrase %>
     <%= f.tinymce_text_area :promotional_phrase %>
   </p>
+</fieldset>
 
+<fieldset>
+  <legend>Promote Trip</legend>
   <p>
     <%= f.label :promoted_trip_id %>
-    <%= f.collection_select :promoted_trip_id, Trip.all(:conditions => ["start_date > ?", Date.today]), :id, :name %>
+    <%= f.select :promoted_trip_id, Trip.all(:conditions => ["start_date > ? and id != ?", Date.today, f.object.id]).map{|x| ["#{ x.name } - #{ x.start_date }", x.id]},
+                 :include_blank => true %>
   </p>
 </fieldset>
 

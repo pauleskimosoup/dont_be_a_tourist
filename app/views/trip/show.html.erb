@@ -8,59 +8,8 @@
   <% url = "http://www.dontbeatourist.co.uk#{url_for(@trip.trip_group)}" %>
 <% end %>
 
+<% render "trip/banner_js" unless params[:controller] == "booking" && params[:action] == "result" %>
 
-
-<script type="text/javascript">
-  var pictures_count = <%= @pictures_count %>;
-  var pictures_array = new Array(<% @pictures_array.each_with_index do |picture, index| -%> <%= index %> <%= "," unless picture == @pictures_array.last %> <% end -%>);
-  var j = 0;
-
-  var currentPicture = pictures_array[0];
-
-  var bannerInterval = setInterval(function() {
-    if( currentPicture < pictures_count - 1 ) {
-      currentPicture += 1;
-    } else {
-      currentPicture = 0;
-    }
-
-    pictureMove(currentPicture);
-
-  }, 5000);
-
-  function jumpToPicture(picture_id){
-    clearInterval(bannerInterval);
-    pictureMove(picture_id);
-  }
-
-  function pictureMove(picture_id) {
-    document.getElementById("picture-" + pictures_array[j]).hide();
-    document.getElementById("picture-control-" + pictures_array[j]).className = '';
-    j = pictures_array.indexOf(picture_id);
-    document.getElementById("picture-" + pictures_array[j]).show();
-    document.getElementById("picture-control-" + pictures_array[j]).className = 'highlight';
-  }
-
-  //var tabs =  ['trip_itinerary','trip_included','trip_more_info', 'activities', 'destinations', 'trip_info'];
-  var tabs =  ['trip_included', 'trip_itinerary', 'destinations', 'trip_info'];
-  //var links = ['itine_link','whinc_link','whnot_link', 'activ_link', 'desti_link', 'ess_info'];
-  var links = ['whinc_link', 'itine_link', 'desti_link', 'ess_info'];
-
-  function tabTo(tabName, linkName)
-  {
-    // close and hide all the other tabs
-    for (i=0;i<tabs.length;i=i+1)
-    {
-      var elementName = tabs[i];
-    Element.hide(elementName);
-    $(links[i]).className = 'tab_link';
-    }
-
-    // set the tab to show up
-    Element.show(tabName);
-    $(linkName).className = 'tab_link_on';
-  }
-</script>
 <% @page_title = @trip.name %>
 
 <%= render :partial => 'shared/our_trips_breadcrumbs' %>
@@ -99,13 +48,6 @@
   <% end %>
 </div>
 
-
-
-<!--
-Star rating to be added at a later date.
-<img src="http://placehold.it/300x40&text=Star+rating" alt="Star rating" class="float-right" />
--->
-
 <div class="clear"></div>
 
 <div class="trip_list">
@@ -121,48 +63,49 @@ Star rating to be added at a later date.
   <div class="clear"></div>
 
   <p class="margin-right-10 float-left trip-status">
-    <%= render "status_line_1", :trip => @trip %>
+    <%= render "trip/status_line_1", :trip => @trip %>
   </p>
 
   <p class="margin-right-10 float-right trip-status">
-    <%= render "status_line_2", :trip => @trip %>
+    <%= render "trip/status_line_2", :trip => @trip %>
   </p>
 
   <div class="clear"></div>
-
-  <!--
-  <span class="cost">Adults: <%= number_to_currency @trip.adult_price, :unit => "&pound;" %></span>
-  <span class="cost_student">Students: <%= number_to_currency @trip.student_price, :unit => "&pound;" %></span>
-  -->
 </div>
 
-<div class="destination_pic_container">
-  <% if @trip.sold_out?  -%>
-    <span class="sold_out"></span>
-  <% end -%>
-
-<% if @trip.photo_1 -%>
-  <%= image_tag @trip.photo_1.url, :alt => @trip.photo_1_alt, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-0" %>
-  <% if @trip.photo_2 %>
-    <%= image_tag @trip.photo_2.url, :alt => @trip.photo_2_alt, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-1", :style => "display: none" %>
-  <% end %>
-  <% if @trip.photo_3 %>
-    <%= image_tag @trip.photo_3.url, :alt => @trip.photo_3_alt,  :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-2", :style => "display: none" %>
-  <% end %>
-  <% if @trip.photo_4 %>
-    <%= image_tag @trip.photo_4.url, :alt => @trip.photo_4_alt, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-3", :style => "display: none" %>
-  <% end %>
-<% elsif @destination.has_picture1? %>
-  <%= scale_image_tag @destination.picture1, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic" %>
-<% end %>
-<% unless @pictures_count.blank? || (@pictures_count == 1) %>
-  <div class="banner_controls trip-show">
-    <% @pictures_array.each_with_index do | picture_number, index | -%>
-      <%= link_to_function "", "jumpToPicture(#{index})", :class => (picture_number == @pictures_array.first) ? 'highlight' : nil, :id => "picture-control-#{index}" %>
+<% if params[:controller] == "booking" && params[:action] == "result" %>
+  <%= render "trip/promotional_data" %>
+<% else %>
+  <div class="destination_pic_container">
+    <% if @trip.sold_out?  -%>
+      <span class="sold_out"></span>
     <% end -%>
+
+    <% if @trip.photo_1 -%>
+      <%= image_tag @trip.photo_1.url, :alt => @trip.photo_1_alt, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-0" %>
+      <% if @trip.photo_2 %>
+        <%= image_tag @trip.photo_2.url, :alt => @trip.photo_2_alt, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-1", :style => "display: none" %>
+      <% end %>
+      <% if @trip.photo_3 %>
+        <%= image_tag @trip.photo_3.url, :alt => @trip.photo_3_alt,  :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-2", :style => "display: none" %>
+      <% end %>
+      <% if @trip.photo_4 %>
+        <%= image_tag @trip.photo_4.url, :alt => @trip.photo_4_alt, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-3", :style => "display: none" %>
+      <% end %>
+    <% elsif @destination.has_picture1? %>
+      <%= scale_image_tag @destination.picture1, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic" %>
+    <% end %>
+    <% unless @pictures_count.blank? || (@pictures_count == 1) %>
+      <div class="banner_controls trip-show">
+        <% @pictures_array.each_with_index do | picture_number, index | -%>
+          <%= link_to_function "", "jumpToPicture(#{index})", :class => (picture_number == @pictures_array.first) ? 'highlight' : nil, :id => "picture-control-#{index}" %>
+        <% end -%>
+      </div>
+    <% end %>
   </div>
 <% end %>
-</div>
+
+
 <br />
 
 <div class="float-left trip-tabs ">

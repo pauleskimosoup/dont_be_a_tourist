@@ -10,7 +10,6 @@ class BasketController < ApplicationController
   def prevent_problems
     unless @current_basket
       redirect_to root_url
-      return
     end
   end
 
@@ -61,7 +60,7 @@ class BasketController < ApplicationController
       flash[:error] = "Sorry, we can't seem to find the details about that trip"
       return
     end
-    
+
     # check that they havnt asked for no bookings
     if params[:male_bookings] == "0" && params[:female_bookings] == "0"
       flash[:error] = "Hmmm... you may want to select the number of people you want to book on this trip..."

@@ -60,6 +60,11 @@ class Trip < ActiveRecord::Base
   named_scope :on_list, lambda{ { :conditions => ["display=? AND start_date>=? AND highlight = ?", true, Date.today, true], :order => 'start_date asc' } }
 
   before_save :check_delete_document, :check_delete_photos, :calculate_length
+  after_validation :set_video_embed_width_and_height
+
+  def set_video_embed_width_and_height
+    self.youtube_embed_code.gsub!(/width="\d*"/, 'width="900"').gsub!(/height="\d*"/, 'height="450"') unless youtube_embed_code.blank?
+  end
 
   def self.categories
     ["Semester 1", "Christmas & New Year", "Semester 2", "Easter", "Summer"]

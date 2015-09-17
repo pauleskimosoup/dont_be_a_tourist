@@ -1,0 +1,51 @@
+<script type="text/javascript">
+  var pictures_count = <%= @pictures_count %>;
+  var pictures_array = new Array(<% @pictures_array.each_with_index do |picture, index| -%> <%= index %> <%= "," unless picture == @pictures_array.last %> <% end -%>);
+  var j = 0;
+
+  var currentPicture = pictures_array[0];
+
+  var bannerInterval = setInterval(function() {
+    if( currentPicture < pictures_count - 1 ) {
+      currentPicture += 1;
+    } else {
+      currentPicture = 0;
+    }
+
+    pictureMove(currentPicture);
+
+  }, 5000);
+
+  function jumpToPicture(picture_id){
+    clearInterval(bannerInterval);
+    pictureMove(picture_id);
+  }
+
+  function pictureMove(picture_id) {
+    document.getElementById("picture-" + pictures_array[j]).hide();
+    document.getElementById("picture-control-" + pictures_array[j]).className = '';
+    j = pictures_array.indexOf(picture_id);
+    document.getElementById("picture-" + pictures_array[j]).show();
+    document.getElementById("picture-control-" + pictures_array[j]).className = 'highlight';
+  }
+
+  //var tabs =  ['trip_itinerary','trip_included','trip_more_info', 'activities', 'destinations', 'trip_info'];
+  var tabs =  ['trip_included', 'trip_itinerary', 'destinations', 'trip_info'];
+  //var links = ['itine_link','whinc_link','whnot_link', 'activ_link', 'desti_link', 'ess_info'];
+  var links = ['whinc_link', 'itine_link', 'desti_link', 'ess_info'];
+
+  function tabTo(tabName, linkName)
+  {
+    // close and hide all the other tabs
+    for (i=0;i<tabs.length;i=i+1)
+    {
+      var elementName = tabs[i];
+      Element.hide(elementName);
+      $(links[i]).className = 'tab_link';
+    }
+
+    // set the tab to show up
+    Element.show(tabName);
+    $(linkName).className = 'tab_link_on';
+  }
+</script>
