@@ -1,0 +1,17 @@
+<% form_for(offer_setting, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+  
+  <p>
+    <%= f.label :multiple_trips_count, "How many trips need to be booked to be eligible for the discount?" %>
+    <%= f.text_field :multiple_trips_count %>
+  </p>
+
+  <p>
+    <%= f.label :multiple_trips_percentage, "Discount (%)" %>
+    <%= f.text_field :multiple_trips_percentage %>
+  </p>
+  
+  <p>
+    <%= f.submit "Update", :class => 'submit' %>
+  </p>
+<% end %>

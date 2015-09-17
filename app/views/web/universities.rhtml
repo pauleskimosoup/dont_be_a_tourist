@@ -1,0 +1,124 @@
+<% hide_right %>
+
+<% @page_title = "Universities" %>
+
+<% content_for :scripts do %>
+  <%= javascript_include_tag "scriptaculous" %>
+<% end %>
+
+<script language="Javascript" type="text/javascript">
+
+  var ids_to_fade = new Array(<%= @banners.length %>);
+  var ids_to_style = new Array(<%= @banners.length %>);
+  var i = 0;
+  var setIntervalId;
+  <% count_a = 0 %>
+  <% for banner in @banners %>
+    ids_to_fade[<%= count_a %>] = "benefit_banner_image_<%= count_a %>";
+    <% count_a += 1 %>
+  <% end %>
+  <% count_a = 0 %>
+  <% for banner in @banners %>
+    ids_to_style[<%= count_a %>] = "benefit_banner_listing_<%= count_a %>";
+    <% count_a += 1 %>
+  <% end %>
+  var wait = 5000;
+  function swapFade()
+  {
+    Effect.Fade(ids_to_fade[i], { duration:1, from:1.0, to:0.0 });
+    $(ids_to_style[i]).className = "";
+    i++;
+    if (i == ids_to_fade.length) i = 0;
+    Effect.Appear(ids_to_fade[i], { duration:1, from:0.0, to:1.0 });
+    $(ids_to_style[i]).className = "highlight";
+  }
+  function startPage()
+  {
+    <% if @banners.length > 1 %>
+      setIntervalId = setInterval('swapFade()', wait);
+    <% end %>
+  }
+
+  function showImage(imageId)
+  {
+    clearInterval(setIntervalId);
+    <% count_b = 0 %>
+    <% for banner in @banners %>
+      $('benefit_banner_image_<%= count_b %>').style.display = "none";
+      $('benefit_banner_listing_<%= count_b %>').className = "";
+      <% count_b += 1 %>
+    <% end %>
+    $('benefit_banner_image_' + imageId).style.display = "";
+    $('benefit_banner_listing_' + imageId).className = "highlight";
+  }
+
+</script>
+
+<% content_for :body do %>
+  <body onLoad="startPage();">
+<% end %>
+
+<%= render :partial => 'shared/past_trips_breadcrumbs' %>
+
+<div class="benefit_container">
+  <% count_c = 0 %>
+  <% for banner in @banners %>
+    <% display = (banner == @banners.first) ? "" : "none" %>
+    <div class="benefit_banner_image" id="benefit_banner_image_<%= count_c %>" style="position:absolute; display:<%= display %>;">
+      <span></span>
+      <%= image_tag banner.picture1.url, :width => '550', :height => '405', :alt => '', :id => count_c %>
+    </div>
+    <% count_c += 1 %>
+  <% end %>
+  <% if @banners.length > 1 %>
+    <div class="benefit_banner_listing" style="margin-left:570px;">
+      <% count_d = 0 %>
+      <% for banner in @banners %>
+          <% if banner.eql?(@banners.first) %>
+            <div id="benefit_banner_listing_<%= count_d %>" class="highlight">
+            <a onclick="showImage(<%= count_d %>);" style="margin-top:0px;">
+          <% else %>
+            <div id="benefit_banner_listing_<%= count_d %>">
+            <a onclick="showImage(<%= count_d %>);">
+          <% end %>
+            <img src="<%= banner.picture1.url %>" width="58px" height="40px" border="0" hspace="0" vspace="0">
+            <span><%= banner.title %></span>
+          </a>
+        </div>
+        <% count_d += 1 %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<div class="benefit_content">
+  <a href="#" class="book_now">Book Now</a>
+  <h2>Discover secret places only the locals know</h2>
+  <p>With all the essentials included in our trip prices - transport, accommodation, breakfast, and lots of free activities - you know exactly how much you can spend on the extras.</p>
+</div>
+
+<h1><%= @page_title %></h1>
+
+<h3>
+  <% if @trip %>
+    <%= @trip.destination_name_dates %>
+  <% elsif @destination %>
+    <%= @destination.name %>
+  <% end %>
+</h3>
+
+<br />
+<%= render :partial => "photo/large_index", :locals => {:destination_id => @destination_id, :trip_id => @trip_id} %>
+
+<div class="clear"></div>
+<p>&nbsp;</p>
+
+<%= render :partial => "video/large_index", :locals => {:destination_id => @destination_id, :trip_id => @trip_id} %>
+
+<div class="clear"></div>
+<p>&nbsp;</p>
+
+<%= render :partial => "review/large_index", :locals => {:destination_id => @destination_id, :trip_id => @trip_id} %>
+
+<% content_for :right do %>
+  <%#= render :partial => 'web/right_past_trips_nav', :locals => {:destination => @destination} %>
+<% end %>

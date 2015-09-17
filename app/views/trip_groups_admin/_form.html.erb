@@ -1,0 +1,31 @@
+<% @include_tinymce_script = true %>
+
+
+<%= f.error_messages %>
+
+<p>
+  <%= f.label :name %><br />
+  <%= f.text_field :name %>
+</p>
+<p>
+  <%= f.label :summary %><br />
+  <%= f.tinymce_text_area :summary %>
+</p>
+<p>
+  <%= f.label :picture1_id %><br />
+  <%= f.comprehensive_image_field :picture1_id %>
+</p>
+
+<p>
+  <%= f.label :rating %><br />
+  <%= f.select :rating, options_for_select(["0 Stars", "1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"], :selected => f.object.rating) %>
+</p>
+
+<p>
+  <%= f.label :display %>
+  <%= f.check_box :display, :class=>"checkbox" %>
+</p>
+
+<p>
+  <%= f.submit 'Submit' %>
+</p>

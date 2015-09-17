@@ -1,0 +1,100 @@
+<h1><%= @page_title = @splash_page.title %></h1>
+<%= image_tag "25_save_pic.jpg", :alt=>"&pound;25 to spend on your first over night trip", :border=>"0", :hspace=>"0", :vspace=>"0" %>
+<%= @splash_page.main_content %>
+
+<% form_for(@user, :url => {:controller => 'splash_page', :action => 'redeem', :id => @splash_page.url}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+  <% if @user.new_record? -%>
+
+    <%= f.error_messages :message => nil, :if => "flash_error" %>
+
+    <p>
+      <%= f.label :first_name, "Your first name:" %>
+      <%= f.text_field :first_name %>
+    </p>
+
+    <p>
+      <%= f.label :family_name, "Your surname:" %>
+      <%= f.text_field :family_name %>
+    </p>
+
+    <p>
+      <%= f.label :email, "Email address:" %>
+      <%= f.text_field :email %>
+    </p>
+
+    <p>
+      <%= f.label :email_confirmation, "Confirm email:" %>
+      <%= f.text_field :email_confirmation %>
+    </p>
+
+    <p>
+      <%= f.label :password, "Choose password:" %>
+      <%= f.password_field :password %>
+    </p>
+
+    <p>
+      <%= f.label :password_confirmation, "Confirm password:" %>
+      <%= f.password_field :password_confirmation %>
+    </p>
+
+    <p>
+      <%= f.label :phone, "Mobile number:" %>
+      <%= f.text_field :phone, :class => "med" %>
+    </p>
+
+    <p>
+      <%= f.label :over_eighteen, "I am over 18" %>
+      <%= f.check_box :over_eighteen, :class=>"checkbox" %>
+    </p>
+
+    <br />
+
+    <p>If you are studying in the UK, how long for?: </p>
+    <p>
+      <%= f.label "how_long_in_uk_not_studying", "Not studying" %>
+      <%= f.radio_button :how_long_in_uk, 'Not studying', :class=>"radio" %>
+    </p>
+    <p>
+      <%= f.label "how_long_in_uk_a_few_weeks", "A few weeks" %>
+      <%= f.radio_button :how_long_in_uk, 'A few weeks', :class=>"radio" %>
+    </p>
+    <p>
+      <%= f.label "how_long_in_uk_1_semester", "1 semester" %>
+      <%= f.radio_button :how_long_in_uk, '1 semester', :class=>"radio" %>
+    </p>
+    <p>
+      <%= f.label "how_long_in_uk_up_to_1_year", "Up to 1 year" %>
+      <%= f.radio_button :how_long_in_uk, 'Up to 1 year', :class=>"radio" %>
+    </p>
+    <p>
+      <%= f.label "how_long_in_uk_over_1_year", "Over 1 year" %>
+      <%= f.radio_button :how_long_in_uk, 'Over 1 year', :class=>"radio" %>
+     </p>
+
+    <br />
+
+    <p>
+      <%= f.label :welcome_code, "Promotional code:" %>
+      <%= f.text_field :welcome_code, :class => "med", :style=>"float: left;" %> <%= f.submit "Redeem your voucher", :class=>"submit", :style=>"width: 190px;" %>
+    </p>
+
+
+<% end -%>
+
+<% end %>
+
+<div class="clear"></div>
+<br />
+<br />
+<h2><a name="more"></a>Join awesome UK trips direct from your uni.</h2>
+
+<p class="highlight">There's no excuse for staying in! Meet new friends from around the world while exploring the UK with <em>Don't be a tourist</em>.</p>
+
+<p>You may be in the UK for a short time or you just fancy getting out there and doing stuff with a bunch of new people! We've selected top destinations and created awesome itineraries so you can enjoy the real UK with minimum fuss and meet people your own age from around the world.</p>
+
+
+<% content_for :right do %>
+  <%= render :partial => 'web/right_accounts' %>
+  <%= render :partial => 'web/right_privacy_promise' %>
+<% end %>

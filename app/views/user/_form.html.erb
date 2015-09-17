@@ -1,0 +1,93 @@
+<% unless params[:action] == 'edit' %>
+
+<h1>Sign up</h1>
+<p>Hello. To receive our latest news about trips and special offers fill out your details below. Whenever there's a trip or offer coming up, we'll let you know.</p>
+
+<p>We DON'T share your details with anyone else and you can unsubscribe at anytime - just click on the unsubscribe button in the email we send you.
+</p>
+
+<% end %>
+
+<% form_for(user, :url => {}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+  <p>
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+  </p>
+
+  <p>
+    <%= f.label :family_name %>
+    <%= f.text_field :family_name %>
+  </p>
+
+    <br />
+  <p>
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </p>
+
+  <p>
+    <label for="user_email_confirmation">Confirm your email</label>
+    <%= f.text_field :email_confirmation, {:value => user.email_confirmation ||= user.email} %>
+  </p>
+  <br />
+
+  <p>
+    <label for="user_password">Create a password</label>
+    <%= f.password_field :password %>
+  </p>
+
+
+  <p>
+    <label for="user_password_confirmation">Confirm your password</label>
+    <%= f.password_field :password_confirmation %>
+  </p>
+  <br />
+
+  <p>
+    <%= f.label :address %>
+    <%= f.text_area :address %>
+  </p>
+
+  <p>
+    <%= f.label :mobile_phone_number %>
+    <%= f.text_field :phone %>
+  </p>
+
+  <p>
+    <label for="user_university_name">Where are you studying?</label>
+    <%= f.text_field :university %>
+  </p>
+
+  <p>
+    <%= f.label :nationality, "What is your nationality?" %>
+    <%= f.text_field :nationality %>
+  </p>
+  <br />
+
+  <% if user.new_record? %>
+    <p>
+      Would you like to receive news about our trips and special offers?<br />
+      <%= f.select :newsletter, [["Yes", 1], ["No", 0]] %>
+
+    </p>
+    <br />
+    <p>
+      <%= f.label "Receive news about trips from", nil, :class=>"long" %><br />
+      <%= f.collection_select :hear_about_trips_from, User.hear_about_trips_from_options, :to_s, :to_s %>
+    </p>
+    <br />
+  <% end %>
+  <p>
+    <%= f.label 'How did you hear about us?', nil, :class=>"long" %><br />
+    <%= f.collection_select :how_did_you_hear, User.hear_about_us_options, :to_s, :to_s %> Other <%= text_field_tag :other, user.how_did_you_hear, :class=>"short" %>    </p>
+  <br />
+
+  <p align="right">
+    <% if user.new_record? %>
+    <%= f.submit "SIGN UP", :class => 'submit' %>
+    <% else %>
+    <%= f.submit "UPDATE", :class => 'submit' %>
+    <% end %>
+  </p>
+<% end %>

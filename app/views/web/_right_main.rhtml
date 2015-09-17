@@ -1,0 +1,22 @@
+<% hide_next_trip ||= false %>
+
+<% unless hide_next_trip %>
+  <%= render "web/right_upcoming_trip" %>
+<% end %>
+
+<div id="right_main">
+<br />
+
+<%= render 'shared/sign_up' %>
+
+<div class="padding">
+  <h2 class="tweet">Tweet</h2>
+  <h2 class="sidebar-title">Twitter Updates</h2>
+  <ul id="twitter_update_list"></ul>
+  <!--<script type="text/javascript" src="http://twitter.com/javascripts/blogger.js"></script>
+  <script type="text/javascript" src="http://twitter.com/statuses/user_timeline/dontbeatourist.json?callback=twitterCallback2&amp;count=3"></script>
+  <br />     -->
+
+</div>
+  <%= image_tag "blue_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %>
+</div>

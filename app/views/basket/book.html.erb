@@ -1,0 +1,65 @@
+<% @page_title = @trip.name %>
+
+<script type="text/javascript">
+function user_feedback()
+{
+  $('wait').toggle();
+  $('spinner').toggle();
+  $('submit_none').toggle();
+}
+</script>
+<% hide_flash %>
+<%= render "booking_steps" %>
+
+<h1>How many places would you like to book on this trip?</h1>
+<h2><%= @trip.name %></h2>
+<h3>
+  <%= @trip.pretty_student_price %> *
+  <br />
+  <%= @trip.pretty_adult_price %> *
+</h3>
+<p><span  class="date_highlight"><%= @trip.length_dates %></span></p>
+
+<% if flash[:error] %>
+  <div id="flash_error">
+  <%= flash[:error] %>
+  <p>
+  <% if @trip.no_rooms? %>
+    <%= @trip.places %>
+  <% end %>
+  </p>
+  </div>
+<% end %>
+
+<% form_tag :action => "book_post" do %>
+
+  <%= hidden_field_tag :trip_id, params[:trip_id] %>
+  <p>
+    <%= label_tag "male_bookings", "How many men are you booking on this trip?", :class=>"none" %>
+    <%= select_tag :male_bookings, options_for_select((0..20), params[:male_bookings].to_i) %>
+  </p>
+  <p>
+    <%= label_tag "female_bookings", "How many women are you booking on this trip?", :class=>"none" %>
+    <%= select_tag :female_bookings, options_for_select((0..20), params[:female_bookings].to_i) %>
+  </p>
+
+  <p>
+    <br />
+    * Please note that a <%= booking_fee %>&#37; booking fee is applicable. There are no other transaction charges.
+    <br /><br />
+  </p>
+
+  <p>
+    <%= submit_tag "BOOK NOW", :class => "submit_none", :id => "submit_none", :onclick => "user_feedback()" %>
+  </p>
+
+  <div id="spinner" style="display: none;"><%= image_tag("/images/loading-spinner.gif") %></div>
+  <p id="wait" style="display: none;">Please wait while we calculate room availability and combinations...</p>
+  <div class="clear"></div>
+
+
+<% end %>
+
+<%= render :partial => 'web/payment_types' %>
+
+<% hide_right %>

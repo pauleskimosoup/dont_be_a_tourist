@@ -1,0 +1,114 @@
+/*--Main--*/
+body {
+	font-family: Arial, Tahoma, sans-serif; 
+	font-size: 14px;
+	color: #000000; 
+	background-color: #FFFFFF; 
+	
+}
+
+
+p {
+	margin: 0px; 
+	padding: 8px 0px 8px 0px;
+}
+
+hr {
+	border: 0px; 
+	border-bottom: 4px; 
+	color: #000000; 
+	border-bottom-style: dotted; 
+	height: 0px; 
+	clear: left; 
+	margin: 15px 0px 5px 0px;
+	padding: 0px;
+}
+
+
+/*--Links--*/
+a:link, a:visited, a:active {
+	color: #1674a3; 
+	text-decoration: none; 
+	font-weight: bold;
+}
+
+a:hover {
+	color: #000000; 
+	text-decoration: underline; 
+	font-weight: bold;
+}
+
+/*--Titles--*/
+h1 {
+	color: #000000; 
+	font-size: 36px; 
+	font-weight: normal; 
+	margin: 0px 0px 8px 0px; 
+	padding: 0px 0px 8px 0px;
+	line-height: 40px;
+	font-family: 'Arial Black', Arial, sans-serif;
+	letter-spacing: -2px;
+}
+
+h2 {
+	color: #000000; 
+	font-size: 28px; 
+	font-weight: normal; 
+	margin: 12px 0px 0px 0px; 
+	padding: 12px 0px 0px 0px;
+	line-height: 31px;
+	font-family: 'Arial Black', Arial, sans-serif;
+	letter-spacing: -1px;
+}
+
+
+h3 {
+	color: #000000; 
+	font-size: 18px; 
+	font-weight: normal; 
+	margin: 8px 0px 0px 0px; 
+	padding: 8px 0px 0px 0px;
+	line-height: 22px;
+	font-family: 'Arial Black', Arial, sans-serif;
+}
+
+h4 {
+	color: #000000; 
+	font-size: 12px; 
+	font-weight: normal; 
+	margin: 6px 0px 0px 0px; 
+	padding: 6px 0px 0px 0px;
+	line-height: normal;
+	font-family: 'Arial Black', Arial, sans-serif;
+}
+
+/*--Bullets--*/
+ul {
+	margin-left: 10px;
+	padding-left: 10px;
+}
+
+li {
+	list-style-type: none;
+	background-image: url(../images/bullet.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 8px;
+	padding: 4px 0px 4px 20px;
+}
+
+#twitter_update_list span {
+	display: block;
+}
+
+ul#twitter_update_list {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+#twitter_update_list li {
+	list-style-type: none;
+	background-image: none;
+	padding: 0px 0px 8px 0px;
+	margin: 0px;
+}
+

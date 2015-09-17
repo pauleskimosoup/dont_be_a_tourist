@@ -1,0 +1,59 @@
+<% @page_title = "Contact us" %>
+<h1><%= @page_title %></h1>
+<p>We're quite often out looking for new places to visit so if you have a question about our trips, have a look on the '<%= link_to "questions", :controller=>"web", :action=>"faqs" %>' page. Otherwise, you could email us, visit our Facebook group, give us a call, text us or write to us.</p>
+
+<% unless @site_profile.address.empty? -%>
+<h3>Write to us</h3>
+  <span class="large"><%= @site_profile.address.gsub(/\n/, "<br />") %></span>
+<% end -%>
+<% unless @site_profile.phone_number.empty? -%>
+<h3>Call us</h3>
+  <span class="large"><%= @site_profile.phone_number %></span>
+<% end -%>
+<% unless @site_profile.fax_number.empty? -%>
+  <h3>Text us</h3>
+   <span class="large"><%= @site_profile.fax_number %></span>
+<% end -%>
+<h3>Facebook us</h3>
+<span class="large"><a target="_blank" href="https://www.facebook.com/dontbeatourist">dontbeatourist</a></span>
+
+<h3>Tweet us</h3>
+<span class="large"><a href="http://twitter.com/dontbeatourist" target="_blank">dontbeatourist</a></span>
+
+<h2>Email us</h2>
+<% unless @site_profile.email.empty? -%>
+  <p>Send your emails to <a href="mailto:<%= @site_profile.email %>"><%= @site_profile.email %></a> or simply complete the form below and we will mail you back as soon as possible.</p>
+<% end -%>
+
+<%= form_tag({:controller => 'web', :action => 'contact_recieved'}, :name => 'contact_form') %>
+  <p>
+    <label for="customer_name">Your Name</label>
+    <%= text_field :customer, :name %>
+  </p>
+
+  <p>
+    <label for="customer_phone">Telephone Number</label>
+    <%= text_field :customer, :phone %>
+  </p>
+
+  <p>
+    <label for="customer_email">Email Address</label>
+    <%= text_field :customer, :email %>
+  </p>
+
+  <p>
+    <label for="customer_enquiry">Your Enquiry</label>
+    <%= text_area :customer, :enquiry %>
+  </p>
+
+  <p>
+    <input name="ContactSubmit" id="ContactSubmit" type="submit" value="SUBMIT" class="submit" />
+  </p>
+
+</form>
+
+<p class="small">Company registered address: 20b Main Street, Barwick in Elmet, Leeds, West Yorkshire, LS15 4JQ.<br />Company registration number: 5913320</p>
+
+<% content_for :right do %>
+  <%= render :partial => 'right_main' %>
+<% end %>

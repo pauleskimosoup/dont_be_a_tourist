@@ -1,0 +1,4 @@
+<h1><%= @page_title = "Update Splash Page" -%></h1>
+
+      View the splash page you're editing <%= link_to "here", "/#{@splash_page.url}" %>
+      <%= render :partial => 'form', :locals => {:splash_page => @splash_page} %>

@@ -1,0 +1,24 @@
+<h1><%= @page_title = "View All Extras" -%></h1>
+<div id="search">
+<% form_tag({}, :method => "GET") do %>
+  <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+  <%= link_to "Clear", :search => "" %>
+<% end %>
+</div>
+<% if @product_pages.count != 0 -%>
+
+  <%= admin_table({:columns =>[:name, 
+    ["Price", lambda{|x| "&pound;#{sprintf('%.2f', x.price)}"}, 'price'],
+    :display, :last_updated],
+    :list => @products,
+    :pages => @product_pages
+  })%>
+
+<% else -%>
+
+  There are currently no Extras in the system.
+
+<% end -%>
+
+
+

@@ -1,0 +1,15 @@
+<h1><%= @page_title = "View Day Itineraries" -%></h1>
+
+<p>
+  <%= link_to "Add new day itinerary", :action => "new", :trip_id => @trip.id %>
+   |
+  <%= link_to "Back to trips", :controller => "trip_admin" %>
+</p>
+
+<% if @day_itineraries_pages.count != 0 -%>
+<% @itineraries = @day_itineraries.sort_by { |a| +(a.day.to_i) } %>
+  <%= admin_table({:columns => [:day, :title, :display],
+    :list => @itineraries,
+    :pages => @day_itineraries_pages
+  })%>
+<% end %>

@@ -1,0 +1,28 @@
+<% grey ||= false %>
+
+<!-- FIND PHOTOS -->
+<% if defined?(trip_id) && !trip_id.blank? %>
+  <% photos = Photo.active.trip_id(trip_id).random %>
+<% elsif defined?(destination_id) && !destination_id.blank? %>
+  <% photos = Photo.active.destination_id(destination_id).random %>
+<% elsif defined?(destination_ids) && !destination_ids.blank? %>
+  <% photos = Photo.active.destination_ids(destination_ids).random %>
+<% else %>
+  <% photos = Photo.active.random %>
+<% end %>
+<% photos = photos[0..11] %>
+
+<!-- VIEW -->
+<% if grey %>
+  <h2 class="your_photos_grey">Your Photos</h2>
+<% else %>
+  <h2 class="your_photos">Your Photos</h2>
+<% end %>
+
+<%= link_to "see more", {:controller => "web", :action => "past_trips"}, {:class => "see_all"} %>
+
+<% if photos.length > 0 %>
+  <%= render :partial => "photo/photo", :locals => {:grey => grey}, :collection => photos %>
+<% else %>
+  Photos coming soon!
+<% end %>

@@ -1,0 +1,87 @@
+<%= render "booking_steps" %>
+<h1><%= @page_title = "Confirm Order" %></h1>
+
+<%- flash.each do |name, msg| -%>
+  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+<%- end -%>
+
+<% if @current_basket.basket_items.length < 1 %>
+  Sorry, there are currently no items in your basket.  You can see our upcoming trips <%= link_to "here", :controller => "trip" %>
+<% else %>
+
+  <table>
+
+  <% for trip in @trips %>
+
+    <tr>
+      <th colspan=3><%= trip.name %> Bookings</th>
+    </tr>
+
+    <% for basket_item in @current_basket.basket_items.select{|x| x.trip == trip} %>
+      <%= render "basket_item/basket_item_advanced", :basket_item => basket_item %>
+    <% end %>
+
+  <% end %>
+
+  <tr>
+  <td colspan=2><div align="right">Trips Subtotal</div></td>
+  <td><%= number_to_currency(@current_basket.basket_items_total, :unit => "&pound;") %></td>
+  </tr>
+
+  <tr>
+  <td colspan=2><div align="right">Booking Fee</div></td>
+  <td><%= number_to_currency(@current_basket.booking_fee, :unit => "&pound;") %></td>
+  </tr>
+
+  <%= render 'discount' %>
+
+  <tr>
+  <td colspan=2><div align="right"><strong>Total</strong></div></td>
+  <td><strong><%= number_to_currency(@current_basket.total, :unit => "&pound;") %></strong></td>
+  </tr>
+
+  <% if @current_basket.deposit? %>
+    <tr>
+    <td colspan=2><div align="right"><strong>Total To Pay Now (Deposit)</strong></div></td>
+    <td><strong><%= number_to_currency(@current_basket.deposit_total, :unit => "&pound;") %></strong></td>
+    </tr>
+  <% end %>
+
+  </table>
+
+<% if @current_basket.all_basket_items_valid? %>
+  <% form_tag({:action => "payment_confirm"}, :html => {:method => :post}) do %>
+
+    <p>
+      <%= check_box_tag :terms_and_conditions, "1", {}, :class=>"checkbox" %>
+      I agree to the <%= link_to 'terms and conditions', {:controller => :web, :action => :terms}, :popup => true %>
+    </p>
+
+    <br />
+    <% if @current_basket.total == 0 %>
+      <%= submit_tag "CONFIRM ORDER", :name => "free", :class=>"submit_none" %>
+    <% else %>
+      <p>
+        <%= submit_tag "CARD PAYMENT", :name => "card", :class=>"submit_none", :onclick => "ga('send', { 'hitType': 'pageview', 'page': 'http://www.dontbeatourist.co.uk/proceeded-to-paypal-payment', 'title': 'Proceeded to paypal payment' });" %> <%= submit_tag "CASH PAYMENT", :name => "cash", :class=>"submit_none" %>
+      </p>
+    <% end %>
+
+    <% if session[:admin_id] && Admin.exists?(session[:admin_id]) %>
+      <%= submit_tag "Admin", :name => "admin", :class=>"submit_none"  %>
+    <% end %>
+
+  <% end %>
+
+<% end %>
+
+<%= render :partial => 'web/payment_types' %>
+
+<% end %>
+
+
+<% content_for :right do %>
+   <!--<div class="advert_3">
+    <%= link_to "Find out more", {:controller => "web", :action => "special_offers"}, {:class=>"advert_more"} %>
+  </div>-->
+  <%= render :partial => 'web/right_bookings' %>
+<% end %>

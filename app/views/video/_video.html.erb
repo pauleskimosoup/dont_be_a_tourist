@@ -1,0 +1,19 @@
+<%# code = video.video_code.scan(/\/v\/(\w*)/).first %>
+<%# code = code.split('&hl=')[0] %>
+<%# width = video.video_code.split('width="')[1] %>
+<%# width = width.split('"')[0] %>
+<%# height = video.video_code.split('height="')[1] %>
+<%# height = height.split('"')[0] %>
+<%# thumbnail = "http://img.youtube.com/vi/#{code}/default.jpg" %>
+
+<% code = video.video_code.split(" ").select{|x| x.starts_with?("src")}.to_s.split("/").last.chop %>
+<% code = code.split('?')[0] %>
+<% width = video.video_code.split('width="')[1] %>
+<% width = width.split('"')[0] %>
+<% height = video.video_code.split('height="')[1] %>
+<% height = height.split('"')[0] %>
+<% thumbnail = "http://img.youtube.com/vi/#{code}/default.jpg" %>
+
+<div class="large_background">
+  <%= link_to image_tag(thumbnail, :width => 222, :height => 145), {:controller => :frame, :action => :video_frame, :video => video.id}, :rel => 'lyteframe', :rev => "width: #{width.to_i + 30}px; height: #{height.to_i + 80}px; scrolling: no;"  %>
+</div>

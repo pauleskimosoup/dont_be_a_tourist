@@ -1,0 +1,31 @@
+<% form_for(video, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+  <p>
+    <%= f.label :trip_id, "Select a Past Trip" %><br />
+    <%= select_tag 'video[trip_id]', "<option></option>" + options_from_collection_for_select(Trip.active.past, :id, :destination_name_dates, @video.trip_id) %>
+  </p>
+ 
+  <p>
+    <%= f.label :destination_id, "Select a Destination (optional)" %><br />
+    <%= select_tag 'video[destination_id]', "<option></option>" + options_from_collection_for_select(Destination.active, :id, :name, @video.destination_id) %>
+  </p>
+
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+    
+  <p>
+    <%= f.label :video_code %>
+    <%= f.text_area :video_code %>
+  </p>
+
+  <p>
+    <%= f.label :display %>
+    <%= f.check_box :display %>
+  </p>
+
+  <p>
+    <%= f.submit "Update", :class => 'submit' %>
+  </p>
+<% end %>

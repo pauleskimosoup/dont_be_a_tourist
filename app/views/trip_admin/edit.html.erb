@@ -1,0 +1,12 @@
+<h1><%= @page_title = "Update Trip" -%></h1>
+
+<% @include_tinymce_script = true %>
+<%= javascript_include_tag :defaults %>
+
+<% form_for(@trip, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+  <%= render :partial => 'form_step_1', :locals => {:trip => @trip, :f => f} %>
+  <%= render :partial => 'form_step_2', :locals => {:trip => @trip, :f => f} %>
+  <p><%= f.submit "Complete", :class => 'submit' %></p>
+<% end %>
+
+<%= link_to "Delete this trip", {:action => "delete", :id => @trip.id}, :method => :delete, :confirm => "Are you certain? This will also delete the information about this trip from users previous trips.  You should only delete trips which have zero attendance" %>

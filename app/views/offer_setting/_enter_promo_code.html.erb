@@ -1,0 +1,27 @@
+<% unless @current_basket.promo_code %>
+  <% form_tag :controller => "promo_code", :action => "enter_code" do %>
+
+  <fieldset>
+  <legend>If you have a promotional code, please enter it here (optional).</legend>
+    <p>
+    <%= text_field_tag :code %> <%= submit_tag "Enter Code", :class=>"submit_none" %>
+    </p>
+  </fieldset>
+
+  <% end %>
+<% else %>
+
+    <% field_set_tag 'Current Promo Code' do -%>
+      <p>
+        <strong><%= @current_basket.promo_code.description %></strong>
+        <br />
+        <span class="small">
+          If your promo code entitles you to a free extra make sure you add it to your order (in the next booking step) so we know you want it.
+          Note that we always try give you the best deal.
+          If we can find an better offer than the one you have applied to you basket we may use this offer instead.
+        </span>
+      </p>
+      <%= link_to "Remove Current Promo Code", :controller => "promo_code", :action => "remove_code" %>
+    <% end -%>
+
+<% end %>

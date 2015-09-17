@@ -1,0 +1,230 @@
+<%= javascript_include_tag :defaults %>
+<% @include_tinymce_script = true %>
+
+<% form_for(@promo_code, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+  <% field_set_tag 'Type of Offer' do -%>
+    <p>
+      <%= f.label :description, "Short description to identify this offer" %><br />
+      <%= f.text_field :description %>
+    </p>
+    
+    <p>
+      <%= f.label :homepage_text, "Text for homepage" %><br />
+      <%= f.text_field :homepage_text %>
+    </p>
+    
+    <p>
+      <%= f.label :activation_type, "How is this offer applied to users baskets?" %>
+      <br />
+      <%= f.select :activation_type, PromoCode.activation_types %>
+    </p>
+    
+    <p>
+      <%= f.check_box :uses_up_bookings %>
+      <%= f.label :uses_up_bookings, "When used in conjunction with another offer this code uses up bookings which other codes cannot then use" %>
+    </p>
+    
+    <!--
+    <p>
+      <%= f.label :reward_type, "What kind of reward is the user getting?" %>
+      <br />
+      <%= f.select :reward_type, PromoCode.reward_types %>
+    </p>
+    -->
+  <% end -%>
+
+<% field_set_tag 'General Conditions' do -%>
+  <p>These must always be met for the offer to be valid.</p>
+  
+  <p>
+    <%= f.label :start_date, "Date is between" %>
+    <br />
+    <%= f.date_select :start_date, :order => [:day, :month, :year], :start_year => 10.year.ago.year, :end_year => 1.year.from_now.year %>
+     and 
+    <%= f.date_select :end_date, :order => [:day, :month, :year], :start_year => 1.year.ago.year, :end_year => 10.year.from_now.year %>
+  </p>
+
+  <p><strong>AND</strong></p>
+  
+  <p>
+    <%= f.check_box :first_booking %>
+    <%= f.label :first_booking, "This must be the user's first booking" %>
+  </p>
+  
+  <p><strong>AND</strong></p>
+  
+  <p>
+    <%= f.label :code, "The user has entered this code" %><br />
+    <%= f.text_field :code %>
+  </p>
+  
+  <p><strong>AND</strong></p>
+  
+  <p>
+    <%= f.check_box :only_welcome %>
+    <%= f.label :only_welcome, "Only valid on welcome trips" %>
+  </p>
+  
+  <p>
+    <%= f.check_box :not_welcome %>
+    <%= f.label :not_welcome, "Invalid on welcome trips" %>
+  </p>
+<% end -%>
+
+
+<% field_set_tag 'Basket Conditions' do -%>
+  <p>
+    Conditions to do with the entire basket.
+  </p>
+  
+  <p>
+    <%= f.label :days_condition, "The user is booking at least this many days" %><br />
+    <%= f.text_field :days_condition %>
+  </p>
+  
+  <p><strong>AND</strong></p>
+  
+  <p>
+    <%= f.label :basket_total_condition, "Basket total comes to at least" %><br />
+    <%= f.text_field :basket_total_condition %>
+  </p>
+  
+<% end -%>
+
+<% field_set_tag 'Trip Conditions' do -%>
+
+  <p>
+    <%= f.label :people_condition, "The user is booking at least this many people on a single trip" %><br />
+    <%= f.text_field :people_condition %>
+  </p>   
+  
+<% end -%>
+
+<% field_set_tag 'Booking Conditions' do -%>
+
+  <p>Conditions surrounding individual bookings.</p>
+
+  <p>
+    <%= f.label :early_condition, "The booking is happening at least this many days before its trip departs" %><br />
+    <%= f.text_field :early_condition %>
+  </p>
+  
+  <p><strong>AND</strong></p>
+  
+  <p>Booking must be one of the following types</p>
+
+  <p>
+    <%= f.check_box :booking_condition_day %>
+    <%= f.label :booking_condition_day, 'Day Trip' %>
+    <br />
+    <%= f.check_box :booking_condition_overnight %>
+    <%= f.label :booking_condition_overnight, 'Overnight Trip' %>
+    <br />
+    <%= f.check_box :booking_condition_multinight %>
+    <%= f.label :booking_condition_multinight, 'Multinight Trip' %>
+    <br />
+  </p>
+  
+  <p><strong>OR</strong></p>
+  
+  <p>
+    <%= f.label :product_ids, "Extras (e.g. t-shirt) (only bookings which contain this item will be eligable for this offer)" %>
+    <%= select_tag "promo_code[product_ids][]", options_from_collection_for_select(Product.all, :id, :name, @promo_code.product_ids), :multiple => true %>
+  </p>
+  
+<% end -%>
+
+<% field_set_tag 'Saving' do -%>
+
+  <p>
+    <%= f.text_field :saving_value, :style => "width: 50px;" %>
+    <%= f.select :saving_type, [['pounds off','pounds'],['percent off','percent']] %>
+    <%= f.select :saving_target, [['whole basket','basket'], ['all matching items','items'], ['cheapest matching item','item']] %>
+  </p>
+  
+  <p><strong>OR</strong></p>
+  
+  <p>
+    <%= f.label :days_discount, "User gets this many free days on trip the cheapest trip(s) in their order." %>
+    <%= f.text_field :days_discount %>
+  </p>
+  
+<% end -%>
+
+<!--
+<% field_set_tag 'Basket Reward' do -%>
+
+  <p>
+    <%= f.label :percentage_discount_off_order, "User get " %>
+    <%= f.select :percentage_discount_off_order, "<option></option>" << options_for_select(1..100, @promo_code.percentage_discount_off_order) %>
+    <%= f.label :percentage_discount_off_order, "% off the total cost of their order" %>
+    
+  </p>
+  
+  <p><strong>OR</strong></p>
+  
+  <p>
+    <%= f.label :amount_discount_off_order, "User gets this many pounds off the total cost of their order (&pound)" %><br />
+    <%= f.text_field :amount_discount_off_order %>
+  </p>
+  
+  <p><strong>OR</strong></p>
+  
+  <p>
+    <%= f.label :days_discount, "User gets this many free days on trip the cheapest trip(s) in their order." %>
+    <%= f.text_field :days_discount %>
+  </p>
+  
+  <p><strong>OR</strong></p>
+  
+  <p>
+    <%= f.label :free_upgrade %>
+    <%= f.check_box :free_upgrade %>
+  </p>
+  
+  <p><strong>OR</strong></p>
+  
+  <p>
+    <%= f.label :product_ids, "Extras (e.g. t-shirt) (each booking will be able to recieve one of the items you select for free)" %>
+    <%= select_tag "promo_code[product_ids][]", options_from_collection_for_select(Product.all, :id, :name, @promo_code.product_ids), :multiple => true %>
+  </p>
+  
+<% end -%>
+
+<% field_set_tag 'Trip Reward' do -%>
+
+  <p>
+    <%= f.label :percentage_discount_off_next_person, "User gets " %>
+    <%= f.select :percentage_discount_off_next_person, "<option></option>" << options_for_select(1..100, @promo_code.percentage_discount_off_next_person) %>
+    <%= f.label :percentage_discount_off_next_person, "% off the cheapest booking in their order on the trip which matched the conditions" %>
+  </p>
+  
+<% end -%>
+
+<% field_set_tag 'Booking Rewards' do -%>
+  <p>
+    <%= f.label :percentage_discount_off_trip, "User gets " %>
+    <%= f.select :percentage_discount_off_trip, "<option></option>" << options_for_select(1..100, @promo_code.percentage_discount_off_trip) %>
+    <%= f.label :trip_id, "% off any bookings which match the booking conditions" %><br />
+  </p>
+<% end -%>
+-->
+ 
+<% field_set_tag 'Linked Promo Codes' do -%>
+  <p>This promo code can be used in conjunction with these others.</p>
+  
+  <p>
+    <%= select_tag "promo_code[linked_promo_code_ids][]", options_from_collection_for_select(PromoCode.all.reject{|x| x == @promo_code}, :id, :description, @promo_code.linked_promo_code_ids), :multiple => true %>
+  </p>
+<% end -%>
+
+  <p>
+    <% if @promo_code.new_record? %>
+      <%= f.submit "Create", :class => 'submit' %>
+    <% else %>
+      <%= f.submit "Update", :class => 'submit' %>
+    <% end %>
+  </p>
+  
+<% end %>

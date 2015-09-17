@@ -1,0 +1,10 @@
+<% unless trip.bookable?(@current_basket.male_bookings(trip), @current_basket.female_bookings(trip)) %>
+  <div id="flash_error">
+  <p>
+  Uh-oh, looks like someone else has just booked the last places, there aren't enough left to complete this order, however if you would like to <%= link_to "contact us to reserve places", :controller => "web", :action => "reserver", :trip_id => trip.id %> we will try and contact you if extra places open up.
+  </p>
+  <p>
+  Otherwise you can remove some of your bookings to see if you can complete your order.
+  </p>
+  </div>
+<% end %>

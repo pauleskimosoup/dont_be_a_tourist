@@ -1,0 +1,53 @@
+<% form_for(pickup, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+
+    
+  <p>
+    
+    <%= f.label :name %> - Please do not use '-' in the name
+    
+    <%= f.text_field :name %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :location %>
+    
+    <%= f.text_field :location %>
+  </p>
+
+    
+      <% @include_tinymce_script = true %>
+    
+  <p>
+    
+    <%= f.label :directions %>
+    
+    <%= f.tinymce_text_area :directions %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :map_code %>
+    
+    <%= f.text_area :map_code %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :display %>
+    
+    <%= f.check_box :display %>
+  </p>
+
+  <p>
+    <% if pickup.new_record? %>
+    <%= f.submit "Create", :class => 'submit' %>
+    <% else %>
+    <%= f.submit "Update", :class => 'submit' %>
+    <% end %>
+  </p>
+<% end %>

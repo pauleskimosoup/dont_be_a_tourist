@@ -1,0 +1,17 @@
+<% @page_title = "Login" %>
+
+<h1><%= User %> Login</h1>
+
+<% if flash[:notice]%>
+  <h3><%= flash[:notice] %></h3>
+<% end %>
+
+<%= render :partial => "user/login" %>
+
+<h2>New to this site?</h2>
+<br />
+<p>Please <%= link_to "apply for a username and password", {:controller => :user, :action => :new} %> to make a booking.</p>
+
+<% content_for :right do %>
+  <%= render :partial => 'web/right_accounts' %>
+<% end %>

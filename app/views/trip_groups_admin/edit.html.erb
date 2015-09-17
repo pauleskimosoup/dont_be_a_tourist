@@ -1,0 +1,5 @@
+<h1>Edit trip group</h1>
+
+<% form_for(@trip_group, :url => {:id => params[:id], :action => :update}, :html => {:method => "post", :multipart => true}) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>

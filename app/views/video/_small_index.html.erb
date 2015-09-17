@@ -1,0 +1,28 @@
+<% grey ||= false %>
+
+<!-- PICK VIDEO -->
+<% if defined?(trip_id) && !trip_id.blank? %>
+  <% videos = Video.active.trip_id(trip_id).random %>
+<% elsif defined?(destination_id) && !destination_id.blank? %>
+  <% videos = Video.active.destination_id(destination_id).random %>
+<% elsif defined?(destination_ids) && !destination_ids.blank? %>
+  <% videos = Video.active.destination_ids(destination_ids).random %>
+<% else %>
+  <% videos = Video.active.random %>
+<% end %>
+<% videos = videos[0..0] %>
+
+<!-- VIEW -->
+<% if grey %>
+  <h2 class="your_photos_grey">Videos</h2>
+<% else %>
+  <h2 class="videos">Videos</h2>
+<% end %>
+
+<%= link_to "see more", {:controller=>"web", :action=>"past_trips"}, {:class=>"see_all"} %>
+
+<% if videos.length > 0 %>
+  <%= render :partial => "video/video", :collection => videos %>
+<% else %>
+  Video coming soon!
+<% end %>

@@ -1,0 +1,16 @@
+  <% if trip.places < 1 %>
+    <div id="flash_error">
+      <p>Uh-oh, this trip is full, register your interest <%= link_to "here", :controller => "web", :action => "reserve", :id => trip.id %>, and we'll contact you if a place becomes available.</p>
+    </div>
+    <br />
+  <% else %>
+
+<div class="right_our_trips_stretch">
+
+    <div class="padding">
+      <%= link_to "BOOK NOW", {:controller => :basket, :action => :book, :trip_id => trip.id}, {:class => "book_now", :title=>"Book Online Now"} %>
+    </div>
+  
+  <%= image_tag "right_bg_sm_stretch_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %>
+</div>
+<% end %>

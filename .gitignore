@@ -1,0 +1,8 @@
+public/pdfs/**/*
+public/images/**/*
+.DS_Store
+tmp/**/*
+log/*.log
+.#*
+#*
+semantic.cache

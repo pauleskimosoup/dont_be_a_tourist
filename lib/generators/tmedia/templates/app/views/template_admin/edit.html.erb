@@ -1,0 +1,4 @@
+<h1><%%= @page_title = "Update <%= print_singular_name %>" -%></h1>
+
+      View the page you're editing <%%= link_to "here", :controller => '<%= feature_name %>', :action => "show", :id => @<%=file_name %> %>
+      <%%= render :partial => 'form', :locals => {:<%= file_name %> => @<%= file_name %>} %>

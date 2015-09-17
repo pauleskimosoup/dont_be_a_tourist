@@ -1,0 +1,44 @@
+<div class='order'>
+
+<% for trip in booking.trips %>
+  <%= if trip.start_date > Date.today then "<div class='trip'>" else "<div class='past_trip'>" end%>
+  <h2><%= link_to trip.name, :controller => "trip", :action => "show", :id => trip.id %></h2>
+  <p><span  class="date_highlight"><%= trip.length_dates %></span></p>
+  <% if trip.facebook_url && trip.facebook_url.strip != '' %>
+  <p>Get excited: <%= link_to 'Facebook Group', trip.facebook_url, :popup => true %></p>
+  <% end %>
+  <% if trip.document? %>
+    <%= link_to "Download Document About This Trip", trip.document.url %><br />
+  <% end %>
+  <%= link_to "View Pickup Points", {:controller => "trip", :action => "show", :id => trip.id, :anchor => "pickup"} %><br />
+  Number of travellers: <%= booking.booking_items.select{|y| y.trip == trip }.length %><br /><br />
+  <% bookings = booking.booking_items.select{|y| y.trip == trip } %>
+  <% ticker = 0 %>
+  <% for booking_item in bookings %>
+    <% ticker += 1 %>
+    <%= render :partial => 'shared/individual_booking', :locals => {:booking_item => booking_item, :ticker => :ticker} %>
+  <% end %>
+  </div>
+<% end %>
+
+<h3>Total Payment</h3>
+<strong>Payment Method:</strong> <%= booking.booking_type.titleize %><br />
+<% if booking.booking_status? %>
+<strong>Payment Status:</strong> <%= booking.booking_status.titleize %><br />
+<% end %>
+<% if booking.payment_deadline %>
+<strong>Payment Deadline:</strong> <%= booking.payment_deadline %><br />
+<% end %>
+<strong>Booking Fee:</strong> <%= number_to_currency booking.booking_fee, :unit => "&pound;" %><br />
+<% if booking.discount_total > 0 -%>
+<strong>Special Offer:</strong> -<%= number_to_currency booking.discount_total, :unit => "&pound;" %> (<%= booking.discount_code_name %>)<br />  
+<% end -%>
+<strong>Total Cost:</strong> <%= number_to_currency booking.total, :unit => "&pound;" %><br />
+
+<% if booking.outstanding_balance > 0 %>
+  <strong>Outstanding Balance:</strong> <%= number_to_currency booking.outstanding_balance, :unit => "&pound;" %><br />
+  <%= link_to "Pay Outstanding Balance", :controller => "booking", :action => "complete", :id => booking.id %><br />
+<% end %> 
+
+<%= link_to "View Invoice", :action => "booking", :id => booking.id %>
+</div>

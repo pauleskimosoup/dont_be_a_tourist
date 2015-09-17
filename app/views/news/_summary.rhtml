@@ -1,0 +1,10 @@
+
+  <h3 style="margin: 0px; padding: 0px;"><span  class="date_highlight_sm"><%= short_text_date(story.date) %></span> <%= link_to h(story.name), :controller => 'news', :action => 'show', :id => story.id %></h3>
+  <div class="clear"></div>
+  <% if story.has_picture1? -%>
+    <div class="right_trip_pic">
+    <%= scale_image_tag(story.picture1, :width => 95, :height => 58, :border => "0", :alt => h(story.picture1.image_alt)) %>
+    </div>
+  <% end -%>
+  <p><%= h(story.summary).gsub(/\n/, "<br />") %></p>
+  <p align="right"><%= link_to "READ MORE", {:controller => 'news', :action => 'show', :id => story.id}, {:class=>"more"} %></p>

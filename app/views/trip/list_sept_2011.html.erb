@@ -1,0 +1,15 @@
+<% @page_title = 'Find Your Next Tour' %>
+
+<h1><%= @page_title %></h1>
+
+<% if @trips.length > 0 %>
+  <% for trip in @trips %>
+    <p><%= link_to trip.name, {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"large_link"} %></p>
+    <span class="date_highlight"><%= trip.dates %></span>
+    <%= link_to "MORE ABOUT THIS TRIP", {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"more"} %>
+    <br />
+    <hr />
+  <% end %>
+<% else %>
+  Trips coming soon!
+<% end %>

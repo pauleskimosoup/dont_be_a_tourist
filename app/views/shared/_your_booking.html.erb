@@ -1,0 +1,9 @@
+<% if defined?(@current_basket) && @current_basket != nil && @current_basket.basket_items.length > 0 %>
+
+  <% unless hide_basket_expire? %>
+    <%= render "basket/expire" %>
+  <% end %>
+
+  <%= link_to image_tag("your_booking.gif", :alt => "Your Booking", :title => "Your Booking", :border => "0", :hspace => "0", :vspace => "0")+ '', {:controller => "basket", :action => "show"}, {:class => "your_booking"} %> 
+  
+<% end %>

@@ -1,0 +1,18 @@
+<% @page_title = "Register" %>
+
+
+        <%= form_tag(:controller => 'login', :action => 'add_demo_user')%>
+        <p> 
+          <label for="user_name">Name*</label>
+          <%= text_field('user', 'name') %>
+        </p>
+        <p> 
+          <label for="user_email">E-Mail*</label>
+          <%= text_field('user', 'email') %>
+        </p>
+        <p> 
+          <input name="Submit" id="Submit" type="submit" value="Get Password" class="button">
+        </p>
+      
+    <%= end_form_tag %>
+

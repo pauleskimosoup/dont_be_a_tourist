@@ -1,0 +1,20 @@
+<% @page_title = @destination.name %>
+
+<%= render :partial => 'shared/our_trips_breadcrumbs' %>
+
+<h1><%= @page_title %></h1>
+  <% random_picture = @destination.random_picture -%>
+  <% if random_picture != nil %>
+  <p><%= crop_image_tag random_picture, 1, :border => "0", :hspace => "0", :vspace => "0", :width => 532, :height => 238, :class => "destination_pic" %></p>
+   <% end %>
+  <p class="large"><strong><%= @destination.summary %></strong></p>
+  <p><%= @destination.description %></p>
+
+<%= render :partial => 'web/upcoming_trips', :locals => {:destination => @destination} %>
+
+<% content_for :right do %>
+  <%= render :partial => 'map' %>
+  <%= render :partial => 'web/right_destinations' %>
+  <%= render :partial => 'web/right_past_trips', :locals => {:destination_id => @destination.id} %>
+<% end %>
+

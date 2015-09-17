@@ -1,0 +1,10 @@
+<% @page_title = "Hello and welcome" %>
+
+<h1><%= page_title %></h1>
+<h2>I would like to...</h2>
+<ul>
+<li><%= link_to "Edit my details", :controller => :user, :action => :edit %></li>
+<li><%= link_to "View my bookings", :controller => :user, :action => :bookings %></li>
+<li><a href="http://www.facebook.com/dontbeatourist" target="_blank">Upload photo/video/comment</a> (external link to Facebook)</li>
+<li><%= link_to "Finish and logout", :controller => :user, :action => :logout %></li>
+</ul>

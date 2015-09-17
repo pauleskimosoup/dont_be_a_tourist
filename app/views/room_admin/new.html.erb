@@ -1,0 +1,5 @@
+<h1><%= @page_title = "Add Room" -%></h1>
+
+<% form_for @room, :url => {:controller => "room_admin", :action => "create"}, :html => {:method => :post, :multipart => true} do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>

@@ -1,0 +1,65 @@
+<% hide_right %>
+<% hide_flash %>
+
+<%= render "booking_steps" %>
+<h1><%= @page_title = "Add Your Bookings" %></h1>
+
+
+<%= render "basket/expire" %>
+
+<%- flash.each do |name, msg| -%>
+  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+<%- end -%>
+
+<% form_for @basket, :url => {:controller => "basket", :action => "bookings"}, :html => {:method => "post"} do |f| %>
+
+<%= f.error_messages :header_message => nil, :message => "Opps... looks like there was a problem with the information you entered", :id => "flash_error" %>
+
+<p>
+  <small>* denotes a required field, please enter a first name and family name for each person in your bookings.</small>
+</p>
+
+
+<table>
+
+  <tr>
+    <th>Gender</th>
+    <th>*First Name</th>
+    <th>*Family Name</th>
+    <th>*Type</th>
+    <th>Upgrade</th>
+    <th>*Pickup &amp; Dropoff Point</th>
+    <th>Delete</th>
+  </tr>
+
+<% for trip in @basket.trips %>
+  <tr>
+    <td colspan="4"><%= trip.name_dates %></td>
+    <td colspan="3"><%= trip.format_upgrade_description %></td>
+  </tr>
+  <% f.fields_for :basket_items, @basket.basket_items.select{|x| x.trip == trip }.sort_by{|x| x.created_at }.reverse do |builder| %>
+    <%= render "basket_item_fields", :f => builder %>
+  <% end %>
+<% end %>
+
+</table>
+
+<%= f.submit "CONTINUE YOUR BOOKING", :class=>"submit_none" %>
+
+<% end %>
+
+<br />
+<hr />
+<h2>Pickup &amp; Dropoff Point Details</h2>
+<% for trip in @basket.trips %>
+  <h3><%= trip.name_dates %></h3>
+  <p>
+  <% for pickup_dropoff_time in trip.pickup_dropoff_times.sort_by{|x| x.pickup_time} %>
+    <%= pickup_dropoff_time.name_pickup_time_dropoff_time %>
+    <% if pickup_dropoff_time.pickup.map_code && pickup_dropoff_time.pickup.map_code.strip != '' %>
+      <span class="small">[ <%= link_to("view map", pickup_dropoff_time.pickup.map_code, :popup => [pickup_dropoff_time.pickup.name, 'height=600,width=600']) %> ]</span>
+    <% end %>
+    <br />
+  <% end %>
+  </p>
+<% end %>

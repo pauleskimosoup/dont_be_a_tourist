@@ -1,0 +1,85 @@
+<script type="text/javascript">
+  function checkLink()
+  {
+    value = document.getElementById('home_banner_link').value
+    if (value == 2)
+    {
+      document.getElementById('trip_fields').style.display = '';
+      document.getElementById('summary_fields').style.display = 'none';
+    }
+    else
+    {
+      document.getElementById('trip_fields').style.display = 'none';
+      document.getElementById('summary_fields').style.display = '';
+    }
+  }
+</script>
+
+
+<% @include_tinymce_script = true %>
+
+<% form_for(banner, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :position %>
+    <%= f.text_field :position %>
+  </p>
+  
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :link, "Link to" %>
+    <%= f.text_field :link %>
+    <!-- <%= f.select :link, options_for_select(HomeBanner.links, f.object.link), {}, :onchange => "checkLink();" %> -->
+  </p>
+
+  <p id="trip_fields" <%= (f.object.link != 2) ? 'style="display:none;"' : '' %>>
+    <%= f.label :trip_id %>
+    <%= f.collection_select :trip_id, Trip.active.future, :id, :name_dates %>
+  </p>
+
+  <p id="summary_fields" <%= (f.object.link == 2) ? 'style="display:none;"' : '' %>>
+    <%= f.label :summary %>
+    <%= f.text_area :summary %>
+
+  </p>
+
+  <p>Please ensure images are: <strong>1920 (w) x 734 (h)</strong>.</p>
+
+  <div class="group_block">
+    <p>
+      <%= f.label :banner%>
+
+      <%= f.file_field :banner %>
+    </p>
+  </div>
+  <% if f.object.banner? %>
+    <p>
+      <%= image_tag f.object.banner.url, :border => "0", :hspace => "0", :vspace => "0", :width => 231, :height => 100 %>
+    </p>
+  <% end %>
+
+  <p>
+    <%= f.label :image_alt, "Image tag ALT attribute" %>
+    <%= f.text_field :image_alt %>
+  </p>
+
+  <p>
+    <%= f.label :display %>
+    <%= f.check_box :display, :class => "checkbox" %>
+  </p>
+
+  <p>
+    <% if banner.new_record? %>
+      <%= f.submit "Create", :class => 'submit' %>
+    <% else %>
+      <%= f.submit "Update", :class => 'submit' %>
+    <% end %>
+  </p>
+
+<% end %>

@@ -1,0 +1,62 @@
+<% hide_right %>
+
+<% form_tag :action => "set_extras" do %>
+
+<p>
+  <%= submit_tag "CONTINUE BOOKING", :class=>"submit" %>
+</p>
+
+<%= render "booking_steps" %>
+<h1><%= @page_title = "Add Extras" %></h1>
+
+<%= render "basket/expire" %>
+
+
+
+<%- flash.each do |name, msg| -%>
+  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+<%- end -%>
+<br />
+<% for product in @products %>
+  <% if product.has_picture1? %>
+    <%= scale_image_tag product.picture1, :width => 100, :style=>"margin: 6px 15px 5px 0px; float: left;" %>
+  <% end %>
+  <h3 style="margin-top: 0px; padding-top: 0px;"><%= product.name %></h3>
+  <strong><%= number_to_currency product.price, :unit => "&pound;" %></strong>
+  <%= product.summary %>
+  <hr />
+
+<% end %>
+  <br />
+  <table>
+    <tr>
+      <th>Name</th>
+      <% for product in @products %>
+        <th><%= product.name %></th>
+      <% end %>
+      <% for basket_item in @current_basket.basket_items %>
+        <tr>
+          <td><%= basket_item.first_name %> <%= basket_item.last_name %></td>
+          <% for product in @products %>
+            <td>
+            <% if basket_item.trip.products.include? product %>
+              <%= check_box_tag "basket_items[#{basket_item.id}][product_ids][#{product.id}]", "1", basket_item.products.include?(product), :class=>"checkbox" %>
+            <% else %>
+              -
+            <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tr>
+  </table>
+
+  <p>
+    <%= submit_tag "CONTINUE BOOKING", :class=>"submit" %>
+  </p>
+  <br />
+  <br />
+
+<% end %>
+
+<%= render :partial => 'web/payment_types' %>

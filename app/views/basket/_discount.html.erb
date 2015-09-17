@@ -1,0 +1,23 @@
+<% bpcnas = @current_basket.best_promo_code_name_and_saving %>
+<tr>
+<td colspan=2 valign="top">
+<div align="right">
+
+<% if bpcnas && bpcnas.last > 0 %>
+<span class="red">Special Offer:</span><br />
+<span class="discount_name"><%= bpcnas.first %></span>
+</div>
+<!--<p class="discount_offer">Make sure you check our <%= link_to "Special Offers", :controller=>"web", :action=>"special_offers" %> page to see if you can save even more money!</p>-->
+</td>
+<td valign="top" class="red">-<%= number_to_currency(bpcnas.last, :unit => "&pound;") %></td>
+</tr>
+
+<% else -%>
+<!--<p class="discount_offer">Make sure you check our <%= link_to "Special Offers", :controller=>"web", :action=>"special_offers" %> page to see if you can save money!</p>-->
+</div>
+</td>
+<td valign="top" class="red">-<%= number_to_currency(0, :unit => "&pound;") %></td>
+</tr>
+
+<% end -%>
+

@@ -1,0 +1,21 @@
+<% @page_title = "Forgotten password" %>
+
+<h1><%= @page_title %></h1>
+
+<h2><%= render :partial => "user/errors" %></h2>
+
+<p>Please enter your email address and we will reset your password and email you your login details.</p>
+
+<% form_tag() do %>
+    
+  <p>
+   <label>Your email</label>
+   <%= text_field_tag :username %>
+  </p>
+  <p>
+    <%= submit_tag "SUBMIT", :class => 'submit' %>
+  </p>
+  
+<% end %>
+<p><%= link_to "Go back to login", :action=>"login" %></p>
+

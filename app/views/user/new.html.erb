@@ -1,0 +1,8 @@
+<% @page_title = "Sign up" -%>
+<% hide_flash -%>
+
+<%= render :partial => 'errors' %>
+<%= render :partial => 'form', :locals => {:user => @user} %>
+<% content_for :right do %>
+  <%= render :partial => 'web/right_accounts' %>
+<% end %>

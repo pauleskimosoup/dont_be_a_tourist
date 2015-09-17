@@ -1,0 +1,5 @@
+<h1><%= @page_title = "Update Room" -%></h1>
+
+<% form_for @room, :url => {:controller => "room_admin", :action => "update", :id => params[:id]}, :html => {:method => :post} do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>

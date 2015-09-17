@@ -1,0 +1,4 @@
+<h1><%= @page_title = "Update Extra" -%></h1>
+
+      View the page you're editing <%= link_to "here", :controller => 'product', :action => "show", :id => @product %>
+      <%= render :partial => 'form', :locals => {:product => @product} %>

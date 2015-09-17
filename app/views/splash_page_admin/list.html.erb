@@ -1,0 +1,22 @@
+<h1><%= @page_title = "View All Splash Pages" -%></h1>
+<div id="search">
+<% form_tag({}, :method => "GET") do %>
+  <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+  <%= link_to "Clear", :search => "" %>
+<% end %>
+</div>
+<% if @splash_page_pages.count != 0 -%>
+
+  <%= admin_table({:columns =>[:title, :url, :summary, :last_updated],
+    :list => @splash_pages,
+    :pages => @splash_page_pages
+  })%>
+
+<% else -%>
+
+  There are currently no splash pages in the system.
+
+<% end -%>
+
+
+

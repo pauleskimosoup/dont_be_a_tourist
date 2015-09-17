@@ -1,0 +1,101 @@
+<% @include_tinymce_script = true %>
+
+<% form_for(destination, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+    
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+  
+  <p>
+    <%= f.label :summary %>
+    <%= f.text_area :summary %>
+  </p>
+
+  <p>
+    <%= f.label :description %>
+    <%= f.tinymce_text_area :description %>
+  </p>
+  
+  <p>
+    <%# f.label :itinerary %><%# link_to (image_tag "admin/info.gif"), {:controller => :popup, :action => :info_itinerary}, :popup => ['Itinerary', 'height=300,width=300'] %>
+    <%# f.tinymce_text_area :itinerary %>
+  </p>
+
+  <p>
+    <%= f.label :picture1_id %>
+    <%= f.comprehensive_image_field :picture1_id %>
+  </p>
+  
+  <% if destination.has_picture1? %>
+  <p>
+    <%= f.label 'Crop Image' %>
+    <div class='group_block'>
+    <%= link_to (crop_image_tag destination.picture1, 1, :width => 266, :height => 119), {:controller => :picture, :action => :crop, :id => destination.picture1.id, :width => 532, :height => 238, :crop => 1}, :rel => 'lyteframe', :rev => "width: 600px; height: 500px;" %>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    </div>
+  </p>
+  <% end %>
+    
+  <p>
+    <%= f.label :picture2_id %>
+    <%= f.comprehensive_image_field :picture2_id %>
+  </p>
+  
+  <% if destination.has_picture2? %>
+  <p>
+    <%= f.label 'Crop Image' %>
+    <div class='group_block'>
+    <%= link_to (crop_image_tag destination.picture2, 1, :width => 266, :height => 119), {:controller => :picture, :action => :crop, :id => destination.picture2.id, :width => 532, :height => 238, :crop => 1}, :rel => 'lyteframe', :rev => "width: 600px; height: 500px;" %>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    </div>
+  </p>
+  <% end %>
+    
+  <p>
+    <%= f.label :picture3_id %>
+    <%= f.comprehensive_image_field :picture3_id %>
+  </p>
+  
+  <% if destination.has_picture3? %>
+  <p>
+    <%= f.label 'Crop Image' %>
+    <div class='group_block'>
+    <%= link_to (crop_image_tag destination.picture3, 1, :width => 266, :height => 119), {:controller => :picture, :action => :crop, :id => destination.picture3.id, :width => 532, :height => 238, :crop => 1}, :rel => 'lyteframe', :rev => "width: 600px; height: 500px;" %>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    </div>
+  </p>
+  <% end %>
+
+  <p>
+    <%= f.label :picture4_id %>
+    <%= f.comprehensive_image_field :picture4_id %>
+  </p>
+  <% if destination.has_picture4? %>
+  <p>
+    <%= f.label 'Crop Image' %>
+    <div class='group_block'>
+    <%= link_to (crop_image_tag destination.picture4, 1, :width => 266, :height => 119), {:controller => :picture, :action => :crop, :id => destination.picture4.id, :width => 532, :height => 238, :crop => 1}, :rel => 'lyteframe', :rev => "width: 600px; height: 500px;" %>
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    </div>
+  </p>
+  <% end %>
+  
+  <p>
+    <%= f.label 'Destination Map' %>
+    <%= f.comprehensive_image_field :picture5_id %>
+  </p>
+      
+  <p>
+    <%= f.label :display %>
+    <%= f.check_box :display %>
+  </p>
+
+  <p>
+    <% if destination.new_record? %>
+    <%= f.submit "Create", :class => 'submit' %>
+    <% else %>
+    <%= f.submit "Update", :class => 'submit' %>
+    <% end %>
+  </p>
+<% end %>

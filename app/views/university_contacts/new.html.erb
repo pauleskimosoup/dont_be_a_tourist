@@ -1,0 +1,85 @@
+<% hide_right %>
+<% @page_title = "Mini Guides" %>
+
+<h1>Download FREE mini-guides for your day trips</h1>
+
+<div class="float-left mini-guides-details">
+  <%= image_tag "students.png", :class => 'students-image' %>
+  
+  <p>
+    Boost your social programme and save time with our free handy A4 mini-guides.
+  </p>
+  
+  <p>
+    <%= link_to "Click for an example", "/documents/mini-guides/dont-be-a-tourist-liverpool-mini-guide-sem1-2013-14.pdf", :target => "_blank" %>
+  </p>
+  
+  <p class="info">
+    We&rsquo;re collecting your name and email address to confirm that you&rsquo;re a real person (not a robot ).
+    Knowing which university the mini-guides are for helps us to gauge interest and decide which areas to provide
+    more for next semester.
+  </p>
+</div>
+
+<div id="mini-guides-form">
+  <% form_for @university_contact do |f| %>
+    <p>Fill in the information below to access the mini-guides.</p>
+
+    <%= f.error_messages :header_message => "Invalid details!", :message => "You'll need to fix the following fields:", :header_tag => :h3 %>
+
+    <div class="field">
+      <%= f.label :name, "Your name:" %>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :email, "Email address:" %>
+      <%= f.text_field :email %>
+    </div>
+
+    <div class="field">
+      <%= f.label :university, "Where do you work?" %>
+      <%= f.select :university, @universities %>
+    </div>
+
+    <div class="field">
+      <%= f.check_box :updates, :class => "checkbox" %>
+      <%= f.label :updates, "Tell me about mini-guide updates and new destinations", :class => "checkbox-label" %>      
+    </div>
+
+    <div class="field">
+      <%= f.check_box :adventures, :class => "checkbox" %>
+      <%= f.label :adventures, "Tell me about overnight adventures for my students", :class => "checkbox-label"  %>      
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Download Free Mini-Guides", :class => 'submit' %>
+    </div>
+  <% end %>
+  
+  <p>We currently have mini-guides for the following areas:</p>
+  
+  <ul class="current-mini-guides">
+    <li>
+        Liverpool
+    </li>
+    
+    <li>
+        Newcastle
+    </li>
+    
+    <li>
+      Oxford
+    </li>
+    
+    <li>
+      Stratford
+    </li>
+    
+    <li>
+      York
+    </li>
+  </ul>
+</div>
+
+<div class="clear"></div>

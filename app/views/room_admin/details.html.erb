@@ -1,0 +1,35 @@
+<h1><%= @page_title = "Room Configuration" -%></h1>
+
+<%= link_to "Download CSV", :action => "details_csv", :rooms => params[:rooms], :trip_id => params[:trip_id] %>
+
+<% for room in params[:rooms].split('-') %>
+
+  <% if room.include?("m") %>
+    <% room_gender = "Man" %>
+  <% elsif room.include?("f") %>
+    <% room_gender = "Woman" %>
+  <% else %>
+    <% room_gender = "Person" %>
+  <% end %>
+  
+  <h4><%= room.to_i %> <%= room_gender %> Room</h4>
+  
+  <% room.to_i.times do %>
+  
+    <% if room_gender == "Man" %>
+      <% person = @possibilities.select{|x| x.gender == "Male"}.first %>
+    <% elsif room_gender == "Woman" %>
+      <% person = @possibilities.select{|x| x.gender == "Female"}.first %>
+    <% end %>
+    
+    <% if person %>
+      <%= person.first_name %> <%= person.last_name %>
+      <% @possibilities.delete(person) %>      
+    <% else %>
+    _______________________________________
+    <% end %>
+    <br />
+    
+  <% end %>
+
+<% end %>

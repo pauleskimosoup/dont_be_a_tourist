@@ -1,0 +1,9 @@
+<h1><%= @page_title = "Pay Outstanding Balance" %></h1>
+
+<p>
+  <strong>Booking Reference:</strong> <%= @booking.id %>
+  <br />
+  <strong>Outstanding Balance:</strong> <%= number_to_currency @booking.outstanding_balance, :unit => "&pound;" %>
+</p>
+
+<%= link_to "Credit Card Payment", @booking.paypal_url(url_for(:controller => "booking", :action => "result", :only_path => false), url_for(:controller => :payment_notification, :action => "complete_payment", :only_path => false)) %>

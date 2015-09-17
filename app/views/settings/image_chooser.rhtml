@@ -1,0 +1,72 @@
+<html>
+
+<head>
+
+<title>Online Image Gallery</title>
+<%= javascript_include_tag "images" %>
+<script src="javascripts/prototype.js" type="text/javascript"></script>
+<%#= javascript_include_tag "prototype" %>
+<%= stylesheet_link_tag "adminstyle" %>
+</head>
+
+<body>
+<div align="left">
+<p class="largetext" align="center"><span class="orange">Online Image Gallery</span></p>
+
+<%= link_to_function "Upload a new image", "Element.show('addform')" %>
+
+<div id="addform" style="{display:none}">
+
+<%= form_tag({:action => 'upload_image'}, :multipart => true)%>
+
+  <p><label for="image_image_data">Image</label>
+  <%= file_field :image, :image_data %></p>
+  <p><label for="image_image_alt">Title</label>
+  <%= text_field :image, :image_alt %></p>
+  <%= hidden_field_tag :field_prefix, @field_prefix %>
+  <%= hidden_field_tag :tag, params[:tag] %>
+  <p><%= submit_tag "Add", :class => "buttoninlineadd" %></p>
+
+<%= end_form_tag %>
+
+</div>
+
+<hr />
+
+<%= form_tag({}, {:method => "GET", :name => "tag_form"}) %>
+<label for="tag">Category: </label>
+<%= select_tag :tag, options_for_select(["All"] + Picture.all_tags, @params[:tag]), :onchange => "document.tag_form.submit();"%>
+<%= hidden_field_tag :field, @params[:field] %>
+<%= end_form_tag %>
+
+<table cellspacing="3" border="1" bordercolor="#000033">
+
+<% for row in @rows %>
+  <tr>
+    <% for picture in row %>
+      <td align="center" width="66">
+      <% alt_tag = picture.filename + " - " + picture.width.to_s + "x" + picture.height.to_s%>
+      <%=thumbnail_tag(picture, :width => 66, :height => 66, :alt => alt_tag, :title => alt_tag) %>
+      <br />
+      <a href="#" onclick="choose_image(<%=picture.id%>, '<%=@field_prefix%>')" class="small">use</a>
+      </td>
+    <% end %>
+  </tr>
+<% end %>
+
+</table>
+
+<% if @picture_pages -%>
+  <div class="pagecount">
+    <% if @picture_pages.previous_page -%>
+      <%= link_to '&lt;&lt; Back', :field => params[:field], :tag => params[:tag], :page => @picture_pages.previous_page %>
+    <% end -%>
+    <%= @picture_pages.range %> of <%= @picture_pages.count %>
+    <% if @picture_pages.next_page -%>
+      <%= link_to 'Next &gt;&gt;', :field => params[:field], :tag => params[:tag], :page => @picture_pages.next_page %>
+    <% end -%>
+  </div>
+<% end -%>
+</div>
+</body>
+</html>

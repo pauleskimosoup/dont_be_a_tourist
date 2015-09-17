@@ -1,0 +1,86 @@
+<% @page_name = "home_page" %>
+<% @page_title = "Welcome to Don't be a Tourist" %>
+
+<div class="home_page">
+
+  <div class="intro_text">
+    <p class="highlight university-benefit">
+      Meet new friends exploring UK & Europe!!
+    </p>
+  </div>
+
+  <div class="trust_messages">
+    <div class="award">
+      <h2>Since 2006</h2>
+      <p>
+        8 year track record<br />
+        of awesomeness
+      </p>
+    </div>
+
+    <div class="award">
+      <h2>5000+</h2>
+      <p>
+        International students<br />
+        safely travelled with us</p>
+    </div>
+
+    <div class="award">
+      <h2>99%</h2>
+      <p>
+        of students recommend<br />
+        Don't Be a Tourist
+      </p>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+
+  <% @trip_groups.each do |trip_group| %>
+    <div class="trip_group">
+      <h3><%= link_to trip_group.name, "/trip/search?trip_group_id=#{trip_group.id}&commit=Go" %></h3>
+
+      <% if trip_group.has_picture1? %>
+        <div class="picture">
+          <%= link_to (scale_image_tag trip_group.picture1, :width => 295, :height => 148), "/trip/search?trip_group_id=#{trip_group.id}&commit=Go" %>
+        </div>
+      <% end %>
+
+    </div>
+  <% end %>
+
+  <div class="clear"></div>
+
+
+  <% if false && !@university_logos.empty? %>
+    <%= render "logos_javascript" %>
+    <div class="uni_logos_container">
+      <div class="uni_logos_box" id="logos_box">
+        <%# Left %>
+          <div class="uni_logos_left">
+            <%= link_to_function "Back", "left()", { :class => "off", :id => "left_arrow" } %>
+          </div>
+        <%# Logos %>
+          <div class="uni_logos" id="logos">
+            <% @university_logos.each do |ul| %>
+              <% if ul.url? -%>
+                <%= link_to scale_image_tag(ul.picture1, :height => 56, :vspace => '0', :hspace => '0', :border => '0', :alt => ul.name), ul.url, :popup => true, :title => ul.name %>
+              <% else -%>
+                <%= scale_image_tag ul.picture1, :height => 56, :vspace => '0', :hspace => '0', :border => '0', :title => ul.name, :alt => ul.name %>
+              <% end -%>
+            <% end %>
+          </div>
+        <%# Right %>
+          <div class="uni_logos_right">
+            <%= link_to_function "Next", "right()", { :class => "off", :id => "right_arrow" } %>
+          </div>
+      </div>
+    </div>
+  <% end %>
+
+</div>
+
+<% content_for :right do %>
+
+<% end %>

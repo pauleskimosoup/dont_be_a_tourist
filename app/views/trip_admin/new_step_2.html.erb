@@ -1,0 +1,9 @@
+<h1><%= @page_title = "Add Trip" -%></h1>
+
+<% @include_tinymce_script = true %>
+<%= javascript_include_tag :defaults %>
+
+<% form_for(@trip, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+  <%= render :partial => 'form_step_2', :locals => {:trip => @trip, :f => f} %>
+  <p><%= f.submit "Complete", :class => 'submit' %></p>
+<% end %>

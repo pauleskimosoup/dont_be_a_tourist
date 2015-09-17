@@ -1,0 +1,32 @@
+<% if trip.status? -%>
+
+  <%= trip.status %>
+
+<% elsif trip.early_early_bird? -%>
+
+  <strong>Early Bird :</strong> Book now until <%= trip.early_early_bird_date.strftime("%a %d %b") %>, <strong>SAVE <%= number_to_currency trip.early_bird_1_amount_off, :unit => "&pound;" %></strong>
+
+<% elsif trip.early_bird? -%>
+
+  <strong>Early Bird :</strong> Book now until <%= trip.early_bird_date.strftime("%a %d %b") %>, <strong>SAVE <%= number_to_currency trip.early_bird_2_amount_off, :unit => "&pound;" %></strong>
+
+<%# elsif current_user? and current_user.never_booked_before? -%>
+
+  <!--
+  Your first trip?
+  <% if ((trip.end_date - trip.start_date).to_i) > 0 -%>
+    <strong>Get &pound;20 OFF!</strong>
+  <% else -%>
+    <strong>Get &pound;6 OFF!</strong>
+  <% end -%>
+  -->
+
+<% else -%>
+
+  <strong>10% OFF Online Bookings</strong>
+
+  <!--
+  Save money on this trip, see our <%= link_to "Special Offers", :controller => "web", :action => "special_offers" %>
+  -->
+
+<% end -%>

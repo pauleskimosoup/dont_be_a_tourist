@@ -1,0 +1,4 @@
+<% @page_title = "Edit An Administrator" -%>
+<h1>Edit An Administrator</h1>
+      <%= error_messages_for :admin %>
+      <%= render :partial => 'admin_form', :locals => {:admin => @admin} %>

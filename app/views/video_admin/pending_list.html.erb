@@ -1,0 +1,23 @@
+<h1><%= @page_title = "View All Videos" -%></h1>
+<div id="search">
+<% form_tag({}, :method => "GET") do %>
+  <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+  <%= link_to "Clear", :search => "" %>
+<% end %>
+</div>
+<% if @video_pages.count != 0 -%>
+
+  <%= admin_table({:columns =>[:trip_id, :user_id, :name, :display, :last_updated],
+    :list => @videos,
+    :pages => @video_pages,
+    :list_action => :pending_list
+  })%>
+
+<% else -%>
+
+  There are currently no Videos in the system.
+
+<% end -%>
+
+
+

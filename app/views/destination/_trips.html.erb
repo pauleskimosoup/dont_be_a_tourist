@@ -1,0 +1,9 @@
+<h2><%= destination.name %> Trips</h2>
+
+<% for trip in destination.trips %>
+  <p>
+    <%= link_to trip.name, :controller => :trip, :action => :show, :id => trip.id %>
+    <br />
+    <%= trip.start_date %> - <%= trip.end_date %>
+  </p>
+<% end %>

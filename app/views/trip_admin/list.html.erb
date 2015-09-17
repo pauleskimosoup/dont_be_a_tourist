@@ -1,0 +1,31 @@
+<h1><%= @page_title = "View All Trips" -%></h1>
+<div id="search">
+<% form_tag({}, :method => "GET") do %>
+  <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+  <%= link_to "Clear", :search => "" %>
+<% end %>
+</div>
+
+<% if @trip_pages.count != 0 -%>
+
+  <%= admin_table({:columns =>[:name,
+    ["Student Price", lambda{|x| number_to_currency x.student_price, :unit => "&pound;" }, 'student_price'],
+    ["Adult Price", lambda{|x| number_to_currency x.adult_price, :unit => "&pound;" }, 'adult_price'],
+    ["Upgrade Price", lambda{|x| number_to_currency x.upgrade_price, :unit => "&pound;"}, 'upgrade_price'],
+    :start_date, :end_date, :display, :highlight,
+    ["Attending", lambda{|x| link_to "Attending (#{x.booking_items.length} of #{x.total_places})", :controller => :trip_admin, :action => :list_people, :id => x.id}, nil],
+    ["Rooms", lambda{|x| link_to "Rooms (#{x.rooms.length})", :controller => "room_admin", :action => "index", :trip_id => x.id}, nil],
+    ["Day Itineraries", lambda{|x| link_to "Itineraries (#{x.day_itineraries.length})", :controller => "day_itinerary_admin", :action => "index", :trip_id => x.id}, nil],
+    ["Duplicate", lambda{|x| link_to "Duplicate", {:action => "duplicate", :id => x.id}, :confirm => "Are you sure you want to DUPLICATE this trip? It will be added under the name 'Copy of #{x.name}'"}, nil]
+
+    ],
+    :list => @trips,
+    :pages => @trip_pages,
+    :delete_action => nil
+  })%>
+
+<% else -%>
+
+  There are currently no Trips in the system.
+
+<% end -%>

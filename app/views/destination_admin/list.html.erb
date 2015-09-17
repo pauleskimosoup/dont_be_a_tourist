@@ -1,0 +1,22 @@
+<h1><%= @page_title = "View All Destinations" -%></h1>
+<div id="search">
+<% form_tag({}, :method => "GET") do %>
+  <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+  <%= link_to "Clear", :search => "" %>
+<% end %>
+</div>
+<% if @destination_pages.count != 0 -%>
+
+  <%= admin_table({:columns =>[:name, :display, :last_updated],
+    :list => @destinations,
+    :pages => @destination_pages
+  })%>
+
+<% else -%>
+
+  There are currently no Destinations in the system.
+
+<% end -%>
+
+
+

@@ -1,0 +1,22 @@
+<h1><%= @page_title = "View All Stories" -%></h1>
+<div id="search">
+<% form_tag({}, :method => "GET") do %>
+  <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+  <%= link_to "Clear", :search => "" %>
+<% end %>
+</div>
+<% if @story_pages.count != 0 -%>
+
+  <%= admin_table({:columns =>[:name, :date, :display, :last_updated],
+    :list => @stories,
+    :pages => @story_pages
+  })%>
+
+<% else -%>
+
+  There are currently no Stories in the system.
+
+<% end -%>
+
+
+

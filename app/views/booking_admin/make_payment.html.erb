@@ -1,0 +1,23 @@
+<h1><%= @page_title = "Make Payment" %></h1>
+
+<% if flash[:error] %>
+  <div style="color:red;"><%= flash[:error] %></div>
+<% end %>
+
+<% form_tag :controller => "booking_admin", :action => "make_payment", :id => @booking.id do %>
+  
+  <p>
+    <%= label_tag :amount, "Amount (outstanding balance #{ number_to_currency @booking.outstanding_balance, :unit => "&pound;"})" %><br />
+    <%= text_field_tag :amount %>
+  </p>
+  
+  <p>
+    <%= label_tag :email, "Send deposit update email" %>
+    <%= check_box_tag :email, "1", :checked => true %>
+  </p>
+  
+  <p>
+    <%= submit_tag "Pay", :class => 'submit' %>
+  </p>
+
+<% end %>

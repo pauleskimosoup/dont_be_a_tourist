@@ -1,0 +1,36 @@
+<% unless session[:user_id] %>
+  
+  <% redirect_controller ||= nil %>
+  <% redirect_action ||= nil %>
+  <% email ||= nil %>  
+  
+  <% form_tag :controller => :user, :action => :login, :redirect_controller => redirect_controller, :redirect_action => redirect_action do %>
+    <p>
+      <label>Your email</label> <%= text_field_tag "username", "username", {:size => "30", :value => email} %>
+    </p>
+    <p>
+      <label>Your password</label> <%= password_field_tag "password", "password", {:size => "30", :value => nil}  %>
+    </p>
+    <p>
+      <%= submit_tag "LOGIN", {:class => "submit"} %> 
+    </p>
+    <p align="right"><%= link_to "Forgotten your password?", {:controller => :user, :action => :forgot} %></p>
+    <br />
+  <% end %>
+  
+<% else %>
+
+  <% @user = User.find(session[:user_id]) %>
+  <% form_tag :controller => :user, :action => :logout do %>
+    <p>
+      <label>Your username</label> <%= text_field_tag "username", @user.username, {:size => "30", :disabled => :true} %>
+    </p>
+    <p>
+      <label>Your password</label> <%= password_field_tag "password", nil, {:size => "30", :disabled => :true}  %>
+    </p>
+    <p>
+      <%= submit_tag "LOGOUT", {:class => "submit"} %>
+    </p>
+  <% end %>
+
+<% end %>

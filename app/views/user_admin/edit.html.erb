@@ -1,0 +1,7 @@
+<h1><%= @page_title = "Update User" -%></h1>
+
+<%= render :partial => 'form', :locals => {:user => @user} %>
+
+<p>
+  <%= link_to "Send Login Information", {:action => "reset_password", :id => @user.id}, :confirm => "Are you sure? This will reset the users password and email them their username and password in a welcome email" %>
+</p>

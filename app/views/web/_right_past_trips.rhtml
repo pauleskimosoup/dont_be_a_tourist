@@ -1,0 +1,25 @@
+<% destination_id ||= nil %>
+<% destination_ids ||= nil %>
+<% hide_comments ||= false %>
+
+<br />
+<div class="right_our_trips_stretch_grey">
+  <h2 class="past_trips_grey">Past Trips</h2>
+  <div class="padding" style="padding-top: 0px;">
+
+    <%= render :partial => "photo/small_index", :locals => { :destination_ids => destination_ids, :destination_id => destination_id, :grey => true } %>
+    <div class="clear"></div>
+    <br />
+    <br />
+
+    <%= render :partial => "video/small_index", :locals => { :destination_ids => destination_ids, :destination_id => destination_id, :grey => true } %>
+    <br />
+    <br />
+
+    <% unless hide_comments == true %>
+      <%= render :partial => "review/small_index", :locals => { :destination_ids => destination_ids, :destination_id => destination_id, :grey => true } %>
+    <% end %>
+
+    </div>
+    <%= image_tag "right_bg_grey_stretch_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %>
+</div>

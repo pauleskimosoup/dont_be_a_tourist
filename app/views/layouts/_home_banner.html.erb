@@ -1,0 +1,32 @@
+<% if banner.link == 2 -%>
+  <%= render 'layouts/home_next_trip_banner', :banner => banner %>
+<% else -%>
+
+  <div class="home-banner-large">
+
+    <% unless banner.summary.blank? or banner.link.blank? %>
+      <div class="home-banner-text-wrapper">
+        <p><%= link_to (simple_format banner.summary), banner.link %></p>
+      </div>
+    <% end %>
+
+    <% unless banner.link.blank? -%>
+      <% unless banner.banner.blank? %>
+        <%= link_to (image_tag banner.banner.url(:home), :alt => banner.image_alt, :title => banner.image_alt, :border => "0", :hspace => "0", :vspace => "0", :class => "home_main_trip_img"), banner.link %>
+      <% end %>
+
+    <% else %>
+       <% unless banner.banner.blank? %>
+        <%= image_tag banner.banner.url(:home),
+          :alt => banner.image_alt,
+          :title => banner.image_alt,
+          :border => "0",
+          :hspace => "0",
+          :vspace => "0",
+          :class => "home_main_trip_img"
+        %>
+      <% end %>
+    <% end %>
+  </div>
+
+<% end -%>

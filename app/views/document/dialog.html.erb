@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Document Selector</title>
+  <script type="text/javascript" src="/javascripts/tiny_mce/tiny_mce_popup.js"></script>
+  <script type="text/javascript" src="/javascripts/tiny_mce/utils/mctabs.js"></script>
+  <script type="text/javascript" src="/javascripts/tiny_mce/utils/form_utils.js"></script>
+  <script type="text/javascript" src="/javascripts/tiny_mce/utils/validate.js"></script>
+  <script type="text/javascript" src="/javascripts/tiny_mce/utils/editable_selects.js"></script>
+  <script type="text/javascript" src="/javascripts/tiny_mce/plugins/tmediaimage/js/image.js"></script>
+  <link href="css/advimage.css" rel="stylesheet" type="text/css" />
+  <base target="_self" />
+  <script type="text/javascript">
+    insertDocument = function(url, name) {
+  //            tinyMCE.activeEditor.dom.add(tinyMCE.activeEditor.getBody(), 'a', {src: url});
+        var el = tinyMCE.activeEditor.dom.create('a', {href: url}, name)
+        tinyMCE.activeEditor.selection.setNode(el);
+        tinyMCEPopup.close();
+    }
+  </script>
+</head>
+<body>
+  <p><%= link_to 'Upload New Document', {:action => 'upload'}, :style => "clear:both" %></p>
+<% @documents.each do |document| %>
+<%= link_to_function document.filename, "insertDocument('/documents/#{document.filename}', '#{document.description.gsub("'", "\\'")}')" %><br />
+<% end %>
+</body>
+</html>

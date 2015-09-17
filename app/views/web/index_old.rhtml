@@ -1,0 +1,40 @@
+<% @page_name = "home_page" %>
+<% @page_title = "Welcome to Don't be a Tourist" %>
+
+<h1 class="home_title">Welcome to Don't be a Tourist</h1>
+<%= image_tag "home_welcome.gif", :alt => "We organise unforgettable, action packed trips. Simple as that.", :title => "We organise unforgettable, action packed trips. Simple as that.", :border => "0", :hspace => "0", :vspace => "0" %>
+<!--
+<p class="highlight">
+  We organise unforgettable, action-packed group trips from university cities in the north of England - an easy, low-cost way to experience the best destinations in the UK and meet loads of people from around the world.
+</p>
+<p class="large">
+We take you there, our legendary guides show you the best bits and have loads of activities planned to help you explore more and meet other people, then we bring you home again. It really is easy!
+</p>
+-->
+<p>&nbsp;</p>
+
+<% comment = Review.active.random.first %>
+<% if comment %>
+<div class="home_comments_box">
+  "<%= comment.body %>" - <span><%= comment.name %></span>
+  <p><%= link_to "see more", {:controller=>"web", :action=>"past_trips"}, {:class=>"see_all", :style=>"margin: 0px;"} %></p>
+</div>
+<% end %>
+
+<div class="photos_left">
+  <%= render :partial => "photo/small_index" %>
+</div>
+
+<div class="videos_right">
+  <%= render :partial => "video/small_index" %>
+</div>
+
+<div class="clear"></div>
+
+<% content_for :right do %>
+  <%= render :partial => 'web/right_main', :locals => {:hide_next_trip => true} %>
+  <br />
+  <iframe src="http://www.facebook.com/plugins/like.php?href=<%= url_for(:controller => "web", :action => "index", :only_path => false) %>&amp;layout=standard&amp;show_faces=true&amp;width=340&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:340px; height:80px;" allowTransparency="true"></iframe>
+  <div align="center">
+    <a href="http://www.vivalafiesta.co.uk/" target="_blank"><%= image_tag "viva_logo.gif", :vspace=>'0', :hspace=>'0', :border=>'0', :alt=>'Partners with: Viva La Fiesta' %></a></div>
+<% end %>

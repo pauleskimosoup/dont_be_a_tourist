@@ -1,0 +1,22 @@
+<h1><%%= @page_title = "View All <%= print_plural_name %>" -%></h1>
+<div id="search">
+<%% form_tag({}, :method => "GET") do %>
+  <%%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%%= submit_tag 'Search', :class => 'submit' %>
+  <%%= link_to "Clear", :search => "" %>
+<%% end %>
+</div>
+<%% if @<%= file_name %>_pages.count != 0 -%>
+
+  <%%= admin_table({:columns =>[<%= field_names.map{|fn| ":"+fn}.join(", ") %>, :last_updated],
+    :list => @<%= plural_name %>,
+    :pages => @<%= file_name %>_pages
+  })%>
+
+<%% else -%>
+
+  There are currently no <%= print_plural_name %> in the system.
+
+<%% end -%>
+
+
+

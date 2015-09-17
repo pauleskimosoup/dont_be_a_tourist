@@ -1,0 +1,11 @@
+<% @page_title = flash[:title] || 'Notice' %>
+
+<h1><%= flash[:title] || 'Notice' %></h1>
+<% if flash[:notice] -%>
+      <p class="message"><%= flash[:notice] %></p>
+<% end -%>
+<% if flash[:error_field] -%>
+      <%= error_messages_for(flash[:error_field]) %>
+<% end %>
+<br />
+<p><%= link_to "Continue browsing", :controller=>"web", :action=>"index" %></p>

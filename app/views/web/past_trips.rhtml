@@ -1,0 +1,140 @@
+<% hide_right %>
+
+<% @page_title = "What's It Like?" %>
+
+<% content_for :scripts do %>
+  <%= javascript_include_tag "scriptaculous" %>
+<% end %>
+
+<% if !@banners.empty? %>
+
+  <%= render "benefit_banners_javascript" %>
+
+  <% content_for :body do %>
+    <body onLoad="startPage();">
+  <% end %>
+
+<% end %>
+
+<%= render :partial => 'shared/past_trips_breadcrumbs' %>
+
+<h1><%= @page_title %></h1>
+
+<!-- Benefit Banner start -->
+
+<% if !@banners.empty? %>
+
+  <div class="benefit_container">
+
+    <% @banners.each_with_index do |banner, index| %>
+      <% display = (index == 0) ? "" : "none" %>
+      <div class="benefit_banner_image" id="benefit_banner_image_<%= index %>" style="position:absolute; display:<%= display %>;">
+        <span></span>
+        <div class="benefit_content">
+          <div style="display:<%= display %>;" id="benefit_content_<%= index %>">
+            <p class="banner_quote"><%= brev(banner.quote, 120) %></p>
+            <%= brev(banner.description, 255) %>
+          </div>
+        </div>
+        <%= image_tag banner.picture1.url, :width => '550', :height => '405', :alt => '', :id => index %>
+      </div>
+    <% end %>
+
+    <div class="benefit_banner_listing">
+      <% @banners.each_with_index do |banner, index| %>
+        <% if banner.eql?(@banners.first) %>
+          <div id="benefit_banner_listing_<%= index %>" class="highlight">
+          <a onclick="showImage(<%= index %>);" style="margin-top:0px;">
+        <% else %>
+          <div id="benefit_banner_listing_<%= index %>">
+          <a onclick="showImage(<%= index %>);">
+        <% end %>
+            <img src="<%= banner.picture1.url %>" width="58px" height="40px" border="0" hspace="0" vspace="0">
+            <span><%= brev(banner.title, 69) %></span>
+          </a>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+
+<% end %>
+
+<!-- Benefit Banner end -->
+
+
+
+  <% if @trip %>
+    <h3><%= @trip.destination_name_dates %></h3>
+  <% elsif @destination %>
+    <h3><%= @destination.name %></h3>
+  <% end %>
+
+  <div class="past_trips_left">
+
+   <% if !@flags.empty? %>
+
+
+    <p class="highlight">  Meet fellow travellers from all around the world on every Don't be a tourist trip. Since 2006 we have welcomed travellers from over 80 countries including...</p>
+      <%= render "flags_javascript" %>
+      <div class="uni_logos_container">
+        <div class="uni_logos_box">
+          <%# Left %>
+            <div class="uni_logos_left"><%= link_to_function "Back", "slide_left()", { :class => "off", :id => "left_arrow" } %></div>
+          <%# Logos %>
+            <div class="flag_logos">
+              <% @grouped_flags.each_with_index do |fg, index| %>
+                <div id="flag_group_<%= index %>" style=<%= (index == 0) ? "" : "display:none;" %>>
+                  <% fg.each do |f| %>
+                    <%= image_tag "http://www.geognos.com/api/en/countries/flag/#{f.country_code}.png", :height => 45, :vspace => '0', :hspace => '0', :border => '0', :title => f.name, :alt => f.name %>
+                  <% end %>
+                </div>
+              <% end %>
+          </div>
+          <%# Right %>
+            <% link_options = (@grouped_flags.length > 1) ? { :class => "on" } : { :class => "off" } %>
+            <div class="uni_logos_right"><%= link_to_function "Next", "slide_right()", link_options.merge!({:id => "right_arrow"}) %></div>
+        </div>
+      </div>
+
+      <p><strong>Can't see your flag?</strong> Be the first from your country to <%= link_to "join us on a trip", :controller => "trip", :action => "list" %>. You'll be a pioneer and we'll add your flag!</p>
+
+    <br />
+    <br />
+
+    <% end %>
+
+
+    <%= render :partial => "photo/large_index", :locals => {:destination_id => @destination_id, :trip_id => @trip_id} %>
+    <div class="clear"></div>
+    <p>&nbsp;</p>
+    <%= render :partial => "video/large_index", :locals => {:destination_id => @destination_id, :trip_id => @trip_id} %>
+
+
+
+  </div>
+
+  <div class="past_trips_right">
+
+      <div class="find_trip"><a href="/trip/list">Find a Trip</a></div>
+
+      <% promo_code = PromoCode.find(:first, :conditions => "homepage = true") -%>
+      <% if promo_code -%>
+      <div class="advert_1">
+        <h2>Come on... Give us a try!</h2>
+        <%= image_tag "advert_1_pic.gif", :vspace=>'0', :hspace=>'0', :border=>'0', :alt=>'Money' %>
+        <p class="advert_1_text"><%= promo_code.homepage_text %></p>
+        <%= link_to "Find out more", {:controller => "web", :action => "special_offers"}, {:class=>"advert_more"} %>
+      </div>
+      <% end -%>
+
+      <h2 class="your_photos">Feedback</h2>
+      <p class="large">
+      <span class="highlight"><strong>97.6%</strong></span> would recommend Don't be a tourist to a friend<br />
+      <span class="highlight"><strong>96.3%</strong></span> thought their trip was good value for money</p>
+      <p class="font_small">Feedback from 700+ travellers on all trips from Sep 2010 to August 2011.</p>
+      <br />
+      <br />
+
+      <%= render :partial => "review/large_index", :locals => {:destination_id => @destination_id, :trip_id => @trip_id} %>
+  </div>

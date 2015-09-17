@@ -1,0 +1,36 @@
+<% @page_title = "Offline payment" %>
+
+<%= render "booking_steps" %>
+
+<p><%= link_to "Prefer to make a card payment?", :action => "confirm" %></p>
+
+<% form_tag({:action => "offline_payment_execute"}, :html => {:method => :post}) do %>
+  <%= submit_tag "Pay Now", :class => "submit_none"   %>
+<% end %>
+
+<h2>Cash Payment</h2>
+
+<p>Pay for your booking(s) in 3 simple steps:</p>
+
+<h3>1. Print off your Cash Invoice</h3>
+
+<h3>2. Pay cash into the HSBC Bank</h3>
+
+<h3>3. Receive confirmation of your booking(s)</h3>
+
+
+<h3><strong>IMPORTANT</strong></h3>
+<p>
+Your booking(s) cannot be confirmed until we receive full payment from you.<br />
+We will hold your booking(s) for 2 working days from the time we send your Cash Invoice. If we do not receive full payment within 2 working days will release your booking(s).
+</p>
+
+<p><%= link_to "Prefer to make a card payment?", :action => "confirm" %></p>
+
+<% form_tag({:action => "offline_payment_execute"}, :html => {:method => :post}) do %>
+  <%= submit_tag "Pay Now", :class => "submit_none"   %>
+<% end %>
+
+<% hide_right %>
+<% content_for :right do %>
+<% end %>

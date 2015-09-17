@@ -1,0 +1,28 @@
+<% grey ||= false %>
+
+<!-- PICK VIDEO -->
+<% if defined?(trip_id) && !trip_id.blank? %>
+  <% comments = Review.active.trip_id(trip_id).random %>
+<% elsif defined?(destination_id) && !destination_id.blank? %>
+  <% comments = Review.active.destination_id(destination_id).random %>
+<% elsif defined?(destination_ids) && !destination_ids.blank? %>
+  <% comments = Review.active.destination_ids(destination_ids).random %>
+<% else %>
+  <% comments = Review.active.random %>
+<% end %>
+<% comments = comments[0..1] %>
+
+<!-- VIEW -->
+<% if grey %>
+  <h2 class="comments_grey">Comments</h2>
+<% else %>
+  <h2 class="comments">Comments</h2>
+<% end %>
+
+<%= link_to "see more", {:controller=>"web", :action=>"past_trips"}, {:class=>"see_all"} %>
+
+<% if comments.length > 0 %>
+  <%= render :partial => "review/review", :collection => comments %>
+<% else %>
+  Reviews coming soon!
+<% end %>

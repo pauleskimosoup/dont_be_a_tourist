@@ -1,0 +1,50 @@
+<h1><%= @page_title = "Reserve Me A Place" %></h1>
+
+<p>
+  Trip you are interested in already full? Drop us a line and we may be able to sort you out! Just fill in the contact form below and we will try to get back to you.
+</p>
+
+<% form_tag :action => "reserve_post" do %>
+
+  <%- flash.each do |name, msg| -%>
+    <%= content_tag :div, msg, :id => "flash_#{name}" %>
+  <%- end -%>
+
+  <fieldset>
+  <legend>I'm Interested in</legend>
+  <p>
+    <%= label_tag :trip, "Which trip are you interested in?" %><br />
+    <%= select_tag :trip, options_from_collection_for_select(Trip.active.future, :id, :name_dates, params[:trip_id]) %>
+  </p>
+
+  <p>
+    How many <strong>men</strong> did you want to book on this trip?
+    <%= select_tag :male_bookings, options_for_select((0..20), params[:male_bookings].to_i) %>
+  </p>
+  <p>
+    How many <strong>women</strong> did you want to book on this trip?
+    <%= select_tag :female_bookings, options_for_select((0..20), params[:female_bookings].to_i) %>
+  </p>
+  </fieldset>
+
+  <fieldset>
+  <legend>Contact Information</legend>
+  <p>
+    <%= label_tag :name, "Your name" %><br />
+    <%= text_field_tag :name, params[:name] %>
+  </p>
+
+  <p>
+    <%= label_tag :email, "Your email address" %><br />
+    <%= text_field_tag :email, params[:email] %>
+  </p>
+
+  <p>
+    <%= label_tag :phone, "Your Telephone Number" %><br />
+    <%= text_field_tag :phone, params[:phone] %>
+  </p>
+  </fieldset>
+
+  <%= submit_tag "Send", {:class=>"submit"} %>
+
+<% end %>

@@ -1,0 +1,48 @@
+<!-- 
+  <a href="#" class="highlight"><span>1</span>Places</a>
+  <a href="#" class="ready"><span>2</span>Details</a>
+  <div><span>3</span>Basket</div>
+-->
+
+<% if @current_basket && @current_basket.basket_items.length > 0 %>
+
+  <div class="basket_checkout_navigation">
+  
+    <% if params[:controller] == "basket" && params[:action] == "bookings" %>      
+      <%= link_to "<span>1</span>Details", {:controller => "basket", :action => "bookings"}, :class => "highlight" %>
+    <% else %>
+      <%= link_to "<span>1</span>Details", {:controller => "basket", :action => "bookings"}, :class => "ready" %>
+    <% end %>
+    
+    <% if params[:controller] == "basket" && params[:action] == "show" %>      
+      <%= link_to "<span>2</span>Basket", {:controller => "basket", :action => "show"}, :class => "highlight" %>
+    <% else %>
+      <%= link_to "<span>2</span>Basket", {:controller => "basket", :action => "show"}, :class => "ready" %>
+    <% end %>
+    
+    <% if params[:controller] == "basket" && params[:action] == "extras" %>      
+      <%= link_to "<span>3</span>Extras", {:controller => "basket", :action => "extras"}, :class => "highlight" %>
+    <% elsif @current_basket.all_basket_items_valid? %>
+      <%= link_to "<span>3</span>Extras", {:controller => "basket", :action => "extras"}, :class => "ready" %>
+    <% else %>
+      <div><span>3</span>Extras</div>
+    <% end %>    
+    
+    <% if params[:controller] == "basket" && params[:action] == "confirm" %>      
+      <%= link_to "<span>4</span>Confirmation", {:controller => "basket", :action => "confirm"}, :class => "highlight" %>
+    <% elsif @current_basket.all_basket_items_valid? %>
+      <%= link_to "<span>4</span>Confirmation", {:controller => "basket", :action => "confirm"}, :class => "ready" %>
+    <% else %>
+      <div><span>4</span>Confirmation</div>
+    <% end %>    
+    
+    <% if params[:controller] == "basket" && params[:action] == "offline_payment_preview" %>
+      <%= link_to "<span>5</span>Payment", {:controller => "basket", :action => "offline_payment_preview"}, :class => "highlight" %>
+    <% else %>
+      <div><span>5</span>Payment</div>
+    <% end %>
+    
+  </div>
+  <div class="clear" style="margin-bottom: 30px;"></div>
+
+<% end %>

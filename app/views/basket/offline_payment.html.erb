@@ -1,0 +1,36 @@
+<% @page_title = "Offline payment" %>
+
+<h2>Thank you for your payment</h2>
+<p>Pay for your booking(s) in 3 simple steps:</p>
+
+<h3>1. Print off your Cash Invoice</h3>
+<ul>
+<li><%= link_to "Click here", {:controller => "user", :action => "booking", :id => @order.id}, :popup => true %> to print your Cash Invoice. Note - you can view this invoice at any time by logging into <%= link_to "http://www.dontbeatourist.co.uk", "http://www.dontbeatourist.co.uk", :popup => true %>, viewing your bookings and clicking the "View Invoice" link.  A copy of your Cash Invoice has also been sent to your email address.</li>
+<li>The invoice shows how much you need to pay to confirm your booking(s). Our bank details and instructions explaining how to pay are on the invoice.</li>
+</ul>
+
+<h3>2. Pay cash into the HSBC Bank</h3>
+<ul>
+<li>Go to any branch of the HSBC and pay the cash into our "Don't be a tourist" bank account within the next 2 working days.</li>
+</ul>
+
+<p>
+Find your nearest branch of the HSBC Bank by clicking on the following link: <br />
+<%= link_to "http://www.hsbc.co.uk/1/2/contact-us/branch-locator", "http://www.hsbc.co.uk/1/2/contact-us/branch-locator", :popup => true %>
+<p>
+
+<h3>3. Receive confirmation of your booking(s)</h3>
+<ul>
+<li>As soon as we receive notification of your payment into our bank account we will send you a Booking Confirmation email. Your booking(s) will be confirmed.</li>
+</ul>
+
+
+<h3><strong>IMPORTANT</strong></h3>
+<p>
+Your booking(s) cannot be confirmed until we receive full payment from you.<br />
+We will hold your booking(s) for 2 working days from the time we send your Cash Invoice. If we do not receive full payment within 2 working days will release your booking(s).
+</p>
+
+<% hide_right %>
+<% content_for :right do %>
+<% end %>

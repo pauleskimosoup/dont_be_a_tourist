@@ -1,0 +1,28 @@
+<% @page_title = "Reservation" %>
+
+<% for reservation in @reservation %>
+<div>
+
+<%= link_to reservation.name, :action => 'show', :id => reservation %><br />
+
+
+
+
+
+
+
+</div>
+<% end %>
+
+<% if @reservation_pages.count != 0 %>
+  <div class="pagecount">
+    <% if @reservation_pages.previous_page -%>
+      <%= link_with_params '&lt;&lt; Back', :action => 'list', :page => @reservation_pages.previous_page %>
+    <% end -%>
+    <%= @reservation_pages.range %> of <%= @reservation_pages.count %>
+    <% if @reservation_pages.next_page -%>
+      <%= link_with_params 'Next &gt;&gt;', :action => 'list', :page => @reservation_pages.next_page %>
+    <% end -%>
+  </div>
+<% end %>
+

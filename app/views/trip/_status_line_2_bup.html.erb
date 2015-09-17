@@ -1,0 +1,37 @@
+<% if trip.status_line_2? -%>
+
+  <%= trip.status_line_2 %>
+  
+<% elsif !trip.week_before_early_early_bird.nil? -%>
+
+  <% if trip.week_before_early_early_bird == 0 -%>
+    <strong>BOOK TODAY FOR THIS OFFER</strong>  
+  <% elsif trip.week_before_early_early_bird == 1 -%>
+    <strong>OFFER ENDS MIDNIGHT TONIGHT!</strong> 
+  <% else -%>
+    <strong>ONLY <%= pluralize trip.week_before_early_early_bird, "DAY", "DAYS" %>  REMAINING</strong>
+  <% end -%>
+
+<% elsif !trip.week_before_early_bird.nil? -%>
+  
+  <% if trip.week_before_early_bird == 0 -%>
+    <strong>BOOK TODAY FOR THIS OFFER</strong>
+  <% elsif trip.week_before_early_bird == 1 -%>
+    <strong>OFFER ENDS MIDNIGHT TONIGHT!</strong>   
+  <% else -%>
+    <strong>ONLY <%= pluralize trip.week_before_early_bird, "DAY", "DAYS" %>  REMAINING</strong>
+  <% end -%>
+
+<% elsif trip.places < 1 -%>
+
+  <strong>SORRY FULLY BOOKED</strong>
+  
+<% elsif trip.places < 10 -%>
+
+  <strong>ONLY <%= pluralize(trip.places, "SEAT", "SEATS") %> REMAINING</strong>
+ 
+<% else -%>
+
+  <strong>BOOK NOW LIMITED AVAILABILITY</strong>
+
+<% end -%>

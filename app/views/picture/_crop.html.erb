@@ -1,0 +1,81 @@
+<%= javascript_include_tag "jcrop/jquery.min.js" %>
+<%= javascript_include_tag "jcrop/jquery.Jcrop.min.js" %>
+<%= stylesheet_link_tag "jcrop/jquery.Jcrop.css"%>
+
+
+<% width ||= 100 %>
+<% height ||= 100 %>
+
+
+<% if picture.width > 500 %>
+  <% scale_factor = (500).to_f/picture.width.to_f %>
+<% elsif picture.height > 400 %>
+  <% scale_factor = (400).to_f/picture.height.to_f %>
+<% else %>
+  <% scale_factor = 1 %>
+<% end %>
+
+
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+      $('#cropbox').Jcrop
+      ({
+        bgOpacity: .25,
+        onChange: showPreview,
+      onSelect: showPreview,
+      setSelect: [0,0,<%= width %>,<%= height %>],
+      <% if width == height %>
+        aspectRatio: 1
+      <% else %>
+        aspectRatio: <%= width %>/<%= height %>
+      <% end %>
+    })
+    });
+
+  function showPreview(coords)
+  {
+    $('#crop_x').val(coords.x/<%= scale_factor %>);
+    $('#crop_y').val(coords.y/<%= scale_factor %>);
+    $('#crop_w').val(coords.w/<%= scale_factor %>);
+    $('#crop_h').val(coords.h/<%= scale_factor %>);
+    if (parseInt(coords.w) > 0)
+    {
+      var rx = <%= width %> / coords.w;
+      var ry = <%= height %> / coords.h;
+       jQuery('#preview').css({
+        width: Math.round(rx * <%= picture.width %>) + 'px',
+        height: Math.round(ry * <%= picture.height %>) + 'px',
+        marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+        marginTop: '-' + Math.round(ry * coords.y) + 'px'
+      });
+    }
+  }
+</script>
+
+<% if picture.width > 500 %>
+  <%= scale_image_tag picture, :id => 'cropbox', :width => 500 %>
+<% elsif picture.height > 400 %>
+  <%= scale_image_tag picture, :id => 'cropbox', :height => 400 %>
+<% else %>
+  <%= image_tag picture.url, :id => 'cropbox' %>
+<% end %>
+
+<!--
+<h3>Preview</h3>
+<div style="width:<%= width %>px;height:<%= height %>px;overflow:hidden;">
+  <%= image_tag picture.url, :id => 'preview' %>
+</div>
+-->
+
+<% form_tag :url => {:controller => :picture, :action => :crop} do %>
+  <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
+      <%= hidden_field_tag attribute, :id => attribute %>
+    <% end %>
+    <%= hidden_field_tag 'crop', crop %>
+    <%= hidden_field_tag 'id', picture.id %>
+    <%= hidden_field_tag 'owner_type', params[:owner_type] %>
+    <%= hidden_field_tag 'owner_id', params[:owner_id] %>
+  <%= submit_tag 'Confirm', :class => 'submit' %>
+  <%= submit_tag 'Cancel', :class => 'submit' %>
+<% end %>

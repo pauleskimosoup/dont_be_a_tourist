@@ -1,0 +1,12 @@
+<% @page_title = "Edit Image" -%>
+<% @page_type = "pictures" -%>
+
+      <p>Edit your image details here using the form below, then press update to save changes</p>
+    <div class="clear"></div>
+    <p><%= thumbnail_tag(@picture, :width => 100) %></p>
+      <%=form_tag({:action => 'edit_image'}) %>
+      <%= create_admin_form(@edit_form) %>
+        <p>
+        <%= submit_tag("Update Image", :class => "button") %>
+        </p>
+      <%= end_form_tag %>

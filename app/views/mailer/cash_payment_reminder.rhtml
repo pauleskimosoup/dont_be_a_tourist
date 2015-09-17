@@ -1,0 +1,45 @@
+<p>We still havn't received payment of your Don't be a tourist booking(s)</p>
+
+<p>***Please do not reply to this email***</p>
+ 
+<p>If you have any questions, check out the 'Questions' section or get in touch via the 'Contact us' page at www.dontbeatourist.co.uk.</p>
+
+
+<p>Hi (<%= @booking.user.name %>)</p>
+
+<p>To pay for your booking(s) in cash, follow these 3 simple steps:</p>
+
+<h3>1. Print off your Cash Invoice</h3>
+<ul>
+<li><%= link_to "Click here", url_for(:controller => "user", :action => "booking", :id => @booking.id, :only_path => false, :host => "www.dontbeatourist.co.uk") %> to print your Cash Invoice. Note - you can view this invoice at any time by logging into <%= auto_link "http://www.dontbeatourist.co.uk" %>, viewing your bookings and clicking the "View Invoice" link.</li>
+<li>The invoice shows how much you need to pay to confirm your booking(s). Our bank details and instructions explaining how to pay are on the invoice.</li>
+</ul>
+
+<h3>2. Pay cash into the HSBC Bank</h3>
+<ul>
+<li>Go to any branch of the HSBC Bank and pay the cash into our "Don't be a tourist" bank account within the next 2 working days.</li>
+</ul>
+
+<p>Find your nearest branch of the HSBC Bank by clicking on the following link:<br />
+<%= auto_link "http://www.hbeu1.hsbc.com/ukservices/branchlocator/country.asp" %>
+</p>
+
+<h3>3. Receive confirmation of your booking(s)</h3>
+<ul>
+<li>As soon as we receive notification of your payment into our bank account we will send you a Booking Confirmation email. Your booking(s) will be confirmed.</li>
+</ul>
+
+<p>If you have any problems making the payment or have any questions, you can contact us via our website.</p>
+ 
+<p>We are looking forward to meeting you!</p>
+ 
+<p>Regards</p>
+ 
+<p>Nevil</p>
+
+
+<p><strong>IMPORTANT</strong></p>
+<p>
+Your booking(s) cannot be confirmed until we receive full payment from you.<br />
+We will hold your booking(s) for 2 working days from the time we send your Cash Invoice. If we do not receive full payment within 2 working days will release your booking(s).
+</p>

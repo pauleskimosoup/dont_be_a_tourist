@@ -1,0 +1,21 @@
+<h1><%= @page_title = "View All Universities" -%></h1>
+
+<p>
+  <%= link_to "New University", {:controller => "university_admin", :action => "new"} %>
+</p>
+
+<div id="search">
+  <% form_tag({}, :method => "GET") do %>
+    <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+    <%= link_to "Clear", :search => "" %>
+  <% end %>
+</div>
+<% if @university_pages.count != 0 -%>
+  <%= admin_table({:columns =>[:name,
+    ["url", lambda{|x| link_to x.slug.name, x, :target => "_blank"}, nil], ["Display", lambda{|bb| bb.display? ? "Yes" : "No"}, "display"], :last_updated],
+    :list => @universities,
+    :pages => @university_pages
+  })%>
+<% else %>
+  There are currently no Universities in the system.
+<% end %>

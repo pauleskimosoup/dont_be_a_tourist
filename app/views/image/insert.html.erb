@@ -1,0 +1,23 @@
+<% @page_title = "Choose size" %>
+<p><%= link_to 'Choose Another Image', :back %></p>
+
+<%= scale_image_tag (@picture, :width => 150, :height => "150", :id => "picture") %>
+<% form_tag({ }, { :onSubmit => "insertImage(); return false;"}) do %>
+<% size_options = [50,75,100,125,150,175,200,225,250,275,300] %>
+<%= hidden_field_tag "id", @picture.id %>
+<p>
+<%= label_tag "width" %>
+<%= select_tag :width, options_for_select(size_options) %>
+</p>
+<p>
+<%= label_tag "height" %>
+<%= select_tag :height, options_for_select(size_options) %>
+</p>
+<p>
+<%= label_tag "alt" %>
+<%= text_field_tag :alt %>
+</p>
+
+
+<%= submit_tag "Insert" %>
+<% end %>

@@ -1,0 +1,20 @@
+<!-- PICK VIDEO -->
+<% if defined?(trip_id) && !trip_id.blank? %>
+  <% videos = Video.active.trip_id(trip_id).random %>
+<% elsif defined?(destination_id) && !destination_id.blank? %>
+  <% videos = Video.active.destination_id(destination_id).random %>
+<% else %>
+  <% videos = Video.active.random %>
+<% end %>
+<% videos = videos[0..0] %>
+
+<!-- VIEW -->
+<h2 class="videos">Videos</h2>
+
+<a href="http://www.facebook.com/dontbeatourist?v=app_2392950137" target="_blank" class="share">share via Facebook</a>
+
+<% if videos.length > 0 %>
+  <%= render :partial => "video/video", :collection => videos %>
+<% else %>
+  Videos coming soon!
+<% end %>

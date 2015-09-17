@@ -1,0 +1,27 @@
+<h1><%= @page_title = "View All User" -%></h1>
+<div id="search">
+<% form_tag({}, :method => "GET") do %>
+  <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+  <%= link_to "Clear", :search => "" %>
+<% end %>
+</div>
+<% if @user_pages.count != 0 -%>
+
+  <%= admin_table({
+    :columns =>[
+                :name, 
+                :username, 
+                :newsletter,
+                :welcome_code,
+                :last_updated,
+                ["Sign in as this user", lambda{|x| link_to "Sign in as this user", :controller => "user_admin", :action => "sign_in_as_user", :id => x.id}, nil]
+               ],
+    :list => @users,
+    :pages => @user_pages
+  })%>
+
+<% else -%>
+
+  There are currently no User in the system.
+
+<% end -%>

@@ -1,0 +1,11 @@
+<div class="right_our_trips_stretch">
+  <div class="padding">
+    <h2 class="our_next_trip">Our Next Trip</h2>
+      <% trip = Trip.active.upcoming.first %>
+      <% if trip %>
+        <p><%= link_to "#{trip.name}", {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"large_link"} %></p>
+        <p class="date_highlight"><%= link_to trip.length_dates, {:controller => :trip, :action => :show, :id => trip.id} %></p>
+      <% end %>
+  </div>
+  <%= image_tag "right_bg_sm_stretch_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %>
+</div>

@@ -1,0 +1,9 @@
+<% @page_title = "Login" -%>
+
+        <%= form_tag({:action => 'login'}, {:autocomplete=>"off", :class=>'login'}) %>
+    <h1 style="font-size: 32px;">Login</h1>
+              <p><label for="admin_name">Username</label><%= text_field('admin', 'name')%></p>
+              <p><label for="admin_password">Password</label><%= password_field('admin', 'password')%></p>
+              <p><%= submit_tag "Enter", :class => 'submit' %> <%= link_to 'Forgotten your password?', :action => 'forgotten' %></p>
+        </form>
+

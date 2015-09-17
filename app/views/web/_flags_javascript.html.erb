@@ -1,0 +1,37 @@
+<script type="text/javascript">
+
+  var divs  = new Array(<%= @grouped_flags.collect{|fg| "\"flag_group_#{@grouped_flags.rindex(fg)}\""}.join(',') %>);
+  var divs_to_display = 1
+  var j = 0;
+
+  function slide_left()
+  {
+    if (j > 0)
+    {
+      j--;
+      $(divs[j + divs_to_display]).style.display = "none";
+      $(divs[j]).style.display = "";
+      $("right_arrow").className = "on";
+      if (j == 0)
+      {
+        $("left_arrow").className = "off";
+      }
+    }
+  }
+
+  function slide_right()
+  {
+    if ((j + divs_to_display) < divs.length)
+    {
+      $(divs[j]).style.display = "none";
+      $(divs[j + divs_to_display]).style.display = "";
+      j++;
+      $("left_arrow").className = "on";
+      if ((j + divs_to_display) == divs.length)
+      {
+        $("right_arrow").className = "off";
+      }
+    }
+  }
+
+</script>

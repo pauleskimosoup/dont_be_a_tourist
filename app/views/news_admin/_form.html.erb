@@ -1,0 +1,68 @@
+<% form_for(story, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+
+    
+  <p>
+    
+    <%= f.label :name %>
+    
+    <%= f.text_field :name %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :summary %>
+    
+    <%= f.text_area :summary %>
+  </p>
+  
+  <p>
+    
+    <%= f.label :tags %>
+    
+    <%= f.tag_field :tags %>
+  </p>
+
+    
+      <% @include_tinymce_script = true %>
+    
+  <p>
+    
+    <%= f.label :body %>
+    
+    <%= f.tinymce_text_area :body %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :picture1_id %>
+    
+    <%= f.comprehensive_image_field :picture1_id %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :date %>
+    
+    <%= f.calendar_date_select :date %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :display %>
+    
+    <%= f.check_box :display %>
+  </p>
+
+  <p>
+    <% if story.new_record? %>
+    <%= f.submit "Create", :class => 'submit' %>
+    <% else %>
+    <%= f.submit "Update", :class => 'submit' %>
+    <% end %>
+  </p>
+<% end %>

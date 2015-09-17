@@ -1,0 +1,1093 @@
+<html style="margin:0;padding:0;height:100%">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<style type="text/css">
+  .beta-base .preheader, .beta-base .header, .beta-base .sidebar, .beta-base .body, .beta-base .footer, #mainContent {
+    text-align: left;
+  }
+
+  .beta-base .preheader, .beta-base .header, .beta-base .body, .beta-base .sidebar, .beta-base .leftSidebar, .beta-base .rightSidebar, .beta-base .footer {
+    margin: 0;
+    padding: 0;
+    border: none;
+    white-space: normal;
+    line-height: normal;
+  }
+
+  .beta-base .title, .beta-base .subtitle, .beta-base .text, .beta-base img {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    white-space: normal;
+    line-height: normal;
+  }
+
+  .beta-base .bodyContainer td.preheader {
+    padding: 10px 0;
+  }
+
+  .beta-base .bodyContainer td.header {
+    padding: 0;
+    height: 30px;
+  }
+
+  .beta-base .bodyContainer td.body, .beta-base .bodyContainer td.footer,
+  .beta-base .bodyContainer td.sidebar, .beta-base .bodyContainer td.leftSidebar, .beta-base .bodyContainer td.rightSidebar {
+    padding: 20px;
+  }
+
+  .beta-base .bodyContainer td.header p, .beta-base .bodyContainer td.preheader p, .beta-base .bodyContainer td.body p,
+  .beta-base .bodyContainer td.footer p, .beta-base .bodyContainer td.sidebar p,
+  .beta-base .bodyContainer td.leftSidebar p, .beta-base .bodyContainer td.rightSidebar p {
+    margin: 0;
+    color: inherit;
+  }
+
+  .beta-base .bodyContainer td.header div.title, .beta-base .bodyContainer td.preheader div.title, .beta-base .bodyContainer td.body div.title,
+  .beta-base .bodyContainer td.footer div.title, .beta-base .bodyContainer td.sidebar div.title,
+  .beta-base .bodyContainer td.leftSidebar div.title, .beta-base .bodyContainer td.rightSidebar div.title,
+  .beta-base .bodyContainer td.header div.subtitle, .beta-base .bodyContainer td.preheader div.subtitle, .beta-base .bodyContainer td.body div.subtitle,
+  .beta-base .bodyContainer td.footer div.subtitle, .beta-base .bodyContainer td.sidebar div.subtitle,
+  .beta-base .bodyContainer td.leftSidebar div.subtitle, .beta-base .bodyContainer td.rightSidebar div.subtitle,
+  .beta-base .bodyContainer td.header div.text, .beta-base .bodyContainer td.preheader div.text, .beta-base .bodyContainer td.body div.text, .beta-base .bodyContainer td.body div.text div,
+  .beta-base .bodyContainer td.footer div.text, .beta-base .bodyContainer td.sidebar div.text,
+  .beta-base .bodyContainer td.leftSidebar div.text, .beta-base .bodyContainer td.rightSidebar div.text {
+    overflow: auto;
+  }
+
+  .beta-base .optout {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  div.infusion-captcha {
+    width: 220px;
+    padding: 10px;
+  }
+
+  div.infusion-captcha input, div.infusion-captcha select, div.infusion-captcha textarea {
+    width: 95%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  table.infusion-field-container td.infusion-field-input-container input[type='text'],
+  table.infusion-field-container td.infusion-field-input-container input[type='password'],
+  table.infusion-field-container td.infusion-field-input-container textarea {
+    width: 98%; /* must be 98% to make the snippet-menu line up due to border width */
+    margin: 0;
+  }
+
+  table.infusion-field-container td.infusion-field-input-container select {
+    width: 101%;
+    *width: 102%; /* this one for IE */
+    margin: 0;
+  }
+
+  table.infusion-field-container td.infusion-field-label-container {
+    padding-right: 5px;
+  }
+
+  td.header .image-snippet img {
+    vertical-align: bottom;
+  }
+
+  #webformErrors {
+    color: #990000;
+    font-size: 14px;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  .infusion-form {
+    margin: 0;
+    height: 100%;
+  }
+
+  .infusion-option {
+    display: block;
+    text-align: left;
+  }
+</style>
+<style type="text/css">
+  .beta-font-b h1, .beta-font-b h2, .beta-font-b h3, .beta-font-b h4, .beta-font-b h5, .beta-font-b h6 {
+    font-family: arial, sans-serif;
+  }
+
+  .beta-font-b h1 {
+    font-size: 24px;
+  }
+
+  .beta-font-b h2 {
+    font-size: 20px;
+  }
+
+  .beta-font-b h3 {
+    font-size: 14px;
+  }
+
+  .beta-font-b h4 {
+    font-size: 12px;
+  }
+
+  .beta-font-b h5 {
+    font-size: 10px;
+  }
+
+  .beta-font-b h6 {
+    font-size: 8px;
+  }
+
+  .beta-font-b address {
+    font-style: italic;
+  }
+
+  .beta-font-b pre {
+    font-family: Courier New, monospace;
+  }
+
+  .beta-font-b .title, .beta-font-b .title p {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: arial, sans-serif;
+  }
+
+  .beta-font-b .subtitle, .beta-font-b .subtitle p {
+    font-size: 11px;
+    font-weight: normal;
+    font-family: arial, sans-serif;
+  }
+
+  .beta-font-b .text, .beta-font-b p {
+    font-size: 12px;
+    font-family: arial, sans-serif;
+  }
+
+  .beta-font-b .preheader .text, .beta-font-b .preheader .text p {
+    font-size: 11px;
+    font-family: arial, sans-serif;
+  }
+
+  .beta-font-b .footer a {
+    font-size: 11px;
+    font-family: arial, sans-serif;
+  }
+
+  .beta-font-b .footer .text {
+    font-size: 10px;
+    font-family: verdana, sans-serif;
+  }
+
+  .beta-font-b .sidebar .title, .beta-font-b .leftSidebar .title, .beta-font-b .rightSidebar .title {
+    font-size: 15px;
+    font-weight: bold;
+    font-family: arial, sans-serif;
+  }
+
+  .beta-font-b .sidebar .subtitle, .beta-font-b .leftSidebar .subtitle, .beta-font-b .rightSidebar .subtitle {
+    font-size: 12px;
+    font-family: arial, sans-serif;
+  }
+
+  .beta-font-b .sidebar .text, .beta-font-b .sidebar .text p, .beta-font-b .leftSidebar .text, .beta-font-b .rightSidebar .text {
+    font-size: 11px;
+    font-family: arial, sans-serif;
+  }
+
+  .infusion-field-label-container {
+    font-size: 14px;
+    font-family: arial, sans-serif;
+  }
+
+  .infusion-field-input-container {
+    color: #000000;
+    font-size: 12px;
+  }
+
+  .infusion-option label {
+    color: #000000;
+    font-size: 14px;
+    font-family: arial, sans-serif;
+  }
+</style>
+<style type="text/css">
+  .custom-24 .background {
+    background-color: #FFFFFF;
+  }
+
+  .custom-24 .body {
+    background-color: #FFFFFF;
+  }
+
+  .custom-24 a {
+    color: #0934C1;
+  }
+
+  .custom-24 .text {
+    color: #000000;
+  }
+
+  .custom-24 .background .preheader a {
+    color: #3b607e;
+  }
+
+  .custom-24 .background .preheader .text {
+    color: #000000;
+  }
+
+  .custom-24 .title {
+    color: #000000;
+  }
+
+  .custom-24 .header {
+    background-color: #FFFFFF;
+  }
+
+  .custom-24 .subtitle {
+    color: #BD3919;
+  }
+
+  .custom-24 .sidebar .title {
+    color: #3b607e;
+  }
+
+  .custom-24 .leftSidebar .title {
+    color: #000000;
+  }
+
+  .custom-24 .sidebar .subtitle {
+    color: #e74f46;
+  }
+
+  .custom-24 .leftSidebar .subtitle {
+    color: #E74F46;
+  }
+
+  .custom-24 .footer {
+    background-color: #000000;
+  }
+
+  .custom-24 .rightSidebar .title {
+    color: #3B607E;
+  }
+
+  .custom-24 .footer a {
+    color: #FFFFFF;
+  }
+
+  .custom-24 .rightSidebar .subtitle {
+    color: #E74F46;
+  }
+
+  .custom-24 .footer .text {
+    color: #FFFFFF;
+  }
+
+  .custom-24 .infusion-field-label-container {
+    color: #000000;
+  }
+
+  .custom-24 .infusion-field-label-container {
+    font-size: 17px;
+  }
+
+  .custom-24 .infusion-field-label-container {
+    font-family: Arial;
+  }
+
+  .custom-24 .infusion-field-input-container {
+    font-size: 11px;
+  }
+
+  .custom-24 .infusion-option label {
+    color: #000000;
+  }
+
+  .custom-24 .infusion-option label {
+    font-size: 10px;
+  }
+
+  .custom-24 .infusion-option label {
+    font-family: Arial;
+  }
+
+  .custom-24 .webFormBodyContainer {
+    border-style: Hidden;
+  }
+
+  .custom-24 .webFormBodyContainer {
+    border-width: 0px;
+  }
+
+  .custom-24 .webFormBodyContainer {
+    border-color: #000000;
+  }
+
+  .custom-24 .sidebar {
+    background-color: #FFFFFF;
+  }
+
+  .custom-24 .leftSidebar {
+    background-color: #FFFFFF;
+  }
+
+  .custom-24 .rightSidebar {
+    background-color: #FFFFFF;
+  }
+</style>
+<style type="text/css">
+  .bodyContainer {
+    width: 940px;
+  }
+
+  .infusion-field-input-container {
+    width: 100px;
+  }
+
+  .rightSidebar {
+    width: 405px;
+  }
+
+  .leftSidebar {
+    width: 200px;
+  }
+
+  .infusion-field-label-container {
+    text-align: Left;
+  }
+
+  .infusion-field-label-container {
+    vertical-align: Middle;
+  }
+
+  .infusion-field-input-container {
+    width: 400px;
+  }
+</style>
+<script src="https://zw185.infusionsoft.com/app/webTracking/getTrackingCode?trackingId=fc83ae41fcdbf7896314332fdcf0289c" type="text/javascript">
+</script>
+</head>
+<body leftmargin="0" marginheight="0" marginwidth="0" offset="0" style="margin-bottom: 0px; margin-top: 0px">
+<form accept-charset="UTF-8" action="https://zw185.infusionsoft.com/app/form/process/80672da10f51f0e36eb5c6572e8052b6" class="infusion-form" method="POST" name="Lead Magnet
+CTT Landing page" onsubmit="var form = document.forms[0];
+    var resolution = document.createElement('input');
+    resolution.setAttribute('id', 'screenResolution');
+    resolution.setAttribute('type', 'hidden');
+    resolution.setAttribute('name', 'screenResolution');
+    var resolutionString = screen.width + 'x' + screen.height;
+    resolution.setAttribute('value', resolutionString);
+    form.appendChild(resolution);
+    var pluginString = '';
+    if (window.ActiveXObject) {
+        var activeXNames = {'AcroPDF.PDF':'Adobe Reader',
+            'ShockwaveFlash.ShockwaveFlash':'Flash',
+            'QuickTime.QuickTime':'Quick Time',
+            'SWCtl':'Shockwave',
+            'WMPLayer.OCX':'Windows Media Player',
+            'AgControl.AgControl':'Silverlight'};
+        var plugin = null;
+        for (var activeKey in activeXNames) {
+            try {
+                plugin = null;
+                plugin = new ActiveXObject(activeKey);
+                } catch (e) {
+                // do nothing, the plugin is not installed
+                }
+            pluginString += activeXNames[activeKey] + ',';
+            }
+        var realPlayerNames = ['rmockx.RealPlayer G2 Control',
+            'rmocx.RealPlayer G2 Control.1',
+            'RealPlayer.RealPlayer(tm) ActiveX Control (32-bit)',
+            'RealVideo.RealVideo(tm) ActiveX Control (32-bit)',
+            'RealPlayer'];
+        for (var index = 0; index &lt; realPlayerNames.length; index++) {
+            try {
+                plugin = new ActiveXObject(realPlayerNames[index]);
+                } catch (e) {
+                continue;
+                }
+            if (plugin) {
+                break;
+                }
+            }
+        if (plugin) {
+            pluginString += 'RealPlayer,';
+            }
+        } else {
+        for (var i = 0; i &lt; navigator.plugins.length; i++) {
+            pluginString += navigator.plugins[i].name + ',';
+            }
+        }
+    pluginString = pluginString.substring(0, pluginString.lastIndexOf(','));
+    var plugins = document.createElement('input');
+    plugins.setAttribute('id', 'pluginList');
+    plugins.setAttribute('type', 'hidden');
+    plugins.setAttribute('name', 'pluginList');
+    plugins.setAttribute('value', pluginString);
+    form.appendChild(plugins);
+    var java = navigator.javaEnabled();
+    var javaEnabled = document.createElement('input');
+    javaEnabled.setAttribute('id', 'javaEnabled');
+    javaEnabled.setAttribute('type', 'hidden');
+    javaEnabled.setAttribute('name', 'javaEnabled');
+    javaEnabled.setAttribute('value', java);
+    form.appendChild(javaEnabled);">
+<input name="inf_form_xid" type="hidden" value="80672da10f51f0e36eb5c6572e8052b6"/><input name="inf_form_name" type="hidden" value="Lead Magnet
+CTT Landing page"/><input name="infusionsoft_version" type="hidden" value="1.33.0.46"/>
+
+<div class="custom-24 beta-base beta-font-b" id="mainContent" style="height:100%">
+<table cellpadding="10" cellspacing="0" class="background" style="width: 100%; height: 100%">
+<tbody>
+<tr>
+<td align="center" valign="top">
+<table cellpadding="0" cellspacing="0" class="bodyContainer">
+  <tbody>
+  <tr>
+    <td class="header" colspan="2" sectionid="header">
+      <div class="text" id="webformErrors" name="errorContent">
+      </div>
+      <div>
+        <div class="authoring-image image-snippet" contentid="header_img">
+          <div class="authoring-image image-snippet" contentid="header_img">
+            <div class="imageSnippet-alignDiv" style="text-align: left;">
+              <img align="bottom" alt="Don't be a tourist" border="0" class="simage float_left" height="77" src="https://d1yoaun8syyxxt.cloudfront.net/zw185-59bcd848-4db6-4b31-a03b-9acb1cd0faa9-v2" style="margin-left: 0px; margin-right: 0px;" title="Don't be a tourist" width="144"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div class="title" style="text-align:left">
+            <div class="title" contentid="title" style="text-align: left;">
+              <div>
+                <h1 style="text-align: center;">
+<span style="font-size: 36pt; font-family: helvetica,arial,sans-serif;">THE ULTIMATE CHEAP TRAIN TICKET 'CHEAT SHEET'
+<br clear="none"/>
+</span>
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div class="title" style="text-align:left">
+            <div class="title" contentid="title" style="text-align: left;">
+              <div>
+                <p style="text-align: center;">
+<span style="font-size: 18pt;"><span style="font-size: 24pt;"><span style="font-family: 'Calibri'; color: #ff0000;"><span style="color: #000000;">FOLLOW THESE 7 SIMPLE HACKS TO GET THE CHEAPEST UK TRAIN TICKETS EVERY TIME YOU BOOK.</span></span></span><span style="font-family: 'Calibri'; color: #ff0000;">
+<br clear="none"/>
+</span></span><span style="font-size: 18pt; font-family: 'Calibri'; font-weight: bold;"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="height:20px">
+          <div style="height:10px;border-bottom:1px solid #CCCCCC">
+            &nbsp;
+          </div>
+          <div style="height:10px;">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="height:10px; line-height:10px;">
+          &nbsp;
+        </div>
+      </div>
+      <div>
+        <div class="text">
+          <div class="text" contentid="paragraph">
+            <div style="text-align: center;">
+              <span style="font-size: 18pt;"><strong>Download this free cheat sheet and video now to
+                learn...</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<table bgcolor="#FFFFFF" cellpadding="20" cellspacing="0" class="bodyContainer">
+<tbody>
+<tr>
+<td class="body" sectionid="body" valign="top">
+<div>
+  <div style="height:15px; line-height:15px;">
+    &nbsp;
+  </div>
+</div>
+<div>
+  <div>
+    <table>
+      <tbody>
+      <tr>
+        <td align="left" style="display: table-cell; vertical-align: middle;">
+          <div class="authoring-image image-snippet">
+            <div class="authoring-image image-snippet" contentid="spotlight">
+              <div class="imageSnippet-alignDiv">
+                <img alt="Spotlight" border="0" class="simage" height="64" manualresize="checked" src="https://zw185.infusionsoft.com/resources/authoring/snippet/images/default-spotlight-image.png" title="Spotlight" width="64"/>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td align="right" style="display: table-cell; padding-left: 10px; vertical-align: top;">
+          <div class="title" style="text-align:left">
+            <div class="title" contentid="header" style="text-align: left;">
+              <div>
+<span style="font-size: 12pt;"><strong>The only way to SAVE UP TO 84% on train ticket prices IMMEDIATELY</strong>
+<br clear="none"/>
+</span>
+              </div>
+            </div>
+          </div>
+          <div class="text" style="text-align:left">
+            <div class="text" contentid="text" style="text-align: left;">
+              <div>
+                &nbsp;
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div>
+  <div>
+    <table>
+      <tbody>
+      <tr>
+        <td align="left" style="display: table-cell; vertical-align: middle;">
+          <div class="authoring-image image-snippet">
+            <div class="authoring-image image-snippet" contentid="spotlight">
+              <div class="imageSnippet-alignDiv">
+                <img alt="Spotlight" border="0" class="simage" height="64" manualresize="checked" src="https://zw185.infusionsoft.com/resources/authoring/snippet/images/default-spotlight-image.png" title="Spotlight" width="64"/>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td align="right" style="display: table-cell; padding-left: 10px; vertical-align: top;">
+          <div class="title" style="text-align:left">
+            <div class="title" contentid="header" style="text-align: left;">
+              <div>
+<span style="font-size: 12pt;">The simple trick which means you NEVER PAY online booking or bank / credit card FEES again.
+<br clear="none"/>
+</span>
+              </div>
+            </div>
+          </div>
+          <div class="text" style="text-align:left">
+            <div class="text" contentid="text" style="text-align: left;">
+              <div>
+                &nbsp;
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div>
+  <div>
+    <table>
+      <tbody>
+      <tr>
+        <td align="left" style="display: table-cell; vertical-align: middle;">
+          <div class="authoring-image image-snippet">
+            <div class="authoring-image image-snippet" contentid="spotlight">
+              <div class="imageSnippet-alignDiv">
+                <img alt="Spotlight" border="0" class="simage" height="64" manualresize="checked" src="https://zw185.infusionsoft.com/resources/authoring/snippet/images/default-spotlight-image.png" title="Spotlight" width="64"/>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td align="right" style="display: table-cell; padding-left: 10px; vertical-align: top;">
+          <div class="title" style="text-align:left">
+            <div class="title" contentid="header" style="text-align: left;">
+              <div>
+<span style="font-size: 12pt;">The sneaky tactic to SAVE UP TO 40% even when buying tickets ON THE DAY OF TRAVEL
+<br clear="none"/>
+</span>
+              </div>
+            </div>
+          </div>
+          <div class="text" style="text-align:left">
+            <div class="text" contentid="text" style="text-align: left;">
+              <div>
+                &nbsp;
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div>
+  <div>
+    <table>
+      <tbody>
+      <tr>
+        <td align="left" style="display: table-cell; vertical-align: middle;">
+          <div class="authoring-image image-snippet">
+            <div class="authoring-image image-snippet" contentid="spotlight">
+              <div class="imageSnippet-alignDiv">
+                <img alt="Spotlight" border="0" class="simage" height="64" manualresize="checked" src="https://zw185.infusionsoft.com/resources/authoring/snippet/images/default-spotlight-image.png" title="Spotlight" width="64"/>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td align="right" style="display: table-cell; padding-left: 10px; vertical-align: top;">
+          <div class="title" style="text-align:left">
+            <div class="title" contentid="header" style="text-align: left;">
+              <div>
+<span style="font-size: 12pt;">How to virtually GUARANTEE CHEAPER TRAIN TICKETS every time...
+<br clear="none"/>
+</span>
+              </div>
+            </div>
+          </div>
+          <div class="text" style="text-align:left">
+            <div class="text" contentid="text" style="text-align: left;">
+              <div>
+                &nbsp;
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div>
+  <div>
+    <table>
+      <tbody>
+      <tr>
+        <td align="left" style="display: table-cell; vertical-align: middle;">
+          <div class="authoring-image image-snippet">
+            <div class="authoring-image image-snippet" contentid="spotlight">
+              <div class="imageSnippet-alignDiv">
+                <img alt="Spotlight" border="0" class="simage" height="64" manualresize="checked" src="https://zw185.infusionsoft.com/resources/authoring/snippet/images/default-spotlight-image.png" title="Spotlight" width="64"/>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td align="right" style="display: table-cell; padding-left: 10px; vertical-align: top;">
+          <div class="title" style="text-align:left">
+            <div class="title" contentid="header" style="text-align: left;">
+              <div>
+                <span style="font-size: 12pt;"><span style="color: #ff0000;">FREE BONUS</span> - get access to 3-part video series '3 WAYS TO CHEAPER TRAVEL FROM YOUR UK UNIVERSITY'</span>
+              </div>
+            </div>
+          </div>
+          <div class="text" style="text-align:left">
+            <div class="text" contentid="text" style="text-align: left;">
+              <div>
+                &nbsp;
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div>
+  <div style="height:15px; line-height:15px;">
+    &nbsp;
+  </div>
+</div>
+<div>
+  <div class="authoring-image image-snippet" contentid="image">
+    <div class="authoring-image image-snippet" contentid="image">
+      <div class="imageSnippet-alignDiv" style="text-align: center;">
+        <img align="bottom" alt="5 stars" border="0" class="simage float_center" src="https://d1yoaun8syyxxt.cloudfront.net/zw185-db95f3ae-ff2f-4def-a96f-15b1ae101c10-v2" style="margin-left: 0px; margin-right: 0px;" title="5 stars" width="261"/>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <div class="text">
+    <div class="text" contentid="paragraph">
+      <div>
+        <div style="text-align: center;">
+          <strong><span style="font-size: 14pt;">Simple but awesome!!</span></strong>
+        </div>
+        <div style="text-align: center;">
+<span style="font-size: 10pt;">Joe&nbsp;<span style="font-size: 10pt;">(USA)</span> Leeds Met University
+<br clear="none"/>
+</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <div style="height:15px; line-height:15px;">
+    &nbsp;
+  </div>
+</div>
+<div>
+  <div style="height:30px; line-height:30px;">
+    &nbsp;
+  </div>
+</div>
+<div>
+  <div>
+    <div class="title" style="text-align:left">
+      <div class="title" contentid="title" style="text-align: left;">
+        <div>
+          <span style="font-size: 24pt;">Get the cheat sheet for free:</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <div style="height:15px; line-height:15px;">
+    &nbsp;
+  </div>
+</div>
+<div>
+  <div class="text">
+    <div class="text" contentid="paragraph">
+      <div>
+        <div style="text-align: left;">
+          <span style="font-size: 10pt; color: #000000;">Enter you UK university and best email address and click 'Get Instant Access!' to complete.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</td>
+<td class="rightSidebar" sectionid="rightSidebar" valign="top">
+  <div>
+    <div style="height:15px; line-height:15px;">
+      &nbsp;
+    </div>
+  </div>
+  <div>
+    <div class="authoring-image image-snippet" contentid="image">
+      <div class="authoring-image image-snippet" contentid="image">
+        <div class="imageSnippet-alignDiv" style="text-align: center;">
+          <img align="bottom" alt="Download this awesome cheat sheet for free" border="0" class="simage float_center" src="https://d1yoaun8syyxxt.cloudfront.net/zw185-e10c4eef-f0e7-4eb6-bf1c-da45a19988b9-v2" style="margin-left: 0px; margin-right: 0px;" title="Download this awesome cheat sheet for free" width="307"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div style="height:15px; line-height:15px;">
+      &nbsp;
+    </div>
+  </div>
+  <div>
+    <div style="height:15px; line-height:15px;">
+      &nbsp;
+    </div>
+  </div>
+  <div>
+    <div class="authoring-image image-snippet" contentid="image">
+      <div class="authoring-image image-snippet" contentid="image">
+        <div class="imageSnippet-alignDiv" style="text-align: center;">
+          <img align="bottom" alt="5 stars" border="0" class="simage float_center" src="https://d1yoaun8syyxxt.cloudfront.net/zw185-db95f3ae-ff2f-4def-a96f-15b1ae101c10-v2" style="margin-left: 0px; margin-right: 0px;" title="5 stars" width="261"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="text">
+      <div class="text" contentid="paragraph">
+        <div>
+          <div style="text-align: center;">
+            <strong><span style="font-size: 14pt;">Amazing!! Saving me &pound;&pound;&pound;&pound;!!</span></strong>
+          </div>
+          <div style="text-align: center;">
+<span style="font-size: 10pt;">Jena (Germany) University of Nottingham
+<br clear="none"/>
+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div style="height:15px; line-height:15px;">
+      &nbsp;
+    </div>
+  </div>
+  <div>
+    <div style="height:30px; line-height:30px;">
+      &nbsp;
+    </div>
+  </div>
+  <div>
+    <table class="infusion-field-container" style="width:400;">
+      <tbody>
+      <tr>
+        <td class="infusion-field-label-container" style="width:100px;">
+          <label for="inf_custom_UKUniversity0">Your UK University *</label>
+        </td>
+      </tr>
+      <tr>
+        <td class="infusion-field-input-container" style="width:400px;">
+          <select id="inf_custom_UKUniversity0" name="inf_custom_UKUniversity0">
+            <option value="">Please select one</option>
+            <option value="Aberystwyth University">Aberystwyth University</option>
+            <option value="Anglia Ruskin University">Anglia Ruskin University</option>
+            <option value="Arts University Bournemouth">Arts University Bournemouth</option>
+            <option value="Aston University">Aston University</option>
+            <option value="Bangor University">Bangor University</option>
+            <option value="Bath Spa University">Bath Spa University</option>
+            <option value="Birkbeck University of London">Birkbeck University of London</option>
+            <option value="Birmingham City University">Birmingham City University</option>
+            <option value="Bishop Grosseteste University College Lincoln">Bishop Grosseteste University College
+              Lincoln
+            </option>
+            <option value="Bournemouth University">Bournemouth University</option>
+            <option value="Brunel University">Brunel University</option>
+            <option value="Bucks New University">Bucks New University</option>
+            <option value="Canterbury Christ Church University">Canterbury Christ Church University</option>
+            <option value="Cardiff Metropolitan University">Cardiff Metropolitan University</option>
+            <option value="Cardiff University">Cardiff University</option>
+            <option value="Central School of Speech & Drama">Central School of Speech & Drama</option>
+            <option value="City University London">City University London</option>
+            <option value="Courtauld Institute of Art University of London">Courtauld Institute of Art University of
+              London
+            </option>
+            <option value="Coventry University">Coventry University</option>
+            <option value="Cranfield University">Cranfield University</option>
+            <option value="De Montfort University">De Montfort University</option>
+            <option value="Durham University">Durham University</option>
+            <option value="Edge Hill University">Edge Hill University</option>
+            <option value="Edinburgh Napier University">Edinburgh Napier University</option>
+            <option value="European School of Economics">European School of Economics</option>
+            <option value="Falmouth University">Falmouth University</option>
+            <option value="Glasgow Caledonian University">Glasgow Caledonian University</option>
+            <option value="Glasgow School of Art">Glasgow School of Art</option>
+            <option value="Glyndwr University">Glyndwr University</option>
+            <option value="Goldsmiths University of London">Goldsmiths University of London</option>
+            <option value="Harper Adams University College">Harper Adams University College</option>
+            <option value="Heriot-Watt University">Heriot-Watt University</option>
+            <option value="Heythrop College University of London">Heythrop College University of London</option>
+            <option value="Imperial College London">Imperial College London</option>
+            <option value="Institute of Education University of London">Institute of Education University of London
+            </option>
+            <option value="Keele University">Keele University</option>
+            <option value="Kings College London">Kings College London</option>
+            <option value="Kingston University">Kingston University</option>
+            <option value="Lancaster University">Lancaster University</option>
+            <option value="Leeds Beckett University (Leeds Metropolitan University)">Leeds Beckett University (Leeds
+              Metropolitan University)
+            </option>
+            <option value="Liverpool Hope University">Liverpool Hope University</option>
+            <option value="Liverpool John Moores University">Liverpool John Moores University</option>
+            <option value="London Business School">London Business School</option>
+            <option value="London Metropolitan University">London Metropolitan University</option>
+            <option value="London School of Economics and Political Science">London School of Economics and Political
+              Science
+            </option>
+            <option value="London School of Hygiene and Tropical Medicine University of London">London School of Hygiene
+              and Tropical Medicine University of London
+            </option>
+            <option value="London South Bank University">London South Bank University</option>
+            <option value="Loughborough University">Loughborough University</option>
+            <option value="Manchester Metropolitan University">Manchester Metropolitan University</option>
+            <option value="Middlesex University">Middlesex University</option>
+            <option value="Newcastle University">Newcastle University</option>
+            <option value="Northumbria University">Northumbria University</option>
+            <option value="Nottingham Trent University">Nottingham Trent University</option>
+            <option value="Oxford Brookes University">Oxford Brookes University</option>
+            <option value="Plymouth University">Plymouth University</option>
+            <option value="Queen Margaret University">Queen Margaret University</option>
+            <option value="Queen Mary">Queen Mary</option>
+            <option value="University of London">University of London</option>
+            <option value="Queens University Belfast">Queens University Belfast</option>
+            <option value="Richmond The American International University in London">Richmond The American International
+              University in London
+            </option>
+            <option value="Robert Gordon University">Robert Gordon University</option>
+            <option value="Roehampton University">Roehampton University</option>
+            <option value="Royal Academy of Music University of London">Royal Academy of Music University of London
+            </option>
+            <option value="Royal Agricultural University">Royal Agricultural University</option>
+            <option value="Royal College of Art">Royal College of Art</option>
+            <option value="Royal College of Music">Royal College of Music</option>
+            <option value="Royal Conservatoire of Scotland">Royal Conservatoire of Scotland</option>
+            <option value="Royal Holloway University of London">Royal Holloway University of London</option>
+            <option value="Royal Veterinary College University of London">Royal Veterinary College University of
+              London
+            </option>
+            <option value="School of Advanced Study University of London">School of Advanced Study University of
+              London
+            </option>
+            <option value="School of Oriental and African Studies University of London">School of Oriental and African
+              Studies University of London
+            </option>
+            <option value="Scotlands Rural College">Scotlands Rural College</option>
+            <option value="Sheffield Hallam University">Sheffield Hallam University</option>
+            <option value="Southampton Solent University">Southampton Solent University</option>
+            <option value="St Georges University of London">St Georges University of London</option>
+            <option value="Staffordshire University">Staffordshire University</option>
+            <option value="Swansea University">Swansea University</option>
+            <option value="Teesside University">Teesside University</option>
+            <option value="University College Birmingham">University College Birmingham</option>
+            <option value="University College London">University College London</option>
+            <option value="University for the Creative Arts">University for the Creative Arts</option>
+            <option value="University of Aberdeen">University of Aberdeen</option>
+            <option value="University of Abertay Dundee">University of Abertay Dundee</option>
+            <option value="University of Bath">University of Bath</option>
+            <option value="University of Bedfordshire">University of Bedfordshire</option>
+            <option value="University of Birmingham">University of Birmingham</option>
+            <option value="University of Bolton">University of Bolton</option>
+            <option value="University of Bradford">University of Bradford</option>
+            <option value="University of Brighton">University of Brighton</option>
+            <option value="University of Bristol">University of Bristol</option>
+            <option value="University of Buckingham">University of Buckingham</option>
+            <option value="University of Cambridge">University of Cambridge</option>
+            <option value="University of Central Lancashire">University of Central Lancashire</option>
+            <option value="University of Chester">University of Chester</option>
+            <option value="University of Chichester">University of Chichester</option>
+            <option value="University of Cumbria">University of Cumbria</option>
+            <option value="University of Derby">University of Derby</option>
+            <option value="University of Dundee">University of Dundee</option>
+            <option value="University of East Anglia">University of East Anglia</option>
+            <option value="University of East London">University of East London</option>
+            <option value="University of Edinburgh">University of Edinburgh</option>
+            <option value="University of Essex">University of Essex</option>
+            <option value="University of Exeter">University of Exeter</option>
+            <option value="University of Glasgow">University of Glasgow</option>
+            <option value="University of Gloucestershire">University of Gloucestershire</option>
+            <option value="University of Greenwich">University of Greenwich</option>
+            <option value="University of Hertfordshire">University of Hertfordshire</option>
+            <option value="University of Huddersfield">University of Huddersfield</option>
+            <option value="University of Hull">University of Hull</option>
+            <option value="University of Kent">University of Kent</option>
+            <option value="University of Leeds">University of Leeds</option>
+            <option value="University of Leicester">University of Leicester</option>
+            <option value="University of Lincoln">University of Lincoln</option>
+            <option value="University of Liverpool">University of Liverpool</option>
+            <option value="University of Manchester">University of Manchester</option>
+            <option value="University of Northampton">University of Northampton</option>
+            <option value="University of Nottingham">University of Nottingham</option>
+            <option value="University of Oxford">University of Oxford</option>
+            <option value="University of Portsmouth">University of Portsmouth</option>
+            <option value="University of Reading">University of Reading</option>
+            <option value="University of Salford">University of Salford</option>
+            <option value="University of Sheffield">University of Sheffield</option>
+            <option value="University of South Wales">University of South Wales</option>
+            <option value="University of Southampton">University of Southampton</option>
+            <option value="University of St Andrews">University of St Andrews</option>
+            <option value="University of Stirling">University of Stirling</option>
+            <option value="University of Strathclyde">University of Strathclyde</option>
+            <option value="University of Sunderland">University of Sunderland</option>
+            <option value="University of Surrey">University of Surrey</option>
+            <option value="University of Sussex">University of Sussex</option>
+            <option value="University of the Arts London">University of the Arts London</option>
+            <option value="University of the West of England">University of the West of England</option>
+            <option value="University of the West of Scotland">University of the West of Scotland</option>
+            <option value="University of Ulster">University of Ulster</option>
+            <option value="University of Wales">University of Wales</option>
+            <option value="University of Wales Trinity Saint David">University of Wales Trinity Saint David</option>
+            <option value="University of Warwick">University of Warwick</option>
+            <option value="University of West London">University of West London</option>
+            <option value="University of Westminster">University of Westminster</option>
+            <option value="University of Winchester">University of Winchester</option>
+            <option value="University of Wolverhampton">University of Wolverhampton</option>
+            <option value="University of Worcester">University of Worcester</option>
+            <option value="University of York">University of York</option>
+            <option value="York St John University">York St John University</option>
+            <option value="I do not have a UK university">I do not have a UK university</option>
+          </select>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="infusion-field-container" style="width:400;">
+      <tbody>
+      <tr>
+        <td class="infusion-field-label-container" style="width:100px;">
+          <label for="inf_field_Email">Your Best Email *</label>
+        </td>
+      </tr>
+      <tr>
+        <td class="infusion-field-input-container" style="width:400px;">
+          <input class="infusion-field-input-container" id="inf_field_Email" name="inf_field_Email" type="text"/>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <div style="height:15px; line-height:15px;">
+      &nbsp;
+    </div>
+  </div>
+  <div>
+    <div class="infusion-submit" style="text-align:left;">
+      <button style="width:400px; height:50px; background-color:#F5AA47; color:#FFFFFF; font-size:20px; font-family:Helvetica; border-color:#000000; border-style:Outset; border-width:2px; -moz-border-radius:5px;border-radius:5px;" type="submit" value="Get Instant Access!">Get
+        Instant Access!
+      </button>
+    </div>
+  </div>
+  <div>
+    <div style="height:15px; line-height:15px;">
+      &nbsp;
+    </div>
+  </div>
+  <div>
+    <div class="text">
+      <div class="text" contentid="paragraph">
+        <div style="text-align: center;">
+          <img align="bottom" border="0" height="12" src="https://d1yoaun8syyxxt.cloudfront.net/zw185-d477be01-8e3c-4a69-a4d0-e3980e2cd2a4-v2" style="margin-left: 0px; margin-right: 0px;" width="13"/>
+          <span style="color: #999999;">We value your privacy and would never spam you.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div style="height:15px; line-height:15px;">
+      &nbsp;
+    </div>
+  </div>
+  <div>
+    <div style="height:15px; line-height:15px;">
+      &nbsp;
+    </div>
+  </div>
+</td>
+</tr>
+<tr>
+  <td class="footer" colspan="2" sectionid="footer" valign="top">
+  </td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</form>
+</body>
+</html>

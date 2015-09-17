@@ -1,0 +1,210 @@
+<fieldset>
+  <%= f.hidden_field :id, :value => @trip.id %>
+<legend>Status</legend>
+<p>
+<%= f.label :status, "Status line 1" %> (optional)<br />
+<%= f.text_field :status %>
+</p>
+
+<p>
+  <%= f.label :status_line_2 %> (optional)<br />
+  <%= f.text_field :status_line_2 %>
+</p>
+</fieldset>
+
+<fieldset>
+<legend>Details</legend>
+<p>
+  <%= f.label :facebook_url %>
+  <%= f.text_field :facebook_url %>
+</p>
+
+<p>
+  <%= f.label :tagline %>
+  <%= f.text_area :tagline %>
+</p>
+
+<p>
+  <%= f.label :summary %>
+  <%= f.text_area :summary %>
+  <br/><strong>Accommodation Link:</strong><br/>
+&lt;a href=&quot;#accommodation&quot; id=&quot;accommodation-link&quot;&gt;accommodation&lt;/a&gt;
+<br/><strong>Activities Link:</strong><br/>
+&lt;a href=&quot;#activities&quot; id=&quot;activities-link&quot;&gt;activities&lt;/a&gt;
+</p>
+<p>
+  <%= f.label :itinerary %>
+  <%= f.tinymce_text_area :itinerary %>
+</p>
+
+<p>Use '<strong>Heading 2</strong>' from Paragraph styles below to match the styled headings.</p>
+
+<p>
+  <%= f.label :highlights %> (and additional content within 'Essential Info')
+  <%= f.tinymce_text_area :highlights %>
+</p>
+
+<p>
+  <%= f.label :whats_included %>
+  <%= f.tinymce_text_area :whats_included %>
+</p>
+
+<p>
+  <%= f.label :more_info, "Accommodation" %>
+  <%= f.tinymce_text_area :more_info %>
+</p>
+</fieldset>
+
+<fieldset>
+<legend>Pictures</legend>
+<div class="group_block">
+  <p>
+    <%= f.label :photo_1 %>
+
+    <%= f.file_field :photo_1 %>
+  </p>
+  <p>
+    <%= f.label :photo_1 %>
+    <%= f.text_field :photo_1_alt %>
+  </p>
+</div>
+<% if f.object.photo_1? %>
+  <p>
+    <%= image_tag f.object.photo_1.url, :border => "0", :hspace => "0", :vspace => "0", :width => 231, :height => 100 %>
+  </p>
+  <p>
+    <%= f.label :delete_photo_1, "Remove Image" %>
+    <%= f.check_box :delete_photo_1 %>
+  </p>
+<% end %>
+
+<div class="group_block">
+  <p>
+    <%= f.label :photo_2 %>
+
+    <%= f.file_field :photo_2 %>
+  </p>
+  <p>
+    <%= f.label :photo_2 %>
+    <%= f.text_field :photo_2_alt %>
+  </p>
+</div>
+<% if f.object.photo_2? %>
+  <p>
+    <%= image_tag f.object.photo_2.url, :border => "0", :hspace => "0", :vspace => "0", :width => 231, :height => 100 %>
+  </p>
+  <p>
+    <%= f.label :delete_photo_2, "Remove Image" %>
+    <%= f.check_box :delete_photo_2 %>
+  </p>
+<% end %>
+
+<div class="group_block">
+  <p>
+    <%= f.label :photo_3 %>
+
+    <%= f.file_field :photo_3 %>
+  </p>
+  <p>
+    <%= f.label :photo_3 %>
+    <%= f.text_field :photo_3_alt %>
+  </p>
+</div>
+<% if f.object.photo_3? %>
+  <p>
+    <%= image_tag f.object.photo_3.url, :border => "0", :hspace => "0", :vspace => "0", :width => 231, :height => 100 %>
+  </p>
+  <p>
+    <%= f.label :delete_photo_3, "Remove Image" %>
+    <%= f.check_box :delete_photo_3 %>
+  </p>
+<% end %>
+
+<div class="group_block">
+  <p>
+    <%= f.label :photo_4 %>
+
+    <%= f.file_field :photo_4 %>
+  </p>
+  <p>
+    <%= f.label :photo_4 %>
+    <%= f.text_field :photo_4_alt %>
+  </p>
+</div>
+<% if f.object.photo_4? %>
+  <p>
+    <%= image_tag f.object.photo_4.url, :border => "0", :hspace => "0", :vspace => "0", :width => 231, :height => 100 %>
+  </p>
+  <p>
+    <%= f.label :delete_photo_4, "Remove Image" %>
+    <%= f.check_box :delete_photo_4 %>
+  </p>
+<% end %>
+</fieldset>
+
+<fieldset>
+<legend>Trip Options</legend>
+<h2>Activities</h2>
+  <% activities = [] %>
+  <% for destination in trip.destinations %>
+    <% for activity in destination.activities %>
+      <% activities << activity %>
+    <% end %>
+  <% end %>
+  <%= collection_select :trip, :activity_ids, activities.uniq, :id, :name, { :selected => trip.activity_ids }, { :multiple => true, :size => 6, :name => 'trip[activity_ids][]' } -%>
+
+
+<h2>Extras</h2>
+<% for product in Product.all %>
+  <p>
+    <%= check_box_tag "trip[product_ids][]", product.id, trip.products.include?(product), {:class => "checkbox"} %>
+    <%= product.name %>
+  </p>
+<% end %>
+
+<h2>Pickups</h2>
+<p>Enter 0 for unlimited pickups</p>
+<% f.fields_for :pickup_dropoff_times do |builder| %>
+  <%= render "pickup_dropoff_time_fields", :f => builder %>
+<% end %>
+<p><%= link_to_add_fields "Add Pick Up", f, :pickup_dropoff_times %></p>
+
+<fieldset>
+<legend>Attachment (Optional)</legend>
+  <p>Attach a file which users will be able to download from their bookings page.</p>
+  <br />
+  <%= f.file_field :document %>
+  <% if f.object.document? %>
+    <%= link_to f.object.document_file_name, f.object.document.url %><br />
+    <%= f.label :delete_document, "Delete attachement" %>
+    <%= f.check_box :delete_document %>
+  <% end %>
+</fieldset>
+
+<fieldset>
+  <legend>Promotional Data</legend>
+  <p>
+    <%= f.label :youtube_embed_code %>
+    <%= f.text_area :youtube_embed_code %>
+  </p>
+
+  <p>
+    <%= f.label :promotional_phrase %>
+    <%= f.tinymce_text_area :promotional_phrase %>
+  </p>
+
+  <p>
+    <%= f.label :promoted_trip_id %>
+    <%= f.collection_select :promoted_trip_id, Trip.all(:conditions => ["start_date > ?", Date.today]), :id, :name %>
+  </p>
+</fieldset>
+
+<p>
+  <%= f.label :display %>
+  <%= f.check_box :display, :class=>"checkbox" %>
+</p>
+
+<p>
+  <%= f.label :highlight %>
+  <%= f.check_box :highlight, :class=>"checkbox" %>
+</p>

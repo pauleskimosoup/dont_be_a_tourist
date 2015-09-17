@@ -1,0 +1,202 @@
+<% hide_right %>
+
+<% @page_title = 'Find Your Next Trip...' %>
+
+<a name="trips"></a>
+<div class="university-filter">
+  <div class="float-left title">
+    <strong>Filter trips by:</strong>
+  </div>
+
+  <div class="width_item">
+    <% form_tag "/trip/search", :method => :get do %>
+      <%= label_tag :university, "<strong>My university</strong> (or nearest me)" %><br />
+      <%= select_tag(:university, options_for_select(@universities.map{|x| [x.name, x.id.to_s]}, :selected => params[:university]), {:class => "cta"}) %>
+      <%= submit_tag "Go", :class => "go" %>
+    <% end %>
+  </div>
+
+
+  <div class="float-left title">
+    OR
+  </div>
+
+  <div class="width_item no-right-margin">
+    <% form_tag "/trip/search", :method => :get do %>
+      <%= label_tag :trip_group_id, "Trip name", :class => "bold-label" %><br />
+      <%= select_tag(:trip_group_id, options_for_select(@trip_groups.map{|x| [x.name, x.id.to_s]}, :selected => params[:trip_group_id]), {:class => "cta"}) %>
+      <%= submit_tag "Go", :class => "go" %>
+    <% end %>
+  </div>
+
+  <div class="clear"></div>
+</div>
+
+
+    <div class="trip_list">
+    <% unless @trips.blank? %>
+
+
+      <div class="search-details float-left">
+
+        <h2 class="search-page">
+          <% if @trips.count >= 1 %>
+            Currently <strong><%= @trips.count %></strong> awesome trips
+
+          <% else %>
+            Currently <strong><%= @trips.count %></strong> awesome trip
+          <% end %>
+
+          <span class="search-criteria">
+            <% unless params[:university].blank? %>
+              <%= @specific_university.name %>
+            <% end %>
+
+            <% unless params[:search_criteria].blank? %>
+              <%= params[:search_criteria] %>
+            <% end %>
+
+            <% unless params[:trip_group_id].blank? %>
+              <%= @specific_trip_group.name %>
+            <% end %>
+          </span>
+
+          <%= link_to 'X', "/trip/list", :title => "Reset to view all trips" %>
+        </h2>
+
+      </div>
+
+      <div class="university-sort float-right">
+        <% form_tag "/trip/search", :method => :get do %>
+          <%= label_tag :order, "Sort list by" %>
+          <%= select_tag(:order, options_for_select(
+                          [
+                          ["Date", "start_date asc"],
+                          ["Adult Price", "adult_price asc"],
+                          ["Student Price", "student_price asc"],
+                          ["Duration", "length asc"]
+                          ],
+                        :selected => params[:order]), {:class => "cta", :onchange => "submit()"}) %>
+
+          <% unless params[:university].blank? %>
+            <%= hidden_field_tag :university, params[:university] %>
+          <% end %>
+
+          <% unless params[:search_criteria].blank? %>
+            <%= hidden_field_tag :search_criteria, params[:search_criteria] %>
+          <% end %>
+
+          <% unless params[:trip_group_id].blank? %>
+            <%= hidden_field_tag :trip_group_id, params[:trip_group_id] %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="clear"></div>
+
+    <% for trip in @trips %>
+      <div class="box-wide">
+        <div class="box_border">
+          <h3><%= link_to trip.name, :controller => :trip, :action => :show, :id => trip.id %>
+            <span class="tagline"><%= trip.tagline %></span>
+          </h3>
+          <div class="picture">
+            <% if trip.photo_1? -%>
+              <span></span>
+              <%= image_tag trip.photo_1.url, :height => 120, :width => 240, :alt => trip.photo_1_alt %>
+            <% end -%>
+            </div>
+          <div class="text">
+            <% if trip.sold_out? -%>
+              <span class="sold_out"></span>
+            <% end -%>
+
+            <div class="float-left date-summary">
+              From:
+              <% for uni in trip.universities %>
+                <strong><%= link_to uni.name, uni %></strong><br />
+              <% end %>
+              Date: <strong><%= trip.dates %></strong><br />
+              Duration: <strong><%= pluralize trip.length, "DAY", "DAYS" %></strong>
+            </div>
+
+            <div class="float-right trip-summary">
+
+            <p>
+              <%= trip.pretty_adult_price %><br />
+              <%= trip.pretty_student_price %>
+            </p>
+
+            <% unless trip.trip_group.blank? %>
+              <div class="star-rating">
+                <%
+                i = 0;
+                total = 5; # total stars
+
+                until i >= total do
+                  i += 1;
+                %>
+
+                  <% if i <= trip.trip_group.rating.to_i  %>
+                    <%= image_tag "star-on.png", :alt => "star" %>
+                  <% else %>
+                    <%= image_tag "star-off.png", :alt => "star" %>
+                  <% end %>
+
+                <% end %>
+              </div>
+            <% end %>
+
+            <%= link_to trip.sold_out? ? "RESERVE PLACES" : "READ MORE / BOOK", {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"more"} %>
+            </div>
+            <div class="clear"></div>
+
+          </div>
+          <div class="status">
+            <%= render :partial => "trip/status_line_1", :locals => {:trip => trip} %>
+            <br />
+            <%= render :partial => "trip/status_line_2", :locals => {:trip => trip} %>
+            <% if current_user? && !current_user.welcome_code.blank? && !PromoCode.find_by_code(current_user.welcome_code.to_s).nil? -%>
+              <br />
+              <%= render :partial => "trip/status_line_3", :locals => {:trip => trip, :code => PromoCode.find_by_code(current_user.welcome_code.to_s)} %>
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="text-center">
+      <h2 class="search-page">
+        <strong>
+          0
+        </strong>
+
+        results
+
+        <span class="search-criteria">
+          <% unless params[:university].blank? %>
+            <%= @specific_university.name %>
+          <% end %>
+
+          <% unless params[:search_criteria].blank? %>
+            <%= params[:search_criteria] %>
+          <% end %>
+
+          <% unless params[:trip_group_id].blank? %>
+            <%= @specific_trip_group.name %>
+          <% end %>
+        </span>
+
+        <%= link_to 'X', "/trip/list" %>
+      </h2>
+
+      <p>
+        Trips coming soon.
+      </p>
+    </div>
+  <% end %>
+
+  <div class="clear"></div>
+
+</div>

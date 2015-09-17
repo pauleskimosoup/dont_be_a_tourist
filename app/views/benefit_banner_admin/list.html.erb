@@ -1,0 +1,15 @@
+<h1><%= @page_title = "View All Benefit Banners" -%></h1>
+<div id="search">
+  <% form_tag({}, :method => "GET") do %>
+    <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+    <%= link_to "Clear", :search => "" %>
+  <% end %>
+</div>
+<% if @banner_pages.count != 0 -%>
+  <%= admin_table({:columns =>[:title, :page, ["Display", lambda{|bb| bb.display? ? "Yes" : "No"}, "display"], :last_updated],
+    :list => @banners,
+    :pages => @banner_pages
+  })%>
+<% else %>
+  There are currently no Benefit Banners in the system.
+<% end %>

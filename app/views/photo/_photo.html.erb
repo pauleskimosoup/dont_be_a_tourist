@@ -1,0 +1,14 @@
+<% grey ||= false %>
+
+<a href="<%= photo.picture1.image_url %>" rel="lytebox[past_trips]"
+  title="<%= photo.picture1.image_alt %> <%= "(taken on #{photo.trip.name} trip)" if photo.trip %>">
+
+<% if grey %>
+  <div class="photos_pic">
+<% else %>
+  <div class="photos_pic" style="margin-right: 0px;">
+<% end %>
+  <span></span>
+  <%= scale_image_tag photo.picture1, :border => "0", :hspace => "0", :vspace => "0", :width => 53, :height => 52 %>
+</div>
+</a>

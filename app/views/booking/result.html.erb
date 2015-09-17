@@ -1,0 +1,56 @@
+<% @page_title = "Thank You" %>
+<% hide_right %>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-54914eae36949d16" async="async"></script>
+<h1><%= "Thank You for your payment, #{current_user.first_name}" %></h1>
+
+<h2>Feedback Request</h2>
+<hr/>
+<p>
+  Is there one thing that made you think about not booking today? – Help us to improve by letting us know
+</p>
+
+<% form_for @feedback do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :message %><br />
+    <%= f.text_area :message, :placeholder => 'One thing that made me think twice about booking today is...', :style => 'width: 97%;' %>
+  </p>
+
+  <p><%= f.submit "Send Feedback", :class=>"submit" %></p>
+<% end %>
+<br/>
+
+<h2>What happens now?</h2>
+<hr/>
+<p>
+  Within the next hour (usually within minutes) we’ll send you an email with details of your booking. You can also log into <%= link_to 'Your Bookings', url_for(:controller => "user", :action => "bookings") %> on our website to view your booking, anytime.
+</p>
+<p>
+  A few days before departure Mirek, our Operations guy, will email you with last minute trip info (what to bring, where to meet the coach, etc).
+</p>
+<p>
+  On the day of your trip, you do not need to bring your booking confirmation, but MUST BRING ID (e.g. student card, driver’s license, or passport etc) so we can check your name on the list. If you booked for friends, don’t forget to tell them to bring ID too.
+</p>
+
+<h2>Travel insurance for your trip</h2>
+<hr/>
+<p>
+  Safety and enjoyment are equally important when travelling with <strong>Don’t be a tourist</strong>.
+</p>
+<p>
+  We are working in partnership with Endsleigh to offer our travellers a policy which has been <strong>specifically designed</strong> to meet their requirements while on tour.
+</p>
+<p>
+  To take out your Single Trip or Annual multi trip Travel Insurance please <%= link_to 'click here', 'https://www.endsleigh.co.uk/personal/dont-be-a-tourist', :target => '_blank' %>
+</p>
+
+<h2>Questions?</h2>
+
+<p>
+  If you have any questions check out our <%= link_to 'Support Page', 'http://dontbeatourist.helpscoutdocs.com/' %> or send an email to <%= mail_to 'info@dontbeatourist.co.uk' %>
+</p>
+
+<h2>Tell your friends...</h2>
+<div class="addthis_sharing_toolbox"></div>
+

@@ -1,0 +1,36 @@
+<% @page_title = "Our news stories" %>
+
+<h1>Our news stories</h1>
+
+<% if @list_name -%>
+  <h2><%= @list_name%></h2>
+<% else -%>
+  <h2><%= month_name(session[:news][:month].to_i) + " - " + params[:year].to_s %></h2>
+<% end -%>
+
+  <% if @stories.length != 0 -%>
+  <% for story in @stories -%>
+    <div class="hr"><hr /></div>
+    <%= render( :partial => 'summary',
+                      :locals => {:story => story}) %>
+  <% end -%>
+    <div class="hr"><hr /></div>
+  <% else -%>
+  <p><strong>There are currently no news stories to be displayed.</strong></p>
+  <% end -%>
+
+  <% if @story_pages.count != 0 %>
+  <div class="pagecount">
+    <% if @story_pages.previous_page -%>
+      <%= link_to '&lt;&lt; Back', :action => 'list', :page => @story_pages.previous_page %>
+    <% end -%>
+    <%= @story_pages.range %> of <%= @story_pages.count %>
+    <% if @story_pages.next_page -%>
+      <%= link_to 'Next &gt;&gt;', :action => 'list', :page => @story_pages.next_page %>
+    <% end -%>
+  </div>
+<% end %>
+
+<% content_for :right do %>
+  <%= render :partial => 'navigation' %>
+<% end %>

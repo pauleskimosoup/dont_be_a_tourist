@@ -1,0 +1,72 @@
+<h1><%= @page_title = "Edit Booking" %></h1>
+
+<% form_for(@booking_item, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+<fieldset>
+<legend>Customer Details</legend>
+  <p>
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+  </p>
+
+  <p>
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+  </p>
+
+  <p>
+    <%= f.label :gender %>
+    <%= f.collection_select :gender, ['Male','Female'], :to_s, :to_s %>
+  </p>
+</fieldset>
+
+<fieldset>
+<legend>Booking Details (Locked)</legend>
+  <p>
+    <%= label_tag 'Order Refrence Number' %>
+    <%= text_field_tag :reference_number, @booking_item.booking.id, {:disabled => true} %>
+  </p>
+
+  <p>
+    <%= label_tag 'Trip' %>
+    <%= text_field_tag :trip, @booking_item.trip.name_dates, {:disabled => true} %>
+  </p>
+</fieldset>
+
+<fieldset>
+<legend>Additional Information</legend>
+
+  <p>
+    <%= label_tag 'Upgrade' %>
+    <%= select_tag 'booking_item[upgrade]', options_for_select([['Yes',true],['No',false]], @booking_item.upgrade?) %>
+  </p>
+
+  <p>
+    <%= label_tag 'Extras' %>
+    <ul>
+    <% for extra in @booking_item.products %>
+      <li><%= extra.name %> <%= link_to '[remove]', {:controller => :booking_admin, :action => :remove_product, :product_id => extra.id, :booking_id => @booking_item.id}, :confirm => "Are you sure?", :style => "margin-left:20px;" %></li>
+    <% end %>
+    </ul>
+  </p>
+
+  <p>
+    <%= f.label :pickup_dropoff %><br />
+    <% pickup_dropoff_times = f.object.trip.pickup_dropoff_times.sort_by{|x| x.pickup_time} %>
+    <%= f.collection_select :pickup_dropoff, pickup_dropoff_times, :name_pickup_time_dropoff_time, :name, {:class => "radio", :multiple => false} %>
+  </p>
+
+</fieldset>
+
+<fieldset>
+<legend>Note</legend>
+  <p>
+    <%= simple_format @booking_item.booking.notes %>
+  </p>
+</fieldset>
+
+<p>
+  <%= submit_tag "Update", :class => 'submit' %>
+</p>
+
+<% end %>

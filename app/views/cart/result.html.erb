@@ -1,0 +1,61 @@
+<div id="content">
+<h1><%= @page_title = "Booking confirmation" -%></h1>
+
+<p class="message">Congratulations <%= @cart.user.name %>, you're coming with us!!<p>
+
+<p>Details of your booking(s) are below. We've also sent you an email with full details of your booking(s).</p>
+
+<p><strong>Name:</strong> <%= @cart.user.name %></p>
+<p><strong>Booking date:</strong> <%= Date.today.strftime('%d %B %Y') %></p>
+<p><strong>Booking reference number:</strong> <%= @cart.id %></p>
+
+<% trips = @cart.trip_instances.collect{|x| x.trip}.uniq %>
+<% for trip in trips %>
+  <h2><%= trip.name %></h2>
+  <p><span  class="date_highlight"><%= trip.length_dates %></span></p>
+  <% bookings = @cart.trip_instances.select{|y| y.trip == trip } %>
+  <p>Number of travellers: <%= bookings.length -%></p>
+  <% count = 0 %>
+  <% for trip_instance in bookings %>
+    <% count += 1 %>
+
+    <p>
+    <strong>Traveller <%= count -%></strong><br />
+    <strong>Name:</strong> <%= trip_instance.name %><br />
+    <strong>Total cost:</strong> <%= trip_instance.totalf %><br />
+    </p>
+    <!-- toggle zone -->
+    <div id="<%= "trip_instance_#{count}" %>" style='display:none'>
+      <h3>Details</h3>
+      <p>
+      <strong>Sex:</strong> <%= trip_instance.sex %><br />
+      <strong>Pickup &amp; dropoff:</strong> <%= trip_instance.pickup_dropoff %><br />
+      </p>
+      <h3>Cost</h3>
+      <p>
+      <strong>Trip base price:</strong> <%= trip_instance.trip.pricef %><br />
+      <strong>Upgrade:</strong> <%= trip_instance.upgrade ? "Yes - Extra #{trip_instance.trip.upgrade_pricef}":"No" %><br />
+      <% if trip_instance.products.length > 0 %>
+        <strong>Extras:</strong><br />
+        <% for product in trip_instance.products %>
+          <%= product.name %> - Extra <%= product.pricef %><br />
+        <% end %>
+      <% end %>
+      <strong>Total:</strong> <%= trip_instance.totalf %><br />
+      <strong>Paypal Fee(3.5%):</strong> Extra <%= price paypal_extra trip_instance.total %>
+      </p>
+      </div>
+
+      <%= link_to_remote (image_tag "admin/more.gif", {:id => "trip_instance_#{count}_more_button", :border=>"0", :align=>"left", :hspace=>"5", :vspace=>"0", :alt=>"see more details"}), :url => "show_more?trip=#{count}" %>
+      <%= link_to_remote (image_tag "admin/less.gif", {:id => "trip_instance_#{count}_less_button", :border=>"0", :align=>"left", :style => "display:none", :hspace=>"5", :vspace=>"0", :alt=>"see less details"}), :url => "show_more?trip=#{count}" %>
+    <br />
+    <% end %>
+<% end %>
+<br />
+<h2>Total payment</h2>
+<p><strong>Payment Method:</strong> <%= @cart.payment_type %></p>
+<p><strong>Payment Recieved:</strong> <%= @cart.payment_recieved ? 'Yes':'No' %></p>
+<p><strong>Total Cost:</strong> <%= @cart.totalf %></p>
+<p><strong>Total PayPal Fee(3.5%):</strong> <%= price paypal_extra @cart.total %></p>
+<p><strong>Total Amount paid:</strong> <%= price @cart.total_plus_paypal %></p>
+</div>

@@ -1,0 +1,27 @@
+<div class="right_our_trips">
+      <h2 class="our_trips">Our Trips</h2>
+            <% destinations = Destination.find(:all, :conditions => "display=1", :limit => 4) %>
+            <% for destination in destinations %>
+              <div class="right_our_trip_pics"><%= link_to destination.name, :controller => :destination, :action => :show, :id => destination.id %>
+              <br />
+              <% if destination.has_picture1? %>
+                <%= scale_image_tag destination.picture1, :border => "0", :hspace => "0", :vspace => "0", :width => 101, :height => 79 %></div>
+              <% end %>
+            <% end %>
+    </div>
+  <div class="right_our_trips_stretch">
+        <div class="padding">
+            <h2><%= destination.name %> Trip</h2>
+            <% trips = Trip.find(:all, :conditions => "destination_id = #{destination.id} AND display=1", :limit => 4) %>
+            <% for trip in trips %>
+              <p><%= link_to "#{destination.name} Trip: #{trip.name}", {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"large_link"} %></p>
+              <p class="date_highlight"><%= trip.dates %></p>
+              <hr />
+            <% end %>
+        <% if @trip %>
+          <%= link_to "BOOK NOW", {:controller => :trip, :action => :personalize, :id => @trip.id}, {:class => "book_now"} %>
+        <% elsif @destination %>
+          <%= link_to "BOOK NOW", {:controller => :trip, :action => :list, :id => @destination.id}, {:class => "book_now"} %>
+        <% end %>
+        </div>
+        <%= image_tag "right_bg_sm_stretch_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %></div>

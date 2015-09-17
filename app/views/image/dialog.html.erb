@@ -1,0 +1,11 @@
+<% @page_title = "Insert Image" %>
+<p><%= link_to 'Upload New Image', {:action => 'upload'}, :style => "clear:both" %></p>
+<% form_tag({}, :method => "GET") do %>
+  <p>In folder: <%= select_tag :tags, options_for_select(["ALL"] + Picture.all_tags_array, params[:tags]), :onchange => "this.form.submit()" %>
+<% end %>
+<div style="margin-top: 10px;">
+<% @pictures.each do |pic| %>
+<%= link_to scale_image_tag(pic, :width => 150, :height => 150), :action => :insert, :id => pic.id %>
+<%#= link_to_function scale_image_tag(pic, :width => 150, :height => 150), "insertImage('/images/gallery/#{pic.filename}')" %>
+<% end %>
+</div>

@@ -1,0 +1,24 @@
+<% hide_right %>
+<% @page_title = "Newsletter Sign Ups" %>
+
+<h1>Sign Up For Our Newsletter</h1>
+
+<% form_for @newsletter_sign_up do |f| %>
+
+  <%= f.error_messages :header_message => "Invalid details!", :message => "You'll need to fix the following fields:", :header_tag => :h3 %>
+
+  <div class="field">
+    <%= f.label :email, "Email address:" %>
+    <br />
+    
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Send", :class => "submit" %>
+  </div>
+
+<% end %>
+
+
+<div class="clear"></div>

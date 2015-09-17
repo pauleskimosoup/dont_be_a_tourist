@@ -1,0 +1,168 @@
+<!-- Close the inner and content divs -->
+</div></div>
+<% hide_right %>
+<% @page_name = "universities" %>
+  <div id="content_long">
+    <div class="top_home_main">
+      <div class="inner">
+        <% unless @university.picture2_id.blank? %>
+          <div class="university-top-pic">
+          <!-- this is a banner -->
+          <span></span>
+          <%= scale_image_tag(@university.picture2, {:width => 562, :height => 270, :class => "university-top-img"}) %>
+          </div>
+        <% end %>
+
+        <div class="university-page-cta">
+          <h2>Join <br /> Awesome Tours</h2>
+
+
+          <div class="university-banner-area">
+            <p>direct from</p>
+
+            <% unless @university.picture1_id.blank? %>
+              <%= scale_image_tag @university.picture1, {:width => 270, :height => 100 }%>
+            <% else %>
+               <%= @university.name %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="inner white-bg">
+  <div class="content_long">
+      <div class="intro_text">
+        <!-- <h1>Join awesome UK trips direct from <%= @university.name %>.</h1> -->
+
+        <p class="highlight university-benefit">
+          Meet new friends exploring UK & Europe!!
+        </p>
+      </div>
+    </div>
+
+
+
+  <div class="trip_list">
+    <% unless @trips.blank? %>
+    <% for trip in @trips %>
+
+      <div class="box-wide">
+        <div class="box_border">
+          <h3><%= link_to trip.name, :controller => :trip, :action => :show, :id => trip.id %>
+            <span class="tagline"><%= trip.tagline %></span>
+          </h3>
+          <div class="picture">
+            <% if trip.photo_1? -%>
+              <span></span>
+              <%= image_tag trip.photo_1.url, :height => 120, :width => 240, :alt => trip.photo_1_alt %>
+            <% end -%>
+            </div>
+          <div class="text">
+            <% if trip.sold_out? -%>
+              <span class="sold_out"></span>
+            <% end -%>
+
+            <div class="float-left date-summary">
+              Date: <strong><%= trip.dates %></strong><br />
+              Duration: <strong><%= pluralize trip.length, "DAY", "DAYS" %></strong>
+            </div>
+
+            <div class="float-right trip-summary">
+
+            <p>
+              <%= trip.pretty_adult_price %><br />
+              <%= trip.pretty_student_price %>
+            </p>
+
+            <% unless trip.trip_group.blank? %>
+              <div class="star-rating">
+                <%
+                i = 0;
+                total = 5; # total stars
+
+                until i >= total do
+                  i += 1;
+                %>
+
+                  <% if i <= trip.trip_group.rating.to_i  %>
+                    <%= image_tag "star-on.png", :alt => "star" %>
+                  <% else %>
+                    <%= image_tag "star-off.png", :alt => "star" %>
+                  <% end %>
+
+                <% end %>
+              </div>
+            <% end %>
+
+            <%= link_to trip.sold_out? ? "RESERVE PLACES" : "READ MORE / BOOK", {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"more"} %>
+            </div>
+            <div class="clear"></div>
+
+          </div>
+          <div class="status">
+            <%= render :partial => "trip/status_line_1", :locals => {:trip => trip} %>
+            <br />
+            <%= render :partial => "trip/status_line_2", :locals => {:trip => trip} %>
+            <% if current_user? && !current_user.welcome_code.blank? && !PromoCode.find_by_code(current_user.welcome_code.to_s).nil? -%>
+              <br />
+              <%= render :partial => "trip/status_line_3", :locals => {:trip => trip, :code => PromoCode.find_by_code(current_user.welcome_code.to_s)} %>
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+
+
+
+<!--
+    <% unless @banners.blank? %>
+      <%# unless @banners.count <= 1 %>
+        <%= render "home_benefit_banners_javascript" %>
+      <%# end %>
+
+      <div class="whats_it_like box-standard half_width_item">
+        <a href="<%= url_for(:controller => "web", :action => "past_trips") %>">
+          <% @banners.each_with_index do |banner, index| %>
+            <% display = (index == 0) ? "" : "none" %>
+
+            <div class="university-show-item home_benefit_banner_image" id="home_benefit_banner_image_<%= index %>" style="display: <%= display %>; position: absolute;">
+              <span></span>
+              <div class="home_benefit_content">
+                <div id="home_benefit_content_<%= index %>">
+                  <p class="banner_quote"><%= brev(banner.quote, 120) %></p>
+                  <%= brev(banner.description, 255) %>
+                </div>
+              </div>
+              <%= image_tag banner.picture1.url, :width => '417', :height => '286', :alt => '', :id => index, :class => "no-margin" %>
+            </div>
+          <% end %>
+        </a>
+      </div>
+    <% end %>
+-->
+    <% end %>
+  </div>
+
+  <div class="clear"></div>
+
+
+
+<% unless @trip_groups.blank? %>
+  <h3>Join more awesome tours from other locations..</h3>
+  <% @trip_groups.each do |trip_group| %>
+    <div class="trip_group">
+      <h3><%= link_to trip_group.name, "/trip/search?trip_group_id=#{trip_group.id}&commit=Go" %></h3>
+
+      <% if trip_group.has_picture1? %>
+        <div class="picture">
+          <%= link_to (scale_image_tag trip_group.picture1, :width => 295, :height => 148), "/trip/search?trip_group_id=#{trip_group.id}&commit=Go" %>
+        </div>
+      <% end %>
+
+    </div>
+  <% end %>
+  <div class="clear"></div>
+<% end %>

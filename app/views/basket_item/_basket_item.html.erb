@@ -1,0 +1,42 @@
+<tr>
+
+  <td valign="top">
+    <strong>Name:</strong> 
+    <%= basket_item.first_name %> <%= basket_item.last_name %>
+    <br />
+    
+    <strong>Gender:</strong> 
+    <%= basket_item.gender %>
+    <br />
+    
+    <strong>Type:</strong>
+    <%= basket_item.buyer_type.titleize %>
+    <br />
+       
+    <%= basket_item.pickup_dropoff %>
+  </td>
+  
+  <td valign="top">
+  <strong>Price:</strong> <br />
+  <%= number_to_currency basket_item.trip.price(basket_item.buyer_type), :unit => "&pound;" %>
+  </td>
+  
+  <td valign="top" rowspan=<%= 1 + basket_item.products.length + (basket_item.upgrade? ? 1 : 0) %>>
+    <%= link_to "[remove]", {:action => "destroy_basket_item", :id => basket_item.id}, :confirm => "Are you sure?" %>
+  </td>
+  
+</tr>
+
+<% if basket_item.upgrade? %>
+  <tr>
+    <td><%= basket_item.trip.format_upgrade_description %></td>
+    <td><%= number_to_currency basket_item.trip.upgrade_price, :unit => "&pound;" %></td>
+  </tr>
+<% end %>
+
+<% for product in basket_item.products %>
+  <tr>
+    <td><%=  product.name %></td>
+    <td><%= number_to_currency product.price, :unit => "&pound;" %></td>
+  </tr>
+<% end %>

@@ -1,0 +1,35 @@
+<%% @page_title = "<%= print_name %>" %>
+
+<%% for <%= file_name %> in @<%= file_name.pluralize %> %>
+<div>
+
+<%%= link_to <%= file_name %>.name, :action => 'show', :id => <%= file_name %> %><br />
+
+<% if model_fields.map(&:name).index("image1_id") %>
+  <%% image = <%= file_name %>.images.first %>
+  <%% if image and image.exists? %>
+    <%%= <%= file_name %>.summary %> <br />
+  <%% end %>
+<% end %>
+
+<% if model_fields.map(&:name).index("summary") %>
+<%%= <%= file_name %>.summary %> <br />
+<% end %>
+
+
+
+</div>
+<%% end %>
+
+<%% if @<%= file_name %>_pages.count != 0 %>
+  <div class="pagecount">
+    <%% if @<%= file_name %>_pages.previous_page -%>
+      <%%= link_with_params '&lt;&lt; Back', :action => 'list', :page => @<%= file_name %>_pages.previous_page %>
+    <%% end -%>
+    <%%= @<%= file_name %>_pages.range %> of <%%= @<%= file_name %>_pages.count %>
+    <%% if @<%= file_name %>_pages.next_page -%>
+      <%%= link_with_params 'Next &gt;&gt;', :action => 'list', :page => @<%= file_name %>_pages.next_page %>
+    <%% end -%>
+  </div>
+<%% end %>
+

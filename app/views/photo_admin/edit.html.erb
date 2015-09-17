@@ -1,0 +1,4 @@
+<h1><%= @page_title = "Update Photo" -%></h1>
+
+      View the page you're editing <%= link_to "here", :controller => 'photo', :action => "show", :id => @photo %>
+      <%= render :partial => 'form', :locals => {:photo => @photo} %>

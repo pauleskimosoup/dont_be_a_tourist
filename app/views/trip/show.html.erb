@@ -1,0 +1,392 @@
+<% @include_tinymce_script = true %>
+<%= javascript_include_tag :defaults %>
+<% hide_right %>
+
+<% unless @trip.trip_group.blank? %>
+
+  <% url = "http://#{request.host}#{request.port.blank? ? "" :  ":#{request.port}" }#{url_for(@trip.trip_group)}" %>
+  <% url = "http://www.dontbeatourist.co.uk#{url_for(@trip.trip_group)}" %>
+<% end %>
+
+
+
+<script type="text/javascript">
+  var pictures_count = <%= @pictures_count %>;
+  var pictures_array = new Array(<% @pictures_array.each_with_index do |picture, index| -%> <%= index %> <%= "," unless picture == @pictures_array.last %> <% end -%>);
+  var j = 0;
+
+  var currentPicture = pictures_array[0];
+
+  var bannerInterval = setInterval(function() {
+    if( currentPicture < pictures_count - 1 ) {
+      currentPicture += 1;
+    } else {
+      currentPicture = 0;
+    }
+
+    pictureMove(currentPicture);
+
+  }, 5000);
+
+  function jumpToPicture(picture_id){
+    clearInterval(bannerInterval);
+    pictureMove(picture_id);
+  }
+
+  function pictureMove(picture_id) {
+    document.getElementById("picture-" + pictures_array[j]).hide();
+    document.getElementById("picture-control-" + pictures_array[j]).className = '';
+    j = pictures_array.indexOf(picture_id);
+    document.getElementById("picture-" + pictures_array[j]).show();
+    document.getElementById("picture-control-" + pictures_array[j]).className = 'highlight';
+  }
+
+  //var tabs =  ['trip_itinerary','trip_included','trip_more_info', 'activities', 'destinations', 'trip_info'];
+  var tabs =  ['trip_included', 'trip_itinerary', 'destinations', 'trip_info'];
+  //var links = ['itine_link','whinc_link','whnot_link', 'activ_link', 'desti_link', 'ess_info'];
+  var links = ['whinc_link', 'itine_link', 'desti_link', 'ess_info'];
+
+  function tabTo(tabName, linkName)
+  {
+    // close and hide all the other tabs
+    for (i=0;i<tabs.length;i=i+1)
+    {
+      var elementName = tabs[i];
+    Element.hide(elementName);
+    $(links[i]).className = 'tab_link';
+    }
+
+    // set the tab to show up
+    Element.show(tabName);
+    $(linkName).className = 'tab_link_on';
+  }
+</script>
+<% @page_title = @trip.name %>
+
+<%= render :partial => 'shared/our_trips_breadcrumbs' %>
+
+<% if flash[:error] %>
+  <div id="flash_error"><%= flash[:error] %></div>
+<% end %>
+
+<div class="margin-right-10">
+  <h1 style="margin: 0px 0 10px 0px; padding: 0px;display:inline;">
+    <%= @page_title %>
+
+    <iframe src="//www.facebook.com/plugins/like.php?href=<%= url %>&amp;width=450&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false" scrolling="no" frameborder="0"
+            style="border:none; overflow:hidden; width:150px; height:21px;margin:12px 0 0 30px;vertical-align: bottom;" allowTransparency="true">
+    </iframe>
+  </h1>
+
+  <% unless @trip.trip_group.blank? %>
+    <div class="margin-right-10 star-rating float-right">
+      <%
+      i = 0;
+      total = 5; # total stars
+
+      until i >= total do
+        i += 1;
+      %>
+
+      <% if i <= @trip.trip_group.rating.to_i  %>
+        <%= image_tag "star-on.png", :alt => "star" %>
+      <% else %>
+        <%= image_tag "star-off.png", :alt => "star" %>
+      <% end %>
+
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+
+
+<!--
+Star rating to be added at a later date.
+<img src="http://placehold.it/300x40&text=Star+rating" alt="Star rating" class="float-right" />
+-->
+
+<div class="clear"></div>
+
+<div class="trip_list">
+  <div class="half-width float-left date_highlight">
+    <%= @trip.length_dates %>
+  </div>
+
+  <p class="margin-right-10 float-right">
+    <%= @trip.pretty_adult_price %>
+    <%= @trip.pretty_student_price %>
+  </p>
+
+  <div class="clear"></div>
+
+  <p class="margin-right-10 float-left trip-status">
+    <%= render "status_line_1", :trip => @trip %>
+  </p>
+
+  <p class="margin-right-10 float-right trip-status">
+    <%= render "status_line_2", :trip => @trip %>
+  </p>
+
+  <div class="clear"></div>
+
+  <!--
+  <span class="cost">Adults: <%= number_to_currency @trip.adult_price, :unit => "&pound;" %></span>
+  <span class="cost_student">Students: <%= number_to_currency @trip.student_price, :unit => "&pound;" %></span>
+  -->
+</div>
+
+<div class="destination_pic_container">
+  <% if @trip.sold_out?  -%>
+    <span class="sold_out"></span>
+  <% end -%>
+
+<% if @trip.photo_1 -%>
+  <%= image_tag @trip.photo_1.url, :alt => @trip.photo_1_alt, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-0" %>
+  <% if @trip.photo_2 %>
+    <%= image_tag @trip.photo_2.url, :alt => @trip.photo_2_alt, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-1", :style => "display: none" %>
+  <% end %>
+  <% if @trip.photo_3 %>
+    <%= image_tag @trip.photo_3.url, :alt => @trip.photo_3_alt,  :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-2", :style => "display: none" %>
+  <% end %>
+  <% if @trip.photo_4 %>
+    <%= image_tag @trip.photo_4.url, :alt => @trip.photo_4_alt, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic", :id => "picture-3", :style => "display: none" %>
+  <% end %>
+<% elsif @destination.has_picture1? %>
+  <%= scale_image_tag @destination.picture1, :border => "0", :hspace => "0", :vspace => "0", :width => 887, :height => 397, :class => "destination_pic" %>
+<% end %>
+<% unless @pictures_count.blank? || (@pictures_count == 1) %>
+  <div class="banner_controls trip-show">
+    <% @pictures_array.each_with_index do | picture_number, index | -%>
+      <%= link_to_function "", "jumpToPicture(#{index})", :class => (picture_number == @pictures_array.first) ? 'highlight' : nil, :id => "picture-control-#{index}" %>
+    <% end -%>
+  </div>
+<% end %>
+</div>
+<br />
+
+<div class="float-left trip-tabs ">
+  <div>
+    <p class="large"><strong><%= @trip.tagline %></strong></p>
+    <p><%= @trip.summary %></p>
+  </div>
+
+  <a name="top_of_tabs"></a>
+  <a id="whinc_link" href="#top_of_tabs" onclick='tabTo("trip_included", "whinc_link");'' class="tab_link_on">What's Included</a>
+  <a id="itine_link" href="#top_of_tabs" onclick="tabTo('trip_itinerary', 'itine_link');" class="tab_link">Itinerary</a>
+  <% unless @trip.accommodations.blank? %>
+    <!-- <a id="whnot_link" href="#top_of_tabs" onclick="tabTo('trip_more_info', 'whnot_link');" class="tab_link">Accommodation</a> -->
+  <% end %>
+
+
+  <a id="desti_link" href="#top_of_tabs" onclick='tabTo("destinations", "desti_link");'' class="tab_link">Destinations</a>
+  <a id="ess_info" href="#top_of_tabs" onclick='tabTo("trip_info", "ess_info");'' class="tab_link">Essential Info</a>
+
+  <div class="tab_box" id="trip_included">
+    <h2>What's Included</h2>
+    <%= @trip.whats_included  %>
+  </div>
+
+  <div class="tab_box" id="trip_itinerary" style="display: none;">
+    <h2>Itinerary</h2>
+
+    <% if @trip.day_itineraries.size > 0 %>
+      <a href="javascript:;" id="toggleswitch" class="day-it-toggle">Show all</a>
+
+      <div class="clear"></div>
+
+      <% @itineraries = @trip.day_itineraries.sort_by { |a| +(a.day.to_i) } %>
+
+      <% @itineraries.each_with_index do |day_itinerary, i| %>
+        <div class="day-itinerary">
+          <div class="day-it-day">
+            Day
+            <strong>
+              <%= day_itinerary.day %>
+            </strong>
+          </div>
+
+          <p class="day-it-summary">
+            <a href="#" onclick="Effect.toggle('details-' + <%= i %>, 'slide'); return false;"><%= day_itinerary.title %></a>
+          </p>
+
+          <div class="clear"></div>
+
+          <div class="day-it-detailed-content">
+            <%= day_itinerary.summary %>
+          </div>
+
+          <div class="day-it-toggled" id="details-<%= i %>" style="display: none;">
+            <%= raw day_itinerary.content %>
+
+            <div class="day-it-detailed-highlights half_width_item">
+              <% unless day_itinerary.highlights.blank? %>
+                <strong>Highlights</strong>
+              <% end %>
+              <%= raw day_itinerary.highlights %>
+
+            </div>
+
+            <% if day_itinerary.activities.size > 0 %>
+              <strong>Optional Extras</strong>
+              <ul class="day-it-activities half_width_item">
+              <% day_itinerary.activities.each do |activity| %>
+                <li><%= activity.name %></li>
+              <% end %>
+              </ul>
+            <% end %>
+            <div class="clear"></div>
+          </div>
+
+          <a href="#" title="Toggle more details" onclick="daytoggle('details-' + <%= i %>, this);return false;" class="day-it-toggle toggleswitch-individual">Show</a>
+          <div class="clear"></div>
+
+        </div>
+      <% end %>
+    <% end %>
+
+    <%= @trip.itinerary %>
+  </div>
+
+  <div class="tab_box" id="destinations" style="display: none;">
+    <h2>Destinations</h2>
+    <%= render :partial => 'destination/destination', :collection => @destinations %>
+  </div>
+
+  <div class="tab_box" id="trip_info" style="display: none;">
+    <h2>Essential Info</h2>
+
+    <div class="bullet_highlight">
+      <%= @trip.highlights %>
+    </div>
+
+    <h2 id="pickup" class="trip_highlights">Pickups</h2>
+    <% for pickup_dropoff_time in @trip.pickup_dropoff_times.sort_by{|x| x.pickup_time} %>
+      <p>
+      <strong><%= pickup_dropoff_time.pickup.name %> - <%= pickup_dropoff_time.pickup_time %></strong><br />
+      <%= pickup_dropoff_time.pickup.location %>
+      <%= link_to("Map", pickup_dropoff_time.pickup.map_code, :popup => true) if pickup_dropoff_time.pickup.map_code? %>
+      </p>
+    <% end %>
+    <h2 class="trip_highlights">Dropoffs</h2>
+    <% for pickup_dropoff_time in @trip.pickup_dropoff_times.sort_by{|x| x.dropoff_time} %>
+      <p><strong><%= pickup_dropoff_time.pickup.name %> - <%= pickup_dropoff_time.dropoff_time %></strong><br />
+      <%= pickup_dropoff_time.pickup.location %></p>
+    <% end %>
+
+    <!-- <h2 class="trip_highlights">Trip Highlights</h2> -->
+
+    <br />
+  </div>
+
+  <% unless @trip.places < 1 %>
+    <p align="center">
+      <%= link_to "BOOK NOW", {:controller => "basket", :action => "book", :trip_id => @trip.id}, {:class => "book_now_white", :title=>"Book Online Now"} %>
+      <a href="#how-to-book" title="How do I book?" class="how-to-book" id="how-to-book-link2">How do I book?</a>
+    </p>
+  <% end %>
+</div>
+
+<div class="float-right trip-right-details">
+  <%= render :partial => 'shared/book_now', :locals => {:trip => @trip} %>
+  <% if @trip.places < 1 %>
+
+    <% else %>
+      <a href="#how-to-book" title="How do I book?" class="how-to-book-button" id="how-to-book-link1">How do I book?</a>
+  <% end %>
+
+  <div class="what_you_say">
+  <h2 class="what_you_say">What you say</h2>
+  <div>
+    <% comments = Review.active.destination_ids(@trip.destination_ids).random[0..2] %>
+    <% if comments.length > 0  %>
+      <% for comment in comments %>
+        <%= render :partial => "review/review", :locals => { :review => comment } %>
+      <% end %>
+    <% else %>
+      No reviews posted yet.  If you have a review to post get in contact with us on facebook!
+    <% end %>
+  </div>
+</div>
+  <br />
+
+
+  <%= render :partial => 'web/right_past_trips', :locals => {:destination_ids => @trip.destination_ids, :hide_comments => true} %>
+  <%# render :partial => 'web/right_upcoming_trips', :locals => {:destination => @destination} %>
+  <br />
+</div>
+
+<div id="how-to-book">
+  <h1>Booking is easy, safe and secure</h1>
+
+  <p>It only takes 10 minutes and you do not need a UK bank account.</p>
+
+  <ol>
+    <li>Click <%= image_tag "booking-popup/book-now-button.jpg" %></li>
+    <li class="small-line-height">Enter your details</li>
+    <li class="small-line-height">Choose your payment method</li>
+  </ol>
+
+  <div class="card-payment half_width_item">
+    <span class="header header-right">Card Payment</span>
+
+    <p>Pay securely using a <strong>credit/debit card</strong> and get your booking confirmation immediately.</p>
+
+    <%= image_tag "booking-popup/paypal.jpg" %>
+
+    <p>
+      <strong>We accept payment from 193 countries</strong> <br />
+      (and you can choose your language).
+    </p>
+  </div>
+
+  <div class="cash-payment float-right half_width_item">
+    <span class="header header-left">Cash Payment</span>
+
+    <p>Pay <strong>cash</strong> in to the HSBC bank and receive your booking confirmation the next working day.</p>
+
+    <%= image_tag "booking-popup/hsbc.jpg" %>
+
+    <p> <strong>You do not need a bank account.</strong> </p>
+  </div>
+
+  <div class="clear"></div>
+
+  <p class="text-center">Need some help? Contact us <%= link_to "here", {:controller => "web", :action => "contact"} %>.</p>
+</div>
+
+<div id="accommodation">
+  <h2>Accommodation</h2>
+  <%= @trip.more_info  %>
+
+  <% unless @trip.accommodations.blank? %>
+    <% @trip.accommodations.each do |accommodation| %>
+      <%= accommodation.name %>
+      <%= accommodation.summary %>
+      <%= raw accommodation.content %>
+    <% end %>
+  <% end %>
+</div>
+
+<div id="activities">
+<h2>Activities</h2>
+  <% if @activities.length > 0 -%>
+  <p>We've planned lots of free or low cost activities to help you explore more and make friends. When we arrive, you can choose to do as much or as little as you want with us. </p>
+    <% count = 0 %>
+      <% for activity in @activities %>
+
+  <h3><%= activity.name %></h3>
+      <div class='activity_popup'>
+      <% count += 1 %>
+        <% if activity.has_picture1? %>
+          <%= scale_image_tag activity.picture1, :width => 120, :height => 120 %>
+        <% end %>
+        <%= simple_format activity.summary %>
+        <div class="clear"></div>
+      </div>
+    <% end %>
+
+  <% else -%>
+    No Activities
+  <% end -%>
+</div>

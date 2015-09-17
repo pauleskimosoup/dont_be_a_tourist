@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>Don't be a Tourist - <%= @page_title %></title>
+  <!-- STYLESHEETS -->
+  <%= stylesheet_link_tag "webstyle.css" %>
+  <%= stylesheet_link_tag "tnymc.css" %>
+  <%= stylesheet_link_tag "lightbox.css" %>
+  <%= stylesheet_link_tag "lytebox.css" %>
+  <!--[if lt IE 7]>
+  <style type="text/css">
+    .photos_pic span, .top_home_pic span, .basket_checkout_navigation span, .benefit_banner_image span { behavior: url(../iepngfix.htc); }
+  </style>
+  <![endif]-->
+  <!-- JAVASCRIPTS -->
+  <%= javascript_include_tag "prototype" %>
+  <%= javascript_include_tag "scriptaculous" %>
+  <%= javascript_include_tag "swfobject" %>
+  <%= javascript_include_tag "lytebox.js" %>
+  <% if @include_tinymce_script -%>
+    <%= javascript_include_tag "tiny_mce/tiny_mce.js" %>
+    <%= javascript_include_tag "tiny_mce_config" %>
+  <% end -%>
+  <% if yield :scripts %>
+    <%= yield :scripts %>
+  <% end %>
+  <script type="text/javascript">
+    // <![CDATA[ var userflyHost = (("https:" == document.location.protocol) ? "https://secure.userfly.com" : " http://asset.userfly.com"); document.write(unescape("%3Cscript src='" + userflyHost + "/users/75222/userfly.js' type='text/javascript'%3E%3C/script%3E")); // ]]>
+  </script>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-24231686-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<% banners = HomeBanner.active.position -%>
+
+<% if yield :body %>
+  <%= yield :body %>
+<% else %>
+  <% if @page_name == "home_page" && ((banners.length == 1) || banners.empty?) -%>
+    <body onload="performSetup();">
+  <% elsif (@page_name == "home_page" && banners.length > 1) -%>
+    <body onload="performSetup(); startPage();">
+  <% else -%>
+    <body>
+  <% end -%>
+<% end %>
+
+<a name="top"></a>
+<p class="skip"><a href="#content" accesskey="s">Skip to the main content</a></p>
+
+<!-- TOP BANNER -->
+
+<% if @page_name == "home_page" %>
+  <div class="top_home">
+<% else %>
+  <div class="top">
+<% end %>
+
+  <div class="inner">
+
+    <% if @page_name == "home_page" %>
+      <%= link_to image_tag("logo.gif", :alt => "Don't be a Tourist", :title => "Don't be a Tourist", :border => "0", :hspace => "0", :vspace => "0", :class => "logo")+ '', {:controller => 'web', :action => 'index'} %>
+    <% else %>
+      <%= link_to image_tag("logo_blue.gif", :alt => "Don't be a Tourist", :title => "Don't be a Tourist", :border => "0", :hspace => "0", :vspace => "0", :class => "logo")+ '', {:controller => 'web', :action => 'index'} %>
+    <% end %>
+
+    <div class="top_navs">
+
+      <!-- TOP NAVIGATION -->
+
+      <div class="nav">
+        <%= link_to "Home", {:controller => "web", :action => "index"}, {:accesskey => "0"} %> |
+        <%= link_to "About Us", {:controller => "web", :action => "about_us"}, {:accesskey => "3"} %> |
+        <%= link_to "News", {:controller => "news"}, {:accesskey => "4"} %> |
+        <%= link_to "Questions", {:controller => "web", :action => "faqs"}, {:accesskey => "5"} %> |
+        <%= link_to "Our Ethics", :controller => "web", :action => "our_ethics" %> |
+        <%= link_to "Safety", :controller => "web", :action => "safety" %> |
+        <%= link_to "Terms &amp; Conditions", :controller => "web", :action => "terms" %> |
+        <% if session[:user_id] %>
+          <%= link_to "Your Bookings", {:controller => "user", :action => "home"}, {:class => "your_bookings", :accesskey => "6"} %>
+        <% else %>
+          <%= link_to "Your Bookings", {:controller => "user", :action => "login"}, {:class => "your_bookings", :accesskey => "6"} %>
+        <% end %>
+      </div>
+
+      <!-- MAIN NAVIGATION -->
+
+      <div class="main_nav">
+        <%= link_to "Contact us", {:controller => "web", :action => "contact"}, {:accesskey => "2"} %>
+        <%= link_to "Special Offers", {:controller => "web", :action => "special_offers"}, {:accesskey => "9"} %>
+        <%= link_to "What's it like?", {:controller => "web", :action => "past_trips"}, {:accesskey => "8"} %>
+        <%= link_to "Find a tour", {:controller => "trip", :action => "list"}, {:accesskey => "7"} %>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- HOMEPAGE TOP BANNER -->
+
+<script type="text/javascript">
+
+  var divs_to_fade = new Array(<%= banners.collect{|x| "\"banner_#{x.id}\""}.join(',') %>);
+  var control_divs = new Array(<%= banners.collect{|x| "\"banner_control_#{x.id}\""}.join(',') %>);
+  var i = 0;
+  var wait = 5000;
+  var inter;
+
+  function swapFade()
+  {
+    Effect.Fade(divs_to_fade[i], { duration:1, from:1.0, to:0.0 });
+    document.getElementById(control_divs[i]).className = '';
+    i++;
+    if (i == divs_to_fade.length) i = 0;
+    Effect.Appear(divs_to_fade[i], { duration:1, from:0.0, to:1.0 });
+    document.getElementById(control_divs[i]).className = 'highlight';
+  }
+
+  function startPage()
+  {
+    inter = setInterval('swapFade()', wait);
+  }
+
+  function jumpToBanner(id, bcid)
+  {
+    clearInterval(inter);
+    <% banners.each do |b| -%>
+      document.getElementById("banner_<%= b.id %>").hide();
+      document.getElementById("banner_control_<%= b.id %>").className = '';
+    <% end -%>
+    document.getElementById(id).show();
+    document.getElementById(bcid).className = 'highlight';
+    for (var j = 0; j < divs_to_fade.length; j++) {
+      if(divs_to_fade[j] == id){
+        i = j;
+      }
+    }
+    inter = setInterval('swapFade()', wait);
+  }
+
+  document.observe("dom:loaded", function() {
+    startPage();
+  });
+
+
+</script>
+
+<% if @page_name == "home_page" %>
+
+  <div class="top_home_main">
+    <div class="inner">
+      <% for banner in banners -%>
+        <% content_tag :div, :style => (banner == banners.first) ? nil : 'display:none;', :id => "banner_#{banner.id}", :class => "home_banner_container" do -%>
+          <%= render 'layouts/home_banner', :banner => banner %>
+        <% end -%>
+      <% end -%>
+
+      <% if banners.length > 1 -%>
+        <div class="banner_controls">
+          <% banners.each do |banner| -%>
+            <%= link_to_function ' ', "jumpToBanner('banner_#{banner.id}', 'banner_control_#{banner.id}')", :class => (banner == banners.first) ? 'highlight' : nil, :id => "banner_control_#{banner.id}" %>
+          <% end -%>
+        </div>
+      <% end -%>
+
+    </div>
+  </div>
+
+
+<% end %>
+
+<!-- MAIN CONTENT -->
+
+<div class="inner">
+
+  <% unless hide_flash? %>
+    <%- flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    <%- end -%>
+  <% end -%>
+
+  <% unless hide_right? %>
+
+    <div id="content">
+      <%= @content_for_layout %>
+     </div>
+
+    <div class="right">
+      <%= render :partial => "shared/your_booking" %>
+      <% if yield :right %>
+        <%= yield :right %>
+      <% else %>
+        <%= render :partial => 'web/right_main' %>
+      <% end %>
+    </div>
+
+    <div class="clear"></div>
+
+  <% else %>
+
+    <div id="content_long">
+      <%= @content_for_layout %>
+      <div class="clear"></div>
+     </div>
+
+  <% end %>
+
+</div>
+
+<!-- IN-PAGE FOOTER -->
+
+<div class="bottom">
+  <div class="inner">
+    <h2>Follow Us</h2>
+    <div><a href="http://www.facebook.com/dontbeatourist" target="_blank"><%= image_tag "facebook.gif", :alt => "Facebook", :border => "0", :hspace => "0", :vspace => "0" %></a></div>
+    <div><a href="http://twitter.com/dontbeatourist" target="_blank"><%= image_tag "twitter.gif", :alt => "Twitter", :border => "0", :hspace => "0", :vspace => "0" %></a></div>
+    <div><a href="http://www.youtube.com/dontbeatourist" target="_blank"><%= image_tag "youtube.gif", :alt => "YouTube", :border => "0", :hspace => "0", :vspace => "0" %></a></div>
+   </div>
+</div>
+
+<!-- BLACK FOOTER -->
+
+<div id="footer">
+  <div class="inner">
+    <div class="footer_left">
+      <%= link_to "Home", :controller => "web", :action => "index" %> I
+      <%= link_to "Destinations", :controller => "destination", :action => "list" %> I
+      <%= link_to "Find a tour", :controller => "trip", :action => "list" %> I
+      <%= link_to "What's it like", :controller => "web", :action => "past_trips" %> I
+      <%= link_to "Login", :controller => "user", :action => "login" %> I
+      <%= link_to "News", :controller => "news" %> I
+      <%= link_to "Contacts Us", :controller => "web", :action => "contact" %> I
+      <%= link_to "About Us", :controller => "web", :action => "about_us" %> I
+      <%= link_to "Questions", :controller => "web", :action => "faqs" %><br />
+      <%= link_to "Our Ethics", :controller => "web", :action => "our_ethics" %> I
+      <%= link_to "Safety", :controller => "web", :action => "safety" %> I
+      <%= link_to "Terms &amp; Conditions", :controller => "web", :action => "terms" %>
+      <p class="small"><%= link_to "&copy; Don't be a Tourist", :controller=>"web", :action=>"index" %> | <a href="http://www.eskimosoup.co.uk" target="_blank">Web design by eskimosoup</a> | <%= link_to "Accessibility", {:controller => "web", :action => "accessibility"}, {:accesskey => "1"} %> | <a href="http://validator.w3.org/check?uri=referer" target="_blank">Valid XHTML</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer" target="_blank">Valid CSS</a></p>
+    </div>
+    <div class="footer_right">
+      <a href="http://www.vivalafiesta.co.uk/" target="_blank"><%= image_tag "viva_logo.gif", :vspace=>'0', :hspace=>'0', :border=>'0', :alt=>'Partners with: Viva La Fiesta' %></a>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

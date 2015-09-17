@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Don't be a Tourist - <%= @page_title %></title>
+<!-- STYLESHEETS -->
+<%= stylesheet_link_tag "webstyle.css" %>
+<%= stylesheet_link_tag "tnymc.css" %>
+<%= stylesheet_link_tag "lightbox.css" %>
+<%= stylesheet_link_tag "lytebox.css" %>
+<!--[if lt IE 7]>
+<style type="text/css">
+  .photos_pic span, .top_home_pic span, .basket_checkout_navigation span, .benefit_banner_image span { behavior: url(../iepngfix.htc); }
+</style>
+<![endif]-->
+<!-- JAVASCRIPTS -->
+<%= javascript_include_tag "prototype" %>
+<%= javascript_include_tag "swfobject" %>
+<%= javascript_include_tag "lytebox.js" %>
+<% if @include_tinymce_script -%>
+  <%= javascript_include_tag "tiny_mce/tiny_mce.js" %>
+  <%= javascript_include_tag "tiny_mce_config" %>
+<% end -%>
+<% if yield :scripts %>
+  <%= yield :scripts %>
+<% end %>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24231686-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+<% if yield :body %>
+  <%= yield :body %>
+<% else %>
+  <body>
+<% end %>
+
+<a name="top"></a>
+<p class="skip"><a href="#content" accesskey="s">Skip to the main content</a></p>
+
+
+<!-- TOP BANNER -->
+<% if  @page_name == "home_page" %>
+  <div class="top_home">
+<% else %>
+  <div class="top">
+<% end %>
+<div class="inner">
+<% if  @page_name == "home_page" %>
+  <%= link_to image_tag("logo.gif", :alt => "Don't be a Tourist", :title => "Don't be a Tourist", :border => "0", :hspace => "0", :vspace => "0", :class => "logo")+ '', {:controller => 'web', :action => 'index'} %>
+<% else %>
+  <%= link_to image_tag("logo_blue.gif", :alt => "Don't be a Tourist", :title => "Don't be a Tourist", :border => "0", :hspace => "0", :vspace => "0", :class => "logo")+ '', {:controller => 'web', :action => 'index'} %>
+<% end %>
+
+  <div class="top_navs">
+    <!-- TOP NAVIGATION -->
+    <div class="nav">
+      <%= link_to "Home", {:controller => "web", :action => "index"}, {:accesskey => "0"} %> |
+      <%= link_to "About Us", {:controller => "web", :action => "about_us"}, {:accesskey => "3"} %> |
+      <%= link_to "News", {:controller => "news"}, {:accesskey => "4"} %> |
+      <%= link_to "Questions", {:controller => "web", :action => "faqs"}, {:accesskey => "5"} %> |
+      <%= link_to "Our Ethics", :controller => "web", :action => "our_ethics" %> |
+      <%= link_to "Safety", :controller => "web", :action => "safety" %> |
+      <%= link_to "Terms &amp; Conditions", :controller => "web", :action => "terms" %> |
+      <% if session[:user_id] %>
+        <%= link_to "Your Bookings", {:controller => "user", :action => "home"}, {:class => "your_bookings", :accesskey => "6"} %>
+      <% else %>
+        <%= link_to "Your Bookings", {:controller => "user", :action => "login"}, {:class => "your_bookings", :accesskey => "6"} %>
+      <% end %>
+    </div>
+
+
+    <!-- MAIN NAVIGATION -->
+    <div class="main_nav">
+      <%= link_to "Contact us", {:controller => "web", :action => "contact"}, {:accesskey => "2"} %>
+      <%= link_to "What's it like?", {:controller => "web", :action => "past_trips"}, {:accesskey => "8"} %>
+      <%= link_to "Find a tour", {:controller => "trip", :action => "list"}, {:accesskey => "7"} %>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- HOMEPAGE TOP BANNER -->
+<% if  @page_name == "home_page" %>
+  <div class="top_home_main">
+    <div class="inner">
+
+     <div class="top_home_left">
+      <div class="top_home_pic">
+        <span></span>
+        <%= image_tag "home_top_pic_example.jpg", :alt => "Don't be a Tourist", :title => "Don't be a Tourist", :border => "0", :hspace => "0", :height => "268", :width => "557", :vspace => "0", :class => "home_main_trip_img" %>
+      </div>
+    </div>
+
+    <div class="top_home_right">
+      <div class="home_next_trip">
+        <% if Trip.active.upcoming.length > 0 %>
+           <% trip = Trip.active.upcoming.first %>
+          <% if trip %>
+            <p>
+              <%= link_to "#{trip.name}", {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"large_link"} %>
+            </p>
+            <p class="date_highlight">
+              <%= link_to trip.length_dates, {:controller => :trip, :action => :show, :id => trip.id} %>
+            </p>
+          <% end %>
+        </div>
+        <p align="center">
+          <%= link_to "Book Now", {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"book_now", :title=>"Book Online Now"} %>
+        </p>
+      </div>
+    <% end %>
+    </div>
+  </div>
+<% end %>
+
+
+<!-- MAIN CONTENT -->
+<div class="inner">
+
+
+    <% unless hide_right? %>
+         <div id="content">
+      <%= @content_for_layout %>
+     </div>
+
+         <div class="right">
+      <%= render :partial => "shared/your_booking" %>
+      <% if yield :right %>
+        <%= yield :right %>
+        <% else %>
+          <%= render :partial => 'web/right_main' %>
+        <% end %>
+        </div>
+    <% else %>
+        <div id="content_long">
+      <%= @content_for_layout %>
+     </div>
+  <% end %>
+
+
+</div>
+
+
+<!-- IN-PAGE FOOTER -->
+<div class="bottom">
+  <div class="inner">
+    <h2>Follow Us</h2>
+    <div><a href="http://www.facebook.com/dontbeatourist" target="_blank"><%= image_tag "facebook.gif", :alt => "Facebook", :border => "0", :hspace => "0", :vspace => "0" %></a></div>
+    <div><a href="http://twitter.com/dontbeatourist" target="_blank"><%= image_tag "twitter.gif", :alt => "Twitter", :border => "0", :hspace => "0", :vspace => "0" %></a></div>
+    <div><a href="http://www.youtube.com/dontbeatourist" target="_blank"><%= image_tag "youtube.gif", :alt => "YouTube", :border => "0", :hspace => "0", :vspace => "0" %></a></div>
+   </div>
+</div>
+
+
+<!-- BLACK FOOTER -->
+<div id="footer">
+  <div class="inner">
+    <p><%= link_to "Home", :controller => "web", :action => "index" %> I
+    <%= link_to "Destinations", :controller => "destination", :action => "list" %> I
+    <%= link_to "Find a tour", :controller => "trip", :action => "list" %> I
+    <%= link_to "What's it like", :controller => "web", :action => "past_trips" %> I
+    <%= link_to "Login", :controller => "user", :action => "login" %> I
+    <%= link_to "News", :controller => "news" %> I
+    <%= link_to "Contacts Us", :controller => "web", :action => "contact" %> I
+    <%= link_to "About Us", :controller => "web", :action => "about_us" %> I
+    <%= link_to "Questions", :controller => "web", :action => "faqs" %> I
+    <%= link_to "Our Ethics", :controller => "web", :action => "our_ethics" %> I
+    <%= link_to "Safety", :controller => "web", :action => "safety" %> I
+    <%= link_to "Terms &amp; Conditions", :controller => "web", :action => "terms" %></p>
+
+    <p class="small"><%= link_to "&copy; Don't be a Tourist", :controller=>"web", :action=>"index" %> | <a href="http://www.eskimosoup.co.uk" target="_blank">Web design by eskimosoup</a> | <%= link_to "Accessibility", {:controller => "web", :action => "accessibility"}, {:accesskey => "1"} %> | <a href="http://validator.w3.org/check?uri=referer" target="_blank">Valid XHTML</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer" target="_blank">Valid CSS</a></p>
+  </div>
+</div>
+
+</body>
+</html>

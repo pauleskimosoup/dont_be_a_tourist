@@ -1,0 +1,39 @@
+<% @page_title = "Where we go" %>
+
+<%= render :partial => 'shared/our_trips_breadcrumbs' %>
+
+<h1><%= @page_title %></h1>
+
+<% if @destinations.length > 0 %>
+  <% for destination in @destinations %>
+    <% if destination.has_picture1? %>
+    <div class="large_background_main">
+      <%= link_to (scale_image_tag destination.picture1, :height => 136, :width => 176, :border => 0), {:controller => :destination, :action => :show, :id => destination.id} %>
+    </div>
+    <% end %>
+    <h2><%= destination.name %></h2>
+    <p><%= destination.summary %></p>
+    <%= link_to "READ MORE", {:controller => :destination, :action => :show, :id => destination.id}, {:class=>"more"} %>
+    <div class="hr"><hr /></div>
+  <% end %>
+<% else %>
+  Destinations coming soon!
+<% end %>
+
+
+<% if @destination_pages.count != 0 %>
+  <div class="pagecount">
+    <% if @destination_pages.previous_page -%>
+      <%= link_with_params '&lt;&lt; Back', :action => 'list', :page => @destination_pages.previous_page %>
+    <% end -%>
+    <%= @destination_pages.range %> of <%= @destination_pages.count %>
+    <% if @destination_pages.next_page -%>
+      <%= link_with_params 'Next &gt;&gt;', :action => 'list', :page => @destination_pages.next_page %>
+    <% end -%>
+  </div>
+<% end %>
+
+
+<% content_for :right do %>
+  <%= render :partial => 'web/right_upcoming_trips' %>
+<% end %>

@@ -1,0 +1,4 @@
+<h1><%= @page_title = "Update my details" -%></h1>
+<%= render :partial => 'errors' %>
+<%= render :partial => 'form', :locals => {:user => @user} %>
+<p><%= link_to "Go back to my options", :action=>"home" %></p>

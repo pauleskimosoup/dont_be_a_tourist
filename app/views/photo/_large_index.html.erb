@@ -1,0 +1,20 @@
+<!-- FIND PHOTOS -->
+<% if defined?(trip_id) && !trip_id.blank? %>
+  <% photos = Photo.active.trip_id(trip_id).random %>
+<% elsif defined?(destination_id) && !destination_id.blank? %>
+  <% photos = Photo.active.destination_id(destination_id).random %>
+<% else %>
+  <% photos = Photo.active.random %>
+<% end %>
+<% photos = photos[0..23] %>
+
+<!-- VIEW -->
+<h2 class="your_photos">Your Photos</h2>
+
+<a href="http://www.facebook.com/dontbeatourist?v=photos" target="_blank" class="share">share via Facebook</a>
+
+<% if photos.length > 0 %>
+  <%= render :partial => "photo/photo", :collection => photos %>
+<% else %>
+  Photos coming soon!
+<% end %>

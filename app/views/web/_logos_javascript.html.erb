@@ -1,0 +1,50 @@
+<script type="text/javascript">
+
+  var position =   0;
+  var moveBy   = 166;
+
+  function performSetup() {
+    // Work around Firefox's treatment of the scrollHeight property
+    $('logos_box').style.overflow = "scroll";
+    window.properScrollHeight = $('logos_box').scrollHeight;
+    $('logos_box').style.overflow = "hidden";
+    // Turn on the right arrow when there is a sufficient number of logos
+    if((position + moveBy) < window.properScrollHeight) {
+      $('right_arrow').className = 'on';
+    }
+  }
+
+  function showStuff() {
+    alert(((position + 50) + moveBy) <= window.properScrollHeight);
+    // alert(((position + 10) + moveBy) > window.properScrollHeight);
+  }
+
+  // Shuffle panel down
+  function left() {
+    if(position > 0) {
+      new Effect.Move('logos', {x:0, y:moveBy, transition:Effect.Transitions.full});
+      position = (position - moveBy);
+      if(position > 0) {
+        $('left_arrow').className = 'on';
+      } else {
+        $('left_arrow').className = 'off';
+      }
+      $('right_arrow').className = 'on';
+    }
+  }
+
+  // Shuffle panel up
+  function right() {
+    if(((position + 50) + moveBy) <= window.properScrollHeight) {
+      new Effect.Move('logos', {x:0, y:-moveBy, transition:Effect.Transitions.full});
+      position = (position + moveBy);
+      if(((position + 50) + moveBy) <= window.properScrollHeight) {
+        $('right_arrow').className = 'on';
+      } else {
+        $('right_arrow').className = 'off';
+      }
+      $('left_arrow').className = 'on';
+    }
+  }
+
+</script>

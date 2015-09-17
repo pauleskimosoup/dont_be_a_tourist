@@ -1,0 +1,17 @@
+<h1><%= @page_title = "Edit Bookings" %></h1>
+
+<%- flash.each do |name, msg| -%>
+  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+<%- end -%>
+
+<% form_for @basket_item, :url => {:controller => "basket", :action => "booking", :id => @basket_item.id}, :html => {:method => "post"} do |f| %>
+
+  <%= f.error_messages :header_message => nil, :message => "Opps... looks like there was a problem with the information you entered", :id => "flash_error" %>
+
+  <%= render "basket_item_fields", :f => f %>
+
+  <%= render "extra_basket_item_fields", :f => f %>
+
+  <%= f.submit "Submit" %>
+
+<% end %>

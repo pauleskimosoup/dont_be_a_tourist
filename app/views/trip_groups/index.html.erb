@@ -1,0 +1,9 @@
+<h1>Listing trip groups</h1>
+
+<% @trip_groups.each do |trip_group| %>
+  <%= link_to trip_group.name, trip_group %>
+  <%= raw trip_group.summary %>
+  <% if trip_group.has_picture1? %>
+    <%= scale_image_tag trip_group.picture1, :width => 120, :height => 120 %>
+  <% end %>
+<% end %>

@@ -1,0 +1,22 @@
+<% trip = f.object.trip %>
+
+<% if trip.products.length > 0 %>
+
+  <fieldset>
+  <legend>Extras</legend>
+
+  <% for product in trip.products %>
+    <p>
+      <%= check_box_tag "basket_item[product_ids][]", product.id, f.object.products.include?(product), {:class => "checkbox"} %>
+      <%= product.name %> - <%= number_to_currency product.price, :unit => "&pound;" %>
+      <br />
+      <%= product.summary %>
+      <% if product.has_picture1? %>
+        <br /><%= scale_image_tag product.picture1, :width => 80, :height => 80 %>
+      <% end %>
+    </p>
+  <% end %>
+
+  </fieldset>
+
+<% end %>

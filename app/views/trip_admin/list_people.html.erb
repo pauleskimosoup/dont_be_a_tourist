@@ -1,0 +1,76 @@
+<h1><%= @page_title = "View Bookings" -%></h1>
+
+<p>
+  <%= link_to "Download CSV Info List", :action => "list_people_csv", :id => @trip.id %> |
+  <%= link_to "Download CSV Pickup List", :action => "list_people_pickup_csv", :id => @trip.id %>
+</p>
+
+<div id="search">
+<% form_tag({}, :method => "GET") do %>
+  <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+  <%= link_to "Clear", :search => "" %>
+<% end %>
+</div>
+
+<h2>Bookings</h2>
+
+<% if @booking_pages.count != 0 -%>
+
+  <%= admin_table({:columns =>
+    [
+      ["Booked At", lambda{|x| l x.created_at}, "created_at"],
+      ["Order Reference", lambda{|x| x.booking.id }, nil],
+      ["Booking Reference", lambda{|x| x.id }, nil],
+      :first_name,
+      :last_name,
+      ["User who booked", lambda{|x| link_to x.booking.user.name_booked, :controller => :user_admin, :action => :edit, :id => x.booking.user.id if (x.booking && x.booking.user)}, nil],
+      :gender,
+      :upgrade,
+      ["Payment Type", lambda{|x| x.booking.booking_type.titleize}, "bookings.booking_type"],
+      ["Status", lambda{|x| x.booking.booking_status.titleize}, "bookings.booking_status"],
+      ["Discount Code", lambda{|x| x.booking.discount_code_name}, nil],
+      ["Extras", lambda{|x| x.products.collect{|p| p.name}.to_sentence}, nil],
+      ["Note", lambda{|x| x.booking.notes? ? "yes" : "no" }, nil],
+      ["Edit", lambda{|x| link_to 'Edit', :controller => :booking_admin, :action => :edit, :id => x.id}, nil],
+    ],
+    :list => @bookings,
+    :pages => @booking_pages,
+    :delete_action => nil,
+    :edit_action => nil,
+    :list_action => 'list_people'
+  })%>
+
+<% else -%>
+
+  There are currently no Bookings in the system.
+
+<% end -%>
+
+<h2>Cancelled Bookings</h2>
+
+<% if @cancelled_bookings.count != 0 -%>
+
+  <%= admin_table({:columns =>
+    [
+      ["Order Reference", lambda{|x| x.booking_id }, "bookings_id"],
+      :first_name,
+      :last_name,
+      :gender,
+      :upgrade,
+      :pickup_dropoff,
+      ["Created At", lambda{|x| x.created_at}, "created_at"],
+      ["Subtotal", lambda{|x| number_to_currency x.subtotal, :unit => "&pound;"}, "subtotal"]
+    ],
+    :list => @cancelled_bookings,
+    :pages => @cancelled_booking_pages,
+    :delete_action => nil,
+    :edit_action => nil,
+    :list_action => 'list_people'
+  })%>
+
+<% else -%>
+
+  There are currently no Cancelled Bookings in the system.
+
+<% end -%>
+

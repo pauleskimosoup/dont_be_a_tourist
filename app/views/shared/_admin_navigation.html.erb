@@ -1,0 +1,27 @@
+<%= module_links 'News', :news_admin %>
+<span class="navtitle">Trip Information</span>
+<%= module_links 'Trip', :trip_admin %>
+<%= module_links 'Activity', :activity_admin %>
+<%= module_links 'Extras', :product_admin %>
+<%= module_links 'Pickups', :pickup_admin %>
+<%= module_links 'Accommodation', :accommodation_admin %>
+<%= module_links 'Destination', :destination_admin %>
+<%= module_links 'Promo Codes', :promo_code_admin %>
+<%= module_links 'Flags', :flag_admin %>
+<%= module_links 'Splash Pages', :splash_page_admin %>
+<%= module_links 'Trip Groups', :trip_groups_admin %>
+<%= module_links 'Universities', :university_admin %>
+<span class="navtitle">Bookings</span>
+<%= module_links 'Users', :user_admin, [["See All", "list"], ["Add New", "new"], ["Newsletter List", "newsletter_list"]] %>
+<%= module_links 'Bookings', :booking_admin, [["See Pending", "pending_list"], ["See All", "list_bookings"]] %>
+<%= module_links 'Reservations', :reservations_admin, [["See All", "list"]] %>
+<span class="navtitle">Past Trips</span>
+<%= module_links 'Comments', :review_admin, [["See All", "list"], ["Add New", "new"]]%>
+<%= module_links 'Photos', :photo_admin, [["See All", "list"], ["Add New", "new"]]%>
+<%= module_links 'Video', :video_admin, [["See All", "list"], ["Add New", "new"]]%>
+<span class="navtitle">Home Banners</span>
+<%= module_links 'Home Banners', :home_banner_admin, [["See All", "list"], ["Add New", "new"]]%>
+<span class="navtitle">Benefit Banners</span>
+<%= module_links 'Benefit Banners', :benefit_banner_admin, [["See All", "list"], ["Add New", "new"]]%>
+<span class="navtitle">Contact Details</span>
+<%= link_to "Web Contact Details", {:controller => :settings, :action => :edit_details}, :class => "main" %>

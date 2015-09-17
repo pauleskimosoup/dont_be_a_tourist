@@ -1,0 +1,17 @@
+<div class="content">
+  <% if flash[:notice] -%>
+        <p class="message"><%= flash[:notice] %></p>
+  <% end -%>
+  <% if flash[:error_field] -%>
+        <h3>Oops... there were problems with the following fields</h3>
+      <ul>
+        <li><%= error_message_on "user", "first_name", "First name " %></li>
+        <li><%= error_message_on "user", "family_name", "Family name " %></li>
+        <li><%= error_message_on "user", "email", "Email " %></li>
+        <li><%= error_message_on "user", "password", "Password " %></li>
+        <li><%= error_message_on "user", "address", "Address " %></li>
+        <li><%= error_message_on "user", "phone", "Mobile phone number " %></li>
+        <li><%= error_message_on "user", "university", "University " %></li>
+      </ul>
+  <% end %>
+</div>

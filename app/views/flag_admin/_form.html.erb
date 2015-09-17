@@ -1,0 +1,32 @@
+<% form_for(flag, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+  <%= f.error_messages %>
+  
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+  
+  <p>
+    Country Codes can be found <%= link_to "here", "http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2", :popup => true %>.
+  </p>
+  
+  <p>
+    <%= f.label :country_code %>
+    <%= f.text_field :country_code %>
+  </p>
+  
+  <p>
+    <%= f.label :display %>
+    <%= f.check_box :display, :class => "checkbox" %>
+  </p>
+  
+  <p>
+    <% if flag.new_record? %>
+      <%= f.submit "Create", :class => 'submit' %>
+    <% else %>
+      <%= f.submit "Update", :class => 'submit' %>
+    <% end %>
+  </p>
+  
+<% end %>

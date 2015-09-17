@@ -1,0 +1,21 @@
+<%% form_for(<%= file_name %>, :url => {}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+<% for field in form_fields %>
+    <% if field.field_type == "tinymce_text_area" %>
+      <%% @include_tinymce_script = true %>
+    <% end %>
+  <p>
+    <% unless field.field_type == "image" or field.field_type == "document" %>
+    <%%= f.label :<%= field.name %> %>
+    <% end %>
+    <%%= f.<%= field.field_type %> :<%= field.name %> %>
+  </p>
+<% end %>
+  <p>
+    <%% if <%= file_name %>.new_record? %>
+    <%%= f.submit "Create", :class => 'submit' %>
+    <%% else %>
+    <%%= f.submit "Update", :class => 'submit' %>
+    <%% end %>
+  </p>
+<%% end %>

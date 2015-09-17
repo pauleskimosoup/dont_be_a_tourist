@@ -1,0 +1,40 @@
+<% form_for(photo, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+  <p>
+  <% if photo.has_picture1? %>
+    <%= scale_image_tag(photo.picture1, :height => 500, :width => 500) %>
+  <% else %>
+    No Picture Uploaded!
+  <% end %>
+  </p>
+  
+  <p>
+    <%= f.label "Select a Past Trip" %>
+    <% @trips = Trip.find(:all, :conditions => ["display=1 AND start_date < ?", Date.today]) %>
+    <%= select_tag 'photo[trip_id]', options_from_collection_for_select(@trips, :id, :destination_name_dates, @photo.trip_id) %>
+  </p>
+  
+  <p>
+    <%= f.label "Select a Destination" %>
+    <% @destinations = [["None/Don't Know", nil]] %>
+    <% Destination.all.each{|x| @destinations << [x.name,x.id]} %>
+    <%= select_tag 'photo[destination_id]', options_for_select(@destinations, @photo.destination_id) %>
+  </p>
+ 
+  <p>
+    <%= f.comprehensive_image_field :picture1_id %>
+  </p>
+      
+  <p>
+    <%= f.label :display %>
+    <%= f.check_box :display %>
+  </p>
+
+  <p>
+    <% if photo.new_record? %>
+    <%= f.submit "Create", :class => 'submit' %>
+    <% else %>
+    <%= f.submit "Update", :class => 'submit' %>
+    <% end %>
+  </p>
+<% end %>

@@ -1,0 +1,112 @@
+<h1><%= @page_title = "View Bookings" -%></h1>
+
+<% if @booking_pages.count != 0 -%>
+
+<% form_for(@booking, :url => {:controller => "booking_admin", :action => "update", :id => @booking.id}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+<fieldset>
+<legend>Booking Details (Locked)</legend>
+<p>
+  <%= f.label :created_at, "Booking Created at" %>:
+  <%= @booking.created_at.strftime("%I:%M %p on %d/%m/%Y") %>
+</p>
+
+<p>
+  <%= f.label :booking_type, 'Payment Type' %>:
+  <%= @booking.booking_type.titleize %>
+</p>
+
+</fieldset>
+
+<fieldset>
+<legend>Note</legend>
+<%= f.text_area :notes %>
+<p><%= f.submit "Update Note" %></p>
+</fieldset>
+
+<fieldset>
+<legend>Payment</legend>
+<p>
+  <%= f.label :booking_status %>:
+  <%= @booking.booking_status.titleize %>
+</p>
+
+<p>
+
+  <%= link_to("Cancel Booking and Send Email", {:controller => "booking_admin", :action => "cancel_with_email", :id => @booking.id}, :confirm => "Are you sure? This will CANCEL the booking") %>
+   |
+  <%= link_to("Just Cancel Booking", {:controller => "booking_admin", :action => "cancel_without_email", :id => @booking.id}, :confirm => "Are you sure? This will CANCEL the booking") %>
+   |
+  <%= link_to("Resend Booking Confirmation Email", {:controller => "booking_admin", :action => "resend_payment_confirmation", :id => @booking.id}, :confirm => "Are you sure? This will RESEND the booking confirmation email ") %>
+  <% unless @booking.booking_status == "paid" %>
+     |
+    <%= link_to("Mark as Paid", {:controller => "booking_admin", :action => "confirm", :id => @booking.id}, :confirm => "Are you sure? This will CONFIRM the booking and email the customer") %>
+     |
+    <%= link_to("Make Payment", {:controller => "booking_admin", :action => "make_payment", :id => @booking.id}) %>
+  <% end %>
+</p>
+
+<p>
+  <%= f.label 'Booking Total' %>:
+  <%= number_to_currency @booking.total, :unit => "&pound;" %>
+</p>
+
+<p>
+  <%= f.label 'Special Offer Amount' %>:
+  <%= number_to_currency @booking.discount_total, :unit => "&pound;" %>
+  <% if @booking.discount_code_name %>
+    (Promo Code: <%= @booking.discount_code_name %>)
+  <% end %>
+</p>
+
+<p>
+  <%= f.label 'Paid' %>:
+  <%= number_to_currency @booking.total - @booking.outstanding_balance, :unit => "&pound;" %>
+</p>
+
+<p>
+  <%= f.label 'Pending' %>:
+  <%= number_to_currency @booking.outstanding_balance, :unit => "&pound;" %>
+</p>
+
+<% if f.object.booking_type == "admin" %>
+<p>
+  <%= f.label :outstanding_balance %>:
+  <%= number_to_currency @booking.outstanding_balance, :unit => "&pound;" %>
+</p>
+
+<p>
+  <%= link_to "Send Payment Reminder", {:action => "send_payment_reminder", :id => f.object.id}, :confirm => "Are you sure? This will email the user a link to allow them to finish payment" %>
+</p>
+<% end %>
+
+</p>
+</fieldset>
+
+<% end %>
+
+
+  <%= admin_table({:columns =>[
+    ["Booking Reference", lambda{|x| x.booking.id}, "bookings.id"],
+    :first_name,
+    :last_name,
+    ["Trip", lambda{|x| x.trip.name_dates}, nil],
+    :gender,
+    :upgrade,
+    :pickup_dropoff,
+    ["Discount Code", lambda{|x| x.booking.discount_code_name}, nil],
+    ["Extras", lambda{|x| x.products.collect{|p| p.name}.to_sentence}, nil]
+    ],
+    :list => @bookings,
+    :pages => @booking_pages,
+    :delete_action => nil
+  })%>
+
+<% else -%>
+
+  There are currently no Bookings in the system.
+
+<% end -%>
+
+
+

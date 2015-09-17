@@ -1,0 +1,110 @@
+<div id="trip_groups">
+  <h1><%= @page_title = @trip_group.name %></h1>
+
+  <div class="group-summary">
+    <% if @trip_group.has_picture1? %>
+      <div class="float-left">
+    <% end %>
+
+      <p>
+        <%= raw  @trip_group.summary %>
+      </p>
+
+    <% if @trip_group.has_picture1? %>
+      </div>
+    <% end %>
+
+    <% if @trip_group.has_picture1? %>
+      <div class="float-right">
+        <%= scale_image_tag @trip_group.picture1, :width => 120, :height => 120 %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="clear"></div>
+
+  <% unless @trips.blank? %>
+    <h3>University Trips</h3>
+
+    <div class="trip_list">
+      <% for trip in @trips %>
+        <div class="box-<%= trip.box_width.downcase %>">
+          <div class="box_border">
+
+            <h3>
+              <%= link_to trip.name, :controller => :trip, :action => :show, :id => trip.id %>
+
+              <span class="tagline">
+                <%= trip.tagline %>
+              </span>
+            </h3>
+
+            <% if trip.picture1 -%>
+
+              <% if trip.box_width == "Wide" %>
+                <div class="picture"><span></span><%= scale_image_tag trip.picture1, :height => 120, :width => 240 %></div>
+              <% else %>
+                <div class="picture"><span></span><%= scale_image_tag trip.picture1, :height => 120, :width => 160 %></div>
+              <% end %>
+
+            <% end -%>
+
+            <div class="date"><%= pluralize trip.length, "DAY", "DAYS" %><br /><%= trip.dates %></div>
+
+            <div class="text">
+              <% if trip.sold_out? -%>
+                <span class="sold_out"></span>
+              <% end -%>
+
+              <p>
+                <%= trip.pretty_adult_price %><br />
+                <%= trip.pretty_student_price %>
+              </p>
+
+              <% unless trip.trip_group.blank? %>
+              <div class="star-rating float-left">
+                <%
+                i = 0;
+                total = 5; # total stars
+
+                until i >= total do
+                  i += 1;
+                %>
+
+                  <% if i <= trip.trip_group.rating.to_i  %>
+                    <%= image_tag "star-on.png", :alt => "star" %>
+                  <% else %>
+                    <%= image_tag "star-off.png", :alt => "star" %>
+                  <% end %>
+
+                <% end %>
+              </div>
+            <% end %>
+
+              <%= link_to trip.sold_out? ? "RESERVE PLACES" : "READ MORE / BOOK", {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"more"} %>
+
+              <div class="clear"></div>
+            </div>
+
+            <div class="status">
+              <%= render :partial => "trip/status_line_1", :locals => {:trip => trip} %>
+
+              <br />
+
+              <%= render :partial => "trip/status_line_2", :locals => {:trip => trip} %>
+
+              <% if current_user? && !current_user.welcome_code.blank? && !PromoCode.find_by_code(current_user.welcome_code.to_s).nil? -%>
+                <br />
+                <%= render :partial => "trip/status_line_3", :locals => {:trip => trip, :code => PromoCode.find_by_code(current_user.welcome_code.to_s)} %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+    <div class="clear"></div>
+  </div>
+  <% end %>
+
+
+</div>

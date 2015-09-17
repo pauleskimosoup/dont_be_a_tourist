@@ -1,0 +1,35 @@
+<% @page_title = "Backups" %>
+<% @page_type = "Backups" %>
+
+<script>
+function restore_backup(id) {
+  if (confirm("Are you sure you want to restore the database with this backup? You will lose all changes made after the backup was saved")) {
+    window.location = "/settings/restore_backup/" + id;
+  };
+}
+</script>
+
+<p>
+Below is a list of all previous backups. From here you can restore an old database or delete unwanted backups.
+</p>
+<div class="clear"></div>
+
+<p>Or <%= link_to 'BACKUP', :action => 'backup' %> your current database now.</p>
+
+<% if @backup_pages.count != 0 -%>
+
+  <%= admin_table({:columns =>
+  [:created_at,
+  ["Restore", lambda{|b| link_to("Restore", :action => 'restore_backup', :id => b.id)}, nil]],
+    :list => @backups,
+    :list_action => 'list_backups',
+    :delete_action => 'delete_backup',
+    :pages => @backup_pages
+  })%>
+
+<% else -%>
+
+
+<p align="center"><strong>There are currently no backups in the system.</strong><br />
+<%= link_to "Click here to backup your database now.", :action => 'backup' %></p>
+<% end -%>

@@ -1,0 +1,46 @@
+<% destination ||= nil %>
+<% trip ||= nil %>
+
+<div class="right_our_trips_stretch_grey">
+<h2 class="past_trips_grey">Past Trips</h2>
+<div class="padding">
+    <% destinations = Destination.find(:all, :conditions => "display=1") %>
+    <% if destinations.length > 0 %>
+      <% for temp_destination in destinations %>
+         <%= link_to temp_destination.name, {:controller => :web, :action => :past_trips, :destination => temp_destination.id}, {:class=>"our_trips_link"} %>
+      <% end %>
+    <% else %>
+      Destinations coming soon!
+    <% end %>
+</div><%= image_tag "right_bg_grey_stretch_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %></div>
+
+  <div class="right_our_trips_stretch_grey">
+    <div class="padding">
+      <% if destination %>
+        <h2>Past <%= destination.name %> Trips</h2>
+        <% trips = destination.trips.select{|x| x.display == true && x.end_date < Date.today} %>
+        <% if trips.length > 0 %>
+          <% for trip in trips %>
+            <p><%= link_to trip.name, {:controller => :web, :action => :past_trips, :trip => trip.id, :destination => destination.id}, {:class=>"large_link"} %></p>
+            <p class="date_highlight"><%= link_to trip.length_dates, {:controller => :trip, :action => :show, :id => trip.id} %></p>
+            <hr />
+          <% end %>
+        <% else %>
+          Past trips coming soon!
+        <% end %>
+      <% else %>
+        <h2>Our Recent Trips</h2>
+        <% trips = Trip.find(:all, :conditions => ["display=1 AND start_date < ?", Date.today], :limit => 10, :order => 'start_date DESC') %>
+        <% if trips.length > 0 %>
+          <% for trip in trips %>
+          <p><%= link_to trip.name, {:controller => :web, :action => :past_trips, :trip => trip.id}, {:class=>"large_link"} %></p>
+          <p class="date_highlight"><%= link_to trip.length_dates, {:controller => :trip, :action => :show, :id => trip.id} %></p>
+          <hr />
+          <% end %>
+        <% else %>
+          Recent trips coming soon!
+        <% end %>
+      <% end %>
+    </div>
+  <%= image_tag "right_bg_grey_stretch_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %></div>
+  </div>

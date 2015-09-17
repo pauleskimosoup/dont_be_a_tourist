@@ -1,0 +1,13 @@
+<% @page_title = "Upload an image" %>
+<%= link_to 'Back', :action => :dialog %>
+<% form_for(@picture, :url => "", :html => {:style => "width:465px !important;", :method => "post", :multipart => true}) do |f| %>
+<p>
+<%= f.label :file_data, 'Picture' %>
+<%= f.file_field(:file_data) %>
+</p>
+<p>
+<%= f.label :tags, 'Folder' %>
+<%= f.tag_field(:tags) %>
+</p>
+<%= f.submit "Upload", :class => "submit" %>
+<% end %>

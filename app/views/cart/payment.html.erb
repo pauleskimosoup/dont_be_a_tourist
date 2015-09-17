@@ -1,0 +1,98 @@
+<% @page_title = "Pay now" %>
+
+<div id="content">
+
+<h1>Pay now</h1>
+  <h3>Your details</h3>
+  <p>
+    Name: <%= @user.name %><br />
+    Email address: <%= @user.email %><br />
+    Phone number: <%= @user.phone %><br />
+    Address: <%= @user.address %><br />
+    [ <%= link_to 'edit details', :controller => :user, :action => :edit %> ]
+
+  </p>
+
+  <h2>Grand total: <%= @cart.totalf %></h2>
+
+  <% if @cart.not_full? %>
+  <p>Select payment method</p>
+
+  <p>Paypal</p>
+  <p>Use your debit / credit card, bank account (where available) or PayPal account.  (PayPal payments are subject to a 3.5% charge - <%= price paypal_extra @cart.total %>).</p>
+  <p>
+    <%= link_to "PAYPAL PAYMENT", {:controller => :cart, :action => :billing_address}, {:class=>"form_button"} %>
+  </p>
+  <br />
+
+  <p>Cash</p>
+  <p>Pay cash into a branch of the HSBC Bank near where you live.  (Cash payments are subject to a 3.5% charge - <%= price paypal_extra @cart.total %>).</p>
+  <p>
+    <%= link_to "CASH PAYMENT", {:controller => :cart, :action => :offline_payment_info}, {:class=>"form_button"} %>
+  </p>
+
+  <% else %>
+    <p><font color="red">One of the Trips you are booking on is already full!</font></p>
+  <% end %>
+
+  <div class="hr"><hr /></div>
+
+
+<h2>Your bookings</h2>
+
+<% if @cart.trip_instances.length > 0 %>
+
+  <% trips = @cart.trip_instances.collect{|x| x.trip}.uniq %>
+  <% count = 0 %>
+  <% for trip in trips %>
+    <h3><%= trip.name %></h3>
+    <p><span  class="date_highlight"><%= trip.length_dates %></span></p>
+    <% bookings = @cart.trip_instances.select{|y| y.trip == trip } %>
+    <% for trip_instance in bookings %>
+      <% count += 1 %>
+
+      <p>
+      <strong>Name:</strong> <%= trip_instance.name %><br />
+      <strong>Total Cost:</strong> <%= trip_instance.totalf %>
+      </p>
+      <!-- toggle zone -->
+      <div id="<%= "trip_instance_#{count}" %>" style='display:none'>
+        <h3>Your details</h3>
+        <strong>Sex:</strong> <%= trip_instance.sex %><br />
+        <strong>Pickup &amp; Dropoff:</strong> <%= trip_instance.pickup_dropoff %><br />
+
+        <h3>Cost</h3>
+        <strong>Trip base price:</strong> <%= trip_instance.trip.pricef %><br />
+        <strong>Upgrade:</strong> <%= trip_instance.upgrade ? "Yes - Extra #{trip_instance.trip.upgrade_pricef}":"No" %><br />
+        <% if trip_instance.products.length > 0 %>
+        <strong>Extras:</strong>
+          <% for product in trip_instance.products %>
+            <%= product.name %> - Extra <%= product.pricef %>
+          <% end %>
+        <% end %>
+      </div>
+      <!-- end of toggle zone -->
+
+      <!-- toggle buttons -->
+      <%= link_to_remote (image_tag "admin/more.gif", {:id => "trip_instance_#{count}_more_button", :border=>"0", :hspace=>"0", :vspace=>"0", :alt=>"see more details"}), :url => "show_more?trip=#{count}" %>
+      <%= link_to_remote (image_tag "admin/less.gif", {:id => "trip_instance_#{count}_less_button", :style => "display:none", :border=>"0", :hspace=>"0", :vspace=>"0", :alt=>"see less details"}), :url => "show_more?trip=#{count}" %>
+
+
+      <% end %>
+  <% end %>
+
+<br />
+<br />
+ <% if @cart.notes && @cart.notes.strip != '' %>
+ <h3>Your Notes:</h3>
+      <p><%= @cart.notes %></p>
+<% end %>
+
+<% else %>
+   <p>You currently have no trips booked.</p>
+<% end %>
+
+</div>
+<div class="right">
+<%= render :partial => 'web/right_cart', :locals => {:cart => @cart} %>
+</div>

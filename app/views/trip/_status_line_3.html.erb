@@ -1,0 +1,31 @@
+<% if code %>
+
+  <% if (current_user.how_long_in_uk.eql?("Not studying") || current_user.how_long_in_uk.blank?) %>
+
+    <% price = trip.adult_price %>
+    <% if trip.early_early_bird? %>
+      <% price = price - (20.0 * (trip.adult_price/100.00)) %>
+    <% elsif trip.early_bird? %>
+      <% price = price - (10.0 * (trip.adult_price/100.00)) %>
+    <% end %>
+
+  <% else %>
+
+    <% price = trip.student_price %>
+    <% if trip.early_early_bird? %>
+      <% price = price - (20.0 * (trip.student_price/100.00)) %>
+    <% elsif trip.early_bird? %>
+      <% price = price - (10.0 * (trip.student_price/100.00)) %>
+    <% end %>
+
+  <% end %>
+
+  <% if !trip.sold_out? %>
+    <strong>
+      <% if (trip.day_trip? && code.code == "welcome1") || (trip.overnight_trip? && code.code == "welcome2") -%>
+        Only <%= number_to_currency((price.to_f - code.saving_value), :unit => "&pound;") %> with your voucher today!
+      <% end %>
+    </strong>
+  <% end %>
+
+<% end %>

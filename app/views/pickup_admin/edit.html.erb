@@ -1,0 +1,4 @@
+<h1><%= @page_title = "Update Pickup" -%></h1>
+
+      View the page you're editing <%= link_to "here", :controller => 'pickup', :action => "show", :id => @pickup %>
+      <%= render :partial => 'form', :locals => {:pickup => @pickup} %>

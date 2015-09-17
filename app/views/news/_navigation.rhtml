@@ -1,0 +1,50 @@
+<div class="right" id="news_nav">
+<% unless @tags.empty? && @years.empty? -%>
+  
+  <% unless @tags.empty? -%>
+  <div class="right_our_trips_stretch">
+  <div class="padding">
+  <h2>Categorised Stories</h2>
+  <ul>
+    <% for tag in @tags -%>
+      <li><%= link_to tag.humanize, :action => 'list', :tag => tag %></li>
+    <% end -%>
+  </ul>
+  </div><%= image_tag "right_bg_sm_stretch_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %></div>
+  <% end -%>
+
+  <% unless @years.empty? -%>
+  <div class="right_our_trips_stretch">
+  <div class="padding">
+  <h2>Archived Stories</h2>
+  <ul>
+    <li><%= link_to 'Latest Headlines', :controller => 'news' %></li>
+        <% for year in @years -%>
+      <li><%= link_to_remote(year, :update => "months_of_#{year}", :url => {:action => 'ajax_year', :year => year}) %></li>
+      <li>
+          <div id="months_of_<%= year %>">
+        <% if year == @year -%>
+          <%= render(:partial => 'year', :locals => {:months => @months, :year => year}) %>
+        <% end -%>
+      </div>
+          </li>
+    <% end -%>
+  </ul>
+  </div><%= image_tag "right_bg_sm_stretch_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %></div>
+  <% end -%>
+
+<% end %>
+
+
+<div class="right_our_trips_stretch">
+<br />
+
+<%= render 'shared/sign_up' %>
+
+<%= image_tag "blue_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %></div>
+
+
+</div>
+
+
+

@@ -1,0 +1,55 @@
+<%= javascript_include_tag "jcrop/jquery.min.js" %>
+<%= javascript_include_tag "jcrop/jquery.Jcrop.min.js" %>
+<%= stylesheet_link_tag "jcrop/jquery.Jcrop.css"%>
+
+<% width ||= 100 %>
+<% height ||= 100 %>
+
+<% if master_crop.original_width > 750 %>
+  <% scale_factor = 750.to_f/master_crop.original_width.to_f %>
+<% else %>
+  <% scale_factor = 1 %>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+      $('#cropbox<%= master_crop.id %>').Jcrop
+    ({
+        onChange: updateValues<%= master_crop.id %>,
+      onSelect: updateValues<%= master_crop.id %>
+    })
+    });
+
+  function updateValues<%= master_crop.id %>(coords)
+  {
+    $('#crop_x<%= master_crop.id %>').val(coords.x/<%= scale_factor %>);
+    $('#crop_y<%= master_crop.id %>').val(coords.y/<%= scale_factor %>);
+    $('#crop_w<%= master_crop.id %>').val(coords.w/<%= scale_factor %>);
+    $('#crop_h<%= master_crop.id %>').val(coords.h/<%= scale_factor %>);
+  }
+</script>
+
+
+<% if master_crop.original_width > 750 %>
+  Original Image (Resized to fit screen)
+  <%= image_tag master_crop.original_url, :id => "cropbox#{master_crop.id}", :width => 750 %>
+<% else %>
+  Original Image (<%= master_crop.original_width %> x <%= master_crop.original_height %> )
+  <%= image_tag master_crop.original_url, :id => "cropbox#{master_crop.id}" %>
+<% end %>
+<% form_tag :url => {:controller => :picture, :action => :master_crop}, :html => {:method => "post", :multipart => true} do %>
+  <% for attribute in ["crop_x#{master_crop.id}", "crop_y#{master_crop.id}", "crop_w#{master_crop.id}", "crop_h#{master_crop.id}"] %>
+      <%= hidden_field_tag attribute, :id => attribute %>
+    <% end %>
+    <%= hidden_field_tag 'picture_id', master_crop.id %>
+    <% if params[:return_url] %>
+      <%= hidden_field_tag 'return_url', params[:return_url] %>
+    <% end %>
+    <%= hidden_field_tag 'picture_ids', params[:picture_ids].to_a.join(',') %>
+  <p>
+    <%= submit_tag 'Crop', :class => 'submit' %>
+    <% if params[:return_url] %>
+      <%= link_to "Finished Cropping", params[:return_url] %>
+    <% end %>
+  </p>
+<% end %>

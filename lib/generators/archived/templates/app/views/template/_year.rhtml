@@ -1,0 +1,9 @@
+<ul>
+  <%% for month in months -%>
+    <%% if month[1] > 0 -%>
+      <li><%%= link_to "#{month_name(month[0])} (#{month[1]})", :action => 'list', :month => month[0], :year => year %></li>
+    <%% else -%>
+      <li><%%= " #{month_name(month[0])} (0) " %></li>
+    <%% end -%>
+  <%% end -%>
+</ul>

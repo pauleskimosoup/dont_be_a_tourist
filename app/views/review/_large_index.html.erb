@@ -1,0 +1,20 @@
+<!-- PICK VIDEO -->
+<% if defined?(trip_id) && !trip_id.blank? %>
+  <% comments = Review.active.trip_id(trip_id).random %>
+<% elsif defined?(destination_id) && !destination_id.blank? %>
+  <% comments = Review.active.destination_id(destination_id).random %>
+<% else %>
+  <% comments = Review.active.random %>
+<% end %>
+<% comments = comments[0..4] %>
+
+<!-- VIEW -->
+<h2 class="comments">Comments</h2>
+
+<a href="http://www.facebook.com/dontbeatourist?v=wall" target="_blank" class="share">share via Facebook</a>
+
+<% if comments.length > 0 %>
+  <%= render :partial => "review/review", :collection => comments %>
+<% else %>
+  Reviews coming soon!
+<% end %>

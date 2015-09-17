@@ -1,0 +1,4 @@
+<h1><%= @page_title = "Update Story" -%></h1>
+
+      View the page you're editing <%= link_to "here", :controller => 'news', :action => "show", :id => @story %>
+      <%= render :partial => 'form', :locals => {:story => @story} %>

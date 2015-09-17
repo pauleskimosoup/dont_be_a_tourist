@@ -1,0 +1,33 @@
+<strong>Name:</strong> <%= booking_item.first_name %> <%= booking_item.last_name %><br />
+<strong>Cost:</strong> <%= number_to_currency booking_item.subtotal, :unit => "&pound;" %><br />
+      
+<!-- toggle zone -->
+<div id="<%= "booking_item_#{booking_item.id}" %>" style='display:none'>
+  <h3>Your details</h3>
+  <strong>Gender:</strong> <%= booking_item.gender %><br />
+  <strong>Pickup &amp; dropoff:</strong> <%= booking_item.pickup_dropoff %>
+  <br />
+
+  <h3>Cost</h3>
+  <strong>Trip base price: </strong>
+  <%= number_to_currency booking_item.trip.price(booking_item.buyer_type), :unit => "&pound;" %> 
+  (<%= booking_item.buyer_type.titleize %> Price)
+  <br />
+  <strong>Upgrade:</strong> <%= booking_item.upgrade ? "Yes - Extra #{number_to_currency booking_item.trip.upgrade_price, :unit => "&pound;"}":"No" %><br />
+  <% if booking_item.products.length > 0 %>
+  <strong>Extras:</strong> 
+    <% for product in booking_item.products %>
+      <%= product.name %> - Extra <%= number_to_currency product.price, :unit => "&pound;" %><br />
+    <% end %>
+  <% end %>
+  <strong>Total:</strong> <%= number_to_currency booking_item.subtotal, :unit => "&pound;" %><br />
+
+</div>
+<!-- end of toggle zone -->
+
+<!-- toggle buttons -->
+<%= link_to_function image_tag("admin/more.gif"), "toggleDetails(#{booking_item.id})", :id => "booking_item_more_#{booking_item.id}", :border=>"0", :hspace=>"5", :vspace=>"0", :title => "see more details" %>
+<%= link_to_function image_tag("admin/less.gif"), "toggleDetails(#{booking_item.id})", :id => "booking_item_less_#{booking_item.id}", :style => "display:none", :border=>"0", :hspace=>"5", :vspace=>"0", :title => "see less details" %>
+
+<br />
+<br />

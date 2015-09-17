@@ -1,0 +1,15 @@
+<h1><%= @page_title = "View All Home Banners" -%></h1>
+<div id="search">
+  <% form_tag({}, :method => "GET") do %>
+    <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+    <%= link_to "Clear", :search => "" %>
+  <% end %>
+</div>
+<% if @banner_pages.count != 0 -%>
+  <%= admin_table({:columns =>[:position, :name, ["Display", lambda{|bb| bb.display? ? "Yes" : "No"}, "display"], :last_updated],
+    :list => @banners,
+    :pages => @banner_pages
+  })%>
+<% else %>
+  There are currently no Home Banners in the system.
+<% end %>

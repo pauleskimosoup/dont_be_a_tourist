@@ -1,0 +1,306 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+strong {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #000;
+	text-align: left;
+	padding-left: 0px;
+	padding-right: 20px;
+	padding-top: 0px;
+	line-height: 1.5;
+}
+
+
+/* Dont Be A Tourist - White Label Travel Services In The UK  */
+
+#container {
+	width: 1200px;
+	margin-left: auto ;
+    margin-right: auto ;
+}
+
+#header {
+	width: 1200px;
+	height: 86px;
+}
+
+#image {
+	width: 1200px;
+	height: 533px;
+	background-image: url(images/main.jpg);
+}
+
+#button {
+	width: 392px;
+	height: 62px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 450px;
+}
+
+#tag {
+	width: 1200px;
+	height: 67px;
+	background-image: url(images/tagbar.jpg);
+}
+
+#tag h1 {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 23px;
+	font-weight: normal;
+	color: #FFF;
+	text-align: center;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 17px;
+	line-height: 1.3;
+}
+
+#headline_info {
+	width: 1200px;
+	height: 220px;
+	color: #FFF;
+}
+
+#headline1 {
+	width: 1200px;
+	height: 90px;
+	color: #FFF;
+}
+
+#headline1 h1 {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 20px;
+	font-weight: bolder;
+	color: #000;
+	text-align: left;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 20px;
+	line-height: 1.3;
+}
+
+#headline_c1 {
+	width: 599px;
+	height: 150px;
+	color: #FFF;
+	float: left;
+}
+
+#headline_c1 p {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: normal;
+	color: #000;
+	text-align: left;
+	padding-left: 150px;
+	padding-right: 30px;
+	padding-top: 0px;
+	line-height: 2.2;
+}
+
+#headline_c2 {
+	width: 600px;
+	height: 150px;
+	color: #FFF;
+	float: right;
+}
+
+#headline_c2 p {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: normal;
+	color: #000;
+	text-align: left;
+	padding-left: 10px;
+	padding-right: 30px;
+	padding-top: 0px;
+	line-height: 2.2;
+}
+
+#quote {
+	width: 1200px;
+	height: 321px;
+	background-image: url(images/blue.jpg);
+}
+
+#quote h3 {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 22px;
+	font-weight: bold;
+	color: #000;
+	text-align: center;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 23px;
+	line-height: 1.2;
+}
+
+#quote p {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 17px;
+	font-weight: normal;
+	color: #000;
+	text-align: center;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 0px;
+	line-height: 1.2;
+}
+
+#uni {
+	width: 1200px;
+	height: 201px;
+}
+
+#itinerary {
+	width: 1200px;
+	height: 560px;
+	color: #FFF;
+}
+
+#itinerary_head {
+	width: 1200px;
+	height: 60px;
+	color: #FFF;
+}
+
+#itinerary_head h3 {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 22px;
+	font-weight: bold;
+	color: #000;
+	text-align: center;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 15px;
+	line-height: 1.2;
+}
+
+#itinerary p {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	color: #000;
+	text-align: left;
+	padding-left: 30px;
+	padding-right: 10px;
+	padding-top: 0px;
+	line-height: 1.5;
+}
+
+
+
+#itinerary_c1 {
+	width: 400px;
+	height: 500px;
+	color: #FFF;
+	float: left;
+}
+
+#itinerary_c2 {
+	width: 400px;
+	height: 500px;
+	color: #FFF;
+	float: left;
+}
+
+#itinerary_c3 {
+	width: 400px;
+	height: 500px;
+	color: #FFF;
+	float: right;
+}
+
+#footer {
+	width: 1200px;
+	height: 120px;
+	color: #FFF;
+}
+
+#footer p {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 10px;
+	font-weight: ;
+	color: #000;
+	text-align: center;
+	
+}
+
+#footer a {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 10px;
+	font-weight: ;
+	color: #000;
+	text-align: center;
+	text-decoration: none;	
+}
+
+#footer a rollover {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 10px;
+	font-weight: ;
+	color: #0CF;
+	text-align: center;
+	text-decoration: none;
+}
+
+#footer h2 {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 11px;
+	font-weight: bolder;
+	color: #000;
+	text-align: center;
+}

@@ -1,0 +1,33 @@
+<% @page_title = "Offline payment" %>
+
+<div id="content">
+
+  <% form_tag (:url => {}, :html => {:method => "post", :multipart => true}) do %>
+
+    <h3>
+      Grand total: <%= price @cart.total_plus_paypal %><br />
+      Reference number: <%= @cart.id %>
+    </h3>
+
+    <p>
+      <label for="notes">Notes/Promotional Code</label>
+      <%= text_area_tag :notes %>
+    </p>
+
+    <p align="right">
+      I agree to the <%= link_to 'terms and conditions', {:controller => :web, :action => :terms}, :popup => true %>
+      <%= check_box_tag :agree, 1, nil, :class => 'checkbox' %>
+    </p>
+
+    <h3><%= flash[:notice] %></h3>
+    <p align="center">
+    <p>
+      <%= submit_tag 'BOOK NOW', :class => 'submit' %>
+    </p>
+
+  <% end %>
+</div>
+
+<div class="right">
+<%= render :partial => 'web/right_cart', :locals => {:cart => @cart} %>
+</div>

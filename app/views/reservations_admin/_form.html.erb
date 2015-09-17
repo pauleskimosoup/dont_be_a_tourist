@@ -1,0 +1,67 @@
+<% form_for(reservation, :url => {}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+
+    
+  <p>
+    
+    <%= f.label :name %>
+    
+    <%= f.text_field :name %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :name %>
+    
+    <%= f.text_field :name %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :email %>
+    
+    <%= f.text_field :email %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :telephone %>
+    
+    <%= f.text_field :telephone %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :trip %>
+    
+    <%= f.text_field :trip %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :male %>
+    
+    <%= f.text_field :male %>
+  </p>
+
+    
+  <p>
+    
+    <%= f.label :female %>
+    
+    <%= f.text_field :female %>
+  </p>
+
+  <p>
+    <% if reservation.new_record? %>
+    <%= f.submit "Create", :class => 'submit' %>
+    <% else %>
+    <%= f.submit "Update", :class => 'submit' %>
+    <% end %>
+  </p>
+<% end %>

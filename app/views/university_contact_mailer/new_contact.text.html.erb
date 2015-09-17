@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+
+  <body>
+    <h1>New University Contact</h1>
+
+    <p>
+      Someone has signed up via the university contact form.
+    </p>
+
+    <p>
+      Name: <%= @university_contact.name %> <br />
+      Email: <%= mail_to @university_contact.email %> <br />
+      University Name: <%= @university_contact.university_name %>
+    </p>
+
+    <p>
+      Would like to know about mini-guide updates and new destinations: <%= @university_contact.updates? ? "Yes" : "No" %> <br />
+      Would like to know about about overnight adventures for their students: <%= @university_contact.adventures? ? "Yes" : "No" %>
+    </p>
+  </body>
+</html>

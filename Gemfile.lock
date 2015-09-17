@@ -1,0 +1,84 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    SystemTimer (1.2.3)
+    actionmailer (2.3.18)
+      actionpack (= 2.3.18)
+    actionpack (2.3.18)
+      activesupport (= 2.3.18)
+      rack (~> 1.1.0)
+    activerecord (2.3.18)
+      activesupport (= 2.3.18)
+    activeresource (2.3.18)
+      activesupport (= 2.3.18)
+    activesupport (2.3.18)
+    babosa (0.3.11)
+    calendar_date_select (1.16.4)
+    cocaine (0.3.2)
+    createsend (2.5.1)
+      hashie (~> 1.0)
+      httparty (~> 0.10)
+      json
+    friendly_id (3.2.1.1)
+      babosa (~> 0.3.0)
+    hashie (1.2.0)
+    httparty (0.10.0)
+      multi_json (~> 1.0)
+      multi_xml
+    json (1.8.3)
+    mime-types (1.25.1)
+    multi_json (1.11.2)
+    multi_xml (0.5.5)
+    mysql2 (0.2.24)
+    paperclip (2.7.5)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+      cocaine (~> 0.3.0)
+      mime-types
+    prawn (0.8.4)
+      prawn-core (>= 0.8.4, < 0.9)
+      prawn-layout (>= 0.8.4, < 0.9)
+      prawn-security (>= 0.8.4, < 0.9)
+    prawn-core (0.8.4)
+    prawn-format (0.2.3)
+      prawn-core
+    prawn-layout (0.8.4)
+    prawn-security (0.8.4)
+    rack (1.1.6)
+    rails (2.3.18)
+      actionmailer (= 2.3.18)
+      actionpack (= 2.3.18)
+      activerecord (= 2.3.18)
+      activeresource (= 2.3.18)
+      activesupport (= 2.3.18)
+      rake (>= 0.8.3)
+    rake (10.4.2)
+    rdoc (4.2.0)
+      json (~> 1.4)
+    restful_authentication (1.1.6)
+      rails (~> 2.3.4)
+    rmagick (2.15.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  SystemTimer (= 1.2.3)
+  calendar_date_select (~> 1.15)
+  createsend (= 2.5.1)
+  friendly_id (= 3.2.1.1)
+  httparty (= 0.10)
+  mysql2 (= 0.2.24)
+  paperclip (~> 2.7.5)
+  prawn (= 0.8.4)
+  prawn-core (= 0.8.4)
+  prawn-format (= 0.2.3)
+  prawn-layout (= 0.8.4)
+  prawn-security (= 0.8.4)
+  rails (= 2.3.18)
+  rdoc
+  restful_authentication (~> 1.1.6)
+  rmagick (~> 2.15.4)
+
+BUNDLED WITH
+   1.10.3

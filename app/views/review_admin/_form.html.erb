@@ -1,0 +1,36 @@
+<% form_for(@review, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+  <p>
+    <%= f.label 'User Name'%>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label 'What Country Are You From?'%>
+    <%= f.text_field :country %>
+  </p>
+
+  <p>
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </p>
+
+  <p>
+    <%= f.label :trip_id, "Select a Past Trip" %><br />
+    <%= select_tag 'review[trip_id]', "<option></option>" + options_from_collection_for_select(Trip.active.past, :id, :destination_name_dates, @review.trip_id) %>
+  </p>
+
+  <p>
+    <%= f.label :destination_id, "Select a Destination (optional)" %><br />
+    <%= select_tag 'review[destination_id]', "<option></option>" + options_from_collection_for_select(Destination.active, :id, :name, @review.destination_id) %>
+  </p>
+
+  <p>
+    <%= f.label :display %>
+    <%= f.check_box :display %>
+  </p>
+
+  <p>
+    <%= f.submit "Update", :class => 'submit' %>
+  </p>
+<% end %>

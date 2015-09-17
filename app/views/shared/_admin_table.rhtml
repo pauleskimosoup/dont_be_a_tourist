@@ -1,0 +1,61 @@
+  <%# the columns parameter is an array of column designators. each column designator is an array of [human_name, entry_spec, order]%>
+  <%# where entry_spec is  the name of the field  %>
+  <%# and order is either nil or the name of the field to order by %>
+
+<table  class="datatable">
+    <tr>
+      <% for column in columns -%>
+        <% if column[2] -%>
+          <th scope="col">
+            <%= link_with_params column[0],
+                :action => list_action,
+                :order_field => column[2],
+                :order_direction => (params[:order_direction] ? (params[:order_direction] == "asc" ? "desc" : "asc") : "asc")
+            %>
+          </th>
+        <% else -%>
+          <th scope="col"><%= column[0] %></th>
+        <% end -%>
+      <% end -%>
+      <% if view_action -%>
+        <th scope="col">View</th>
+      <% end %>
+      <% if edit_action -%>
+        <th scope="col">Edit</th>
+      <% end -%>
+      <% if delete_action -%>
+        <th scope="col">Delete</th>
+      <% end -%>
+    </tr>
+
+    <% for item in list -%>
+    <tr valign="TOP">
+
+      <% for column in columns -%>
+        <%
+        case column[1]
+        when "last_updated"
+        %>
+          <td><%= last_updated_field(item) %></td>
+        <% else
+             if column[1].class == Proc %>
+               <td><%= column[1].call(item) %></td>
+             <% else %>
+               <td><%= h item.send(column[1]) %></td>
+             <% end -%>
+          <% end -%>
+        <% end %>
+
+      <% if view_action -%>
+        <td align="CENTER"><%= link_with_params "View", :action => view_action, :id => item.id %></td>
+      <% end -%>
+      <% if edit_action -%>
+        <td align="CENTER"><%= link_with_params "Edit", :action => edit_action, :id => item.id %></td>
+      <% end -%>
+      <% if delete_action -%>
+        <td align="CENTER"><a href="javascript:delete_list_item(<%=item.id%>, '<%=url_for :action => delete_action%>')">Delete</a></td>
+      <% end -%>
+    </tr>
+    <% end -%>
+  </table>
+<%= paging pages %>

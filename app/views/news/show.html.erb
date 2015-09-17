@@ -1,0 +1,29 @@
+<% @page_title = "Our news stories" %>
+
+<span  class="date_highlight"><%= short_text_date(@story.date) %></span>
+<h2><%= h @story.name %></h2>
+
+<div class="large_background_main">
+  <% if @story.has_picture1? -%>
+    <%= thumbnail_tag(@story.picture1, :width => 176, :height => 136, :border => "0", :alt => h(@story.picture1.image_alt)) %>
+  <% end -%>
+</div>
+
+<%= @story.body %>
+<% tags = @story.tag_array -%>
+<% unless tags.empty? -%>
+  <div class="category">
+    (Within categories:
+      <% for tag in tags -%>
+        <%= link_to(tag.humanize, :controller => 'news', :action => 'list', :tag => tag) %>
+      <% end %>
+    )
+  </div>
+<% end -%>
+
+<div class="hr"><hr /></div>
+<p align="right"><%= link_to 'Go back', :action => 'list' %> to the all the news stories.</p>
+
+<% content_for :right do %>
+  <%= render :partial => 'navigation' %>
+<% end %>

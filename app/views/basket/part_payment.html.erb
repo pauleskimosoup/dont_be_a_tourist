@@ -1,0 +1,23 @@
+<h1><%= @page_title = "Confirm Admin Payment" %></h1>
+
+<% form_tag :html => {:method => :post} do %>
+
+  <%- flash.each do |name, msg| -%>
+    <%= content_tag :div, msg, :id => "flash_#{name}" %>
+  <%- end -%>
+
+  <p>
+    Total Due: <%= number_to_currency @current_basket.total, :unit => "&pound;" %>
+  </p>
+
+  <p>
+    <%= label_tag :amount, "Amount already paid" %><br />
+    <%= text_field_tag :amount %>
+  </p>
+
+  <br />
+  <p>
+    <%= submit_tag "Place My Booking!", :class => "submit" %>
+  </p>
+
+<% end %>

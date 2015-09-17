@@ -1,0 +1,23 @@
+<h1><%= @page_title = "View All Reviews" -%></h1>
+<div id="search">
+<% form_tag({}, :method => "GET") do %>
+  <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+  <%= link_to "Clear", :search => "" %>
+<% end %>
+</div>
+<% if @review_pages.count != 0 -%>
+
+  <%= admin_table({:columns =>[:user_id, :trip_id, :rating, :display, :last_updated],
+    :list => @reviews,
+    :pages => @review_pages,
+    :list_action => :pending_list
+  })%>
+
+<% else -%>
+
+  There are currently no Reviews in the system.
+
+<% end -%>
+
+
+

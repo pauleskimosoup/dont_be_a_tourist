@@ -1,0 +1,6 @@
+<h3><%= link_to object.name, :controller => :destination, :action => :show, :id => object.id %></h3>
+<p><%= object.summary %></p>
+<%= link_to 'See More', {:controller => :destination, :action => :show, :id => object.id} %>
+<% if object.has_picture1? %>
+  <p align='center'><%= link_to (scale_image_tag object.picture1, :width => 200, :border => "0"), :controller => :destination, :action => :show, :id => object.id %></p>
+<% end %>

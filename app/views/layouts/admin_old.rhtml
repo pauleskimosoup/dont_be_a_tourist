@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>[NAME] Administration - <%= @page_title %></title>
+<%= javascript_include_tag "prototype" %>
+<%= javascript_include_tag "effects" %>
+<%= javascript_include_tag "tag_script" %>
+<%= calendar_date_select_includes "blue" %>
+<% if @include_tinymce_script -%>
+  <%= javascript_include_tag "tiny_mce/tiny_mce.js" %>
+  <%= javascript_include_tag "tiny_mce" %>
+<% end -%>
+
+<script type ="text/javascript">
+Effect.DefaultOptions.duration = 0.6
+function BlindToggle(arg) {
+  elem = $(arg);
+  if (Element.visible(elem)) {
+    $(arg + '_image').writeAttribute({'src' :"/images/admin/nav_plus.gif"});
+    Effect.BlindUp(elem);
+  } else {
+    $(arg + '_image').writeAttribute({'src' :"/images/admin/nav_minus.gif"});
+    Effect.BlindDown(elem);
+  }
+}
+</script>
+<%= stylesheet_link_tag "adminstyle" %>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+</head>
+
+<body onload="<%= @onload %>">
+<div class="maincontainer">
+        <div id="top">
+        <h1>[NAME] Administration</h1>
+          <% if session[:admin_id] %>
+            <% admin = Admin.find(session[:admin_id]) %>
+          <% end %>
+          <% if admin %>
+            <div class="log">Logged in as <%= admin.name %> - <%= link_to "Logout", :controller=>"login", :action => "logout" %></div>
+            <div id="navigation"><%= link_to "Home", {:controller => "login", :action=>"home"}, {:title=>"Return to the admin home page"} %>
+
+            <%= link_to "Admin Users", {:controller => "settings", :action=>"list_admins"}, {:title=>"See/edit all admin users"} %>
+
+                        <!--<%= link_to "Back-up Data", {:action=>"index"}, {:title=>"Make a back-up of all your admin data"} %>-->
+                        <a href="http://<%=request.env["SERVER_NAME"]%>:2082/frontend/x/stats/index.html" target="_blank" title="External link to your web stats">Web Statistics</a>
+                        <a href="http://<%=request.env["SERVER_NAME"]%>/webmail" target="_blank" title="External link to your web mail">Web Mail</a>
+                        <a href="http://<%=request.env["SERVER_NAME"]%>" target="_blank" title="External link to your web site">Web Site</a>
+
+            </div>
+          <% end %>
+                  <% if ["Login", "Forgotten Password"].include?(@page_title)%>
+                        <div style="clear: both;"></div>
+                  <% end %>
+        </div>
+
+
+        <% if admin %>
+        <div id="subnav">
+          <% nav = AdminNavigation.new %>
+          <% nav.top_level.each do |tl| %>
+          <% if nav.open?(tl, params[:controller]) %>
+          <% @open = true %>
+          <% @style = "" %>
+          <% else %>
+          <% @open = false %>
+          <% @style = "display:none;" %>
+          <% end %>
+            <h2 class="<%= tl.hclass%>"><%= link_to_function tl.title, "BlindToggle('#{tl.title.gsub(' ', '_')}')" %><%= link_to_function(image_tag(@open ? "admin/nav_minus.gif": "admin/nav_plus.gif", :border=> "0", :hspace=>"0", :vspace=>"0", :title=>"Click to toggle more/less links", :alt=>"Click to toggle more/less links", :id => tl.title.gsub(' ', '_') + '_image'), "BlindToggle('#{tl.title.gsub(' ', '_')}')", :class => "plus_minus") %></h2>
+            <% next_level = tl.next_level %>
+            <% if next_level %>
+              <ul id="<%= tl.title.gsub(' ', '_')  %>" style="<%= @style %>">
+                <% next_level.each do |n| %>
+                <li><%= link_to n.title, :controller => n.controller, :action => n.action %>
+                  <% mext = n.next_level %>
+                  <% unless mext.empty? %>
+                  <ul>
+                    <% mext.each do |m| %>
+                      <li><%= link_to m.title, :controller => m.controller, :action => m.action %></li>
+                    <% end %>
+                  </ul>
+                  <% end %>
+                </li>
+                <% end %>
+              </ul>
+            <% end %>
+          <% end %>
+        </div>
+        <% end %>
+                <div class="content">
+                  <% if flash[:notice] -%>
+                        <p class="message"><%= flash[:notice] %></p>
+                  <% end -%>
+                  <% if flash[:error_field] -%>
+                        <%= error_messages_for(flash[:error_field]) %>
+                  <% end %>
+                  <%= yield %>
+                </div>
+
+    <div id="bottom"><%= copyright_message(2005) %> | <a href="mailto:info@tmedia.co.uk">info@tmedia.co.uk</a> | tel: 01482 327230</div>
+</div>
+</body>
+</html>

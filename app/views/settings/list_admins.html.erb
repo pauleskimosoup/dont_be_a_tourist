@@ -1,0 +1,22 @@
+<h1><%= @page_title = "View all administrators" -%></h1>
+
+<p><%= link_to 'Add an Aadministrator', :action => 'new_admin' %></p>
+
+<% if @admin_pages.count != 0 -%>
+
+  <%= admin_table({:columns =>[:name, :email],
+    :list => @admins,
+    :list_action => 'list_admins',
+    :edit_action => 'edit_admin',
+    :delete_action => 'delete_admin',
+    :pages => @admin_pages
+  })%>
+
+<% else -%>
+
+  There are currently no Admins in the system.
+
+<% end -%>
+
+
+

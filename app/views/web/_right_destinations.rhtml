@@ -1,0 +1,9 @@
+<% destination ||= nil %>
+
+  <div class="right_our_trips_stretch">
+    <h2 class="our_trips">Our Trips</h2>
+      <div class="padding">
+        <% for destination in Destination.all(:conditions => {:display => true})%>
+              <%= link_to destination.name, {:controller => :destination, :action => :show, :id => destination.id}, {:class=>"our_trips_link"} %>
+            <% end %>
+  </div><%= image_tag "right_bg_sm_stretch_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %></div>

@@ -1,0 +1,45 @@
+<% @include_tinymce_script = true %>
+
+<% form_for(university, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :slogan %>
+    <%= f.text_field :slogan %>
+  </p>
+
+  <p>
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+  </p>
+
+  <p>
+    <span>Logo</span>
+    <%= f.comprehensive_image_field :picture1_id %>
+  </p>
+
+  <p>
+    <span>Banner</span>
+    <%= f.comprehensive_image_field :picture2_id %>
+  </p>
+
+  <p>
+    <%= f.label :display %>
+    <%= f.check_box :display, :class => "checkbox" %>
+  </p>
+
+  <p>
+    <% if university.new_record? %>
+      <%= f.submit "Create", :class => 'submit' %>
+    <% else %>
+      <%= f.submit "Update", :class => 'submit' %>
+    <% end %>
+  </p>
+
+<% end %>

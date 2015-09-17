@@ -1,0 +1,34 @@
+<script language="Javascript" type="text/javascript">
+
+  var ids_to_fade = new Array(<%= @banners.length %>);
+  var bbIndex = 0;
+  var bbWait = 7000;
+  var setIntervalBanner;
+
+  <% @banners.each_with_index do |banner, index| %>
+    ids_to_fade[<%= index %>] = "home_benefit_banner_image_<%= index %>";
+  <% end %>
+
+  function swapBenefitBanner()
+  {
+    $(ids_to_fade[bbIndex]).fade({ duration: 1.0 });
+
+    Effect.Fade(ids_to_fade[bbIndex], { duration:1, from:1.0, to:0.0 });
+
+    if ((bbIndex + 1) == ids_to_fade.length){
+      bbIndex = 0;
+    }
+    else{
+      bbIndex = bbIndex + 1;
+    }
+
+    Effect.Appear(ids_to_fade[bbIndex], { duration:1, from:0.0, to:1.0 });
+
+  }
+
+  document.observe("dom:loaded", function() {
+    <% unless @banners.blank? or @banners.count.zero? %>
+      setIntervalBanner = setInterval('swapBenefitBanner()', bbWait);
+    <% end %>
+  });
+</script>

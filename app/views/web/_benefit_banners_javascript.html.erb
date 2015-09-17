@@ -1,0 +1,49 @@
+<script language="Javascript" type="text/javascript">
+
+  var ids_to_fade = new Array(<%= @banners.length %>);
+  var ids_to_style = new Array(<%= @banners.length %>);
+  var ids_to_fade_desc = new Array(<%= @banners.length %>);
+  var bannerIndex = 0;
+  var wait = 7000;
+  var setIntervalId;
+
+  <% @banners.each_with_index do |banner, index| %>
+    ids_to_fade[<%= index %>] = "benefit_banner_image_<%= index %>";
+    ids_to_style[<%= index %>] = "benefit_banner_listing_<%= index %>";
+    ids_to_fade_desc[<%= index %>] = "benefit_content_<%= index %>";
+  <% end %>
+
+  document.observe("dom:loaded", function() {
+    <% if !@banners.empty? %>
+      setIntervalId = setInterval('swapBanner()', wait);
+    <% end %>
+  });
+
+  function swapBanner()
+  {
+    Effect.Fade(ids_to_fade[bannerIndex], { duration:1, from:1.0, to:0.0 });
+    $(ids_to_style[bannerIndex]).className = "";
+    Effect.Fade(ids_to_fade_desc[bannerIndex], { duration:1, from:1.0, to:0.0 });
+    $(ids_to_style[bannerIndex]).className = "";
+    bannerIndex++;
+    if (bannerIndex == ids_to_fade.length) bannerIndex = 0;
+    Effect.Appear(ids_to_fade[bannerIndex], { duration:1, from:0.0, to:1.0 });
+    $(ids_to_style[bannerIndex]).className = "highlight";
+    Effect.Appear(ids_to_fade_desc[bannerIndex], { duration:1, from:0.0, to:1.0 });
+    $(ids_to_style[bannerIndex]).className = "highlight";
+  }
+
+  function showImage(imageId)
+  {
+    clearInterval(setIntervalId);
+    <% @banners.each_with_index do |banner, index| %>
+      $('benefit_banner_image_<%= index %>').style.display = "none";
+      $('benefit_banner_listing_<%= index %>').className = "";
+      $('benefit_content_<%= index %>').style.display = "none";
+    <% end %>
+    $('benefit_banner_image_' + imageId).style.display = "";
+    $('benefit_banner_listing_' + imageId).className = "highlight";
+    $('benefit_content_' + imageId).style.display = "";
+  }
+
+</script>

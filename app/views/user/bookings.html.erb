@@ -1,0 +1,46 @@
+<%= javascript_include_tag :defaults %>
+
+<h1><%= @page_title = "My bookings" -%></h1>
+
+<% if @bookings.length > 0 %>
+
+<% for booking in @bookings %>
+
+  <%= render :partial => 'shared/entire_order', :locals => {:booking => booking}%>
+
+  <h2>Like to share a room with a friend?</h2>
+<%= form_tag %>
+  <p>
+    Simply enter the trip you wish to share on and their name here and we'll do our best to accomodate your request.
+    Please note there is a deadline of 48 hours prior to departure.
+  </p>
+
+  <%= hidden_field_tag :first_name, @current_user.first_name %>
+  <%= hidden_field_tag :family_name, @current_user.family_name %>
+  <p>
+    <%= label_tag :trip %>
+    <%= select_tag(:trip, options_for_select(@trip_names)) %>
+  </p>
+
+  <p>
+    Please enter who you would like to share a room with or if you have booked for multiple people the room
+    sharing requirements of your party.  Please note you can only share with same sex friends.
+  </p>
+  <p>
+    <%= label_tag :sharing_options %>
+    <%= text_area_tag :sharing_options %>
+  </p>
+
+  <p align="right">
+    <%= submit_tag "Send", :class => 'submit' %>
+  </p>
+
+<% end %>
+
+<% else %>
+  You have not made any bookings yet...
+<% end %>
+
+
+
+<p><%= link_to "Go back to my options", :action=>"home" %></p>

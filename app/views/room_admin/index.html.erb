@@ -1,0 +1,44 @@
+<h1><%= @page_title = "View Rooms" -%></h1>
+
+<p>
+  <%= link_to "Add new room", :action => "new", :trip_id => @trip.id %>
+   |
+  <%= link_to "Back to trips", :controller => "trip_admin" %>
+</p>
+
+<% if @room_pages.count != 0 -%>
+
+  <%= admin_table({:columns => [:places],
+    :list => @rooms,
+    :pages => @room_pages
+  })%>
+  <%#= @trip.rooms_configurations %>
+  <% unless @trip.rooms_configurations.blank? %>
+    <h3>Possible Room Configurations</h3>
+    <ol>
+    <% for config in @trip.rooms_configurations %>
+      <li>
+        <%= config.join(" - ") %>
+        <%= link_to "See Details", :action => "details", :rooms => config.join('-'), :trip_id => @trip.id %>
+      </li>
+    <% end %>
+    </ol>
+  <% else %>
+    <p>Cannot find configuration of current rooms which allows these bookings</p>
+  <% end %>
+
+  <% form_for(@trip, :url => {:controller => "trip_admin", :action => "update_notes", :id => @trip.id}, :html => {:method => "post"}) do |f| %>
+    <p>
+      <%= f.label :room_notes %>
+      <%= f.text_area :room_notes %>
+    </p>
+    <p>
+      <%= f.submit "Submit", :class => 'submit' %>
+    </p>
+  <% end %>
+
+<% else -%>
+
+  There are currently no rooms set for this trip.
+
+<% end -%>

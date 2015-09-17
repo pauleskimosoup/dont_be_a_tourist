@@ -1,0 +1,104 @@
+<% hide_right %>
+
+<% @page_title = 'Find Your Next Trip...' %>
+
+<a name="trips"></a>
+
+<h1><%= @page_title %></h1>
+
+<p>Must-see sights, incredible places, unforgettable experiences. Only with <em>Don't be a tourist</em>...</p>
+
+<h2 style="margin: 0px; padding: 0px; font-size: 18px; line-height: normal;"><%= Date.today.strftime("%Y") %>/<%= 1.year.from_now.strftime("%y") %></h2>
+
+<div class="trip_list">
+
+  <div class="trip_list_links">
+    <%= Trip.categories.collect{|x| link_to(x, :anchor => x.gsub(/\W/, '').downcase) }.join(' | ') %>
+  </div>
+
+  <div class="clear"></div>
+
+  <% for category in Trip.categories -%>
+    <h2 id="<%= category.gsub(/\W/, '').downcase %>"><%= category %></h2>
+
+    <% trips = @trips.select{|x| x.category == category} -%>
+
+    <% if trips.length > 0 %>
+      <% for trip in trips %>
+
+        <div class="box">
+          <div class="box_border">
+
+            <h3><%= link_to trip.name, :controller => :trip, :action => :show, :id => trip.id %>
+            <span class="tagline"><%= trip.tagline %></span>
+            </h3>
+
+              <% if trip.photo_1 -%>
+                <div class="picture"><span></span><%= image_tag trip.photo_1.url, :alt => trip.photo_1_alt, :height => 120, :width => 160 %></div>
+              <% end -%>
+
+              <!-- <div class="date"><%= pluralize trip.length, "DAY", "DAYS" %><br /><%= trip.dates %></div> -->
+            <div class="text">
+              <% if trip.sold_out? -%>
+                <span class="sold_out"></span>
+              <% end -%>
+
+              <div class="date-summary half_width_item">
+                <div>
+                  Date: <strong><%= trip.dates %></strong><br />
+                  Duration: <strong><%= pluralize trip.length, "DAY", "DAYS" %></strong>
+                </div>
+              </div>
+
+              <p class="half_width_item float-right">
+                <%= trip.pretty_adult_price %><br />
+                <%= trip.pretty_student_price %><br />
+
+                <% unless trip.trip_group.blank? %>
+
+                  <%
+                  i = 0;
+                  total = 5; # total stars
+
+                  until i >= total do
+                    i += 1;
+                  %>
+
+
+                  <% if i <= trip.trip_group.rating.to_i  %>
+                    <%= image_tag "star-on.png", :alt => "star" %>
+                  <% else %>
+                    <%= image_tag "star-off.png", :alt => "star" %>
+                  <% end %>
+
+                  <% end %>
+                <% end %>
+
+
+               <br />
+               <%= link_to trip.sold_out? ? "RESERVE PLACES" : "READ MORE / BOOK", {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"more"} %>
+               </p>
+              <div class="clear"></div>
+            </div>
+            <div class="status">
+              <%= render "status_line_1", :trip => trip %>
+              <br />
+              <%= render "status_line_2", :trip => trip %>
+              <% if current_user? && !current_user.welcome_code.blank? && !PromoCode.find_by_code(current_user.welcome_code.to_s).nil? -%>
+                <br />
+                <%= render "status_line_3", :trip => trip, :code => PromoCode.find_by_code(current_user.welcome_code.to_s) %>
+              <% end %>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p>Trips coming soon!</p>
+    <% end %>
+    <div class="clear"></div>
+
+  <% end -%>
+
+
+</div>

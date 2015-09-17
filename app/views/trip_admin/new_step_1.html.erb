@@ -1,0 +1,6 @@
+<h1><%= @page_title = "Add Trip" -%></h1>
+
+<% form_for(@trip, :url => {:action => :new_step_1}, :html => {:method => "post", :multipart => true}) do |f| %>
+  <%= render :partial => 'form_step_1', :locals => {:trip => @trip, :f => f} %>
+  <p><%= f.submit "Next Step", :class => 'submit' %></p>
+<% end %>

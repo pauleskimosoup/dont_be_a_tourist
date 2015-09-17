@@ -1,0 +1,11 @@
+<% @page_title = "New image" -%>
+<% @page_type = "pictures" -%>
+
+      <p>Please upload your image using the form below, then press update to save changes</p>
+    <div class="clear"></div>
+      <%=form_tag({:action => 'new_image'}, :multipart => true) %>
+      <%= create_admin_form(@picture_form) %>
+        <p>
+        <%= submit_tag("Upload Image", :class => "button") %>
+        </p>
+      <%= end_form_tag %>

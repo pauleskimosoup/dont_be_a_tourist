@@ -1,0 +1,31 @@
+<% cart ||= nil %>
+
+<% if cart.trip_instances.length > 0 %>
+
+
+<div class="right_our_trips_stretch">
+<div class="padding">
+
+<% trips = cart.trip_instances.collect{|x| x.trip}.uniq %>
+
+  <%= link_to image_tag("your_booking_blue.gif", :alt => "Your Booking", :title => "Your Booking", :border => "0", :hspace => "0", :vspace => "0")+ '', {:controller => :cart, :action => :show} %>
+  <% for trip in trips %>
+  <p><%= link_to trip.name, {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"large_link"} %></p>
+    <p class="date_highlight"><%= trip.length_dates %></p>
+
+    <% bookings = cart.trip_instances.select{|y| y.trip == trip } %>
+  <p>
+  <% for booking in bookings %>
+      <em><%= booking.name %></em><br />
+    <% end %>
+    </p>
+  <% end %>
+
+  <h3>Total: <%= cart.totalf %></h3>
+
+   </div>
+   <%= image_tag "right_bg_sm_stretch_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %></div>
+
+<% else %>
+
+<% end %>

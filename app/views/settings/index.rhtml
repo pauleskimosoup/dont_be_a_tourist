@@ -1,0 +1,20 @@
+<% @page_title = "Settings Admin" -%>
+
+      <p>In the settings area you can control the site administrators, back-up your data and amend your contact details.</p>
+          <p class="largetext">What would you like to do?</p>
+          <p><strong>Control Admins</strong></p>
+          <div class="subnavindex">
+      <%= link_to image_tag("admin/list.gif", :alt => " ", :border => "0", :align => "middle", :hspace => "2", :vspace => "6")+ ' List Admins', :action => 'list_admins' %> - See a list of all admins.<br />
+      <%= link_to image_tag("admin/add.gif", :alt => " ", :border => "0", :align => "middle", :hspace => "1", :vspace => "6")+ ' Add Admin', :action => 'new_admin' %> - Add a new admin.
+      </div>
+
+          <p><strong>Backup Database</strong></p>
+          <div class="subnavindex">
+          <%= link_to image_tag("admin/list.gif", :alt => " ", :border => "0", :align => "middle", :hspace => "2", :vspace => "6")+ ' Administer Backups', :action => 'list_backups' %> - See a list of all database backup files, and backup your database.
+          </div>
+
+    <p><strong>Site Settings</strong></p>
+          <div class="subnavindex">
+          <%= link_to image_tag("admin/list.gif", :alt => " ", :border => "0", :align => "middle", :hspace => "2", :vspace => "6")+ ' Edit Details', :action => 'edit_details' %> - Edit the contact details on your contact form.<br />
+          <%= link_to image_tag("admin/list.gif", :alt => " ", :border => "0", :align => "middle", :hspace => "2", :vspace => "6")+ ' Image Manager', :action => 'list_images' %> - Manage your uploaded images.<br />
+          </div>

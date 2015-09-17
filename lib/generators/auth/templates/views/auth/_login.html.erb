@@ -1,0 +1,34 @@
+<%% unless session[:<%= singular_name %>_id] %>
+  
+  <%% form_tag :controller => :<%= singular_name %>, :action => :login do %>
+    <p>
+      <%%= text_field_tag "username", "username", {:size => "30"} %>
+    </p>
+    <p>
+      <%%= password_field_tag "password", "password", {:size => "30"}  %>
+    </p>
+    <p>
+      <%%= submit_tag "Login", {:class => "submit"} %>
+      <%%= link_to "Forgotten Password", {:controller => :<%= singular_name %>, :action => :forgot} %>
+      <%%= link_to "New <%= class_name %>", {:controller => :<%= singular_name %>, :action => :new} %>
+    </p>
+  <%% end %>
+  
+<%% else %>
+
+  <%% @<%= singular_name %> = <%= class_name %>.find(session[:<%= singular_name %>_id]) %>
+  <%% form_tag :controller => :<%= singular_name %>, :action => :logout do %>
+    <p>
+      <%%= text_field_tag "username", @<%= singular_name %>.username, {:size => "30", :disabled => :true} %>
+    </p>
+    <p>
+      <%%= password_field_tag "password", nil, {:size => "30", :disabled => :true}  %>
+    </p>
+    <p>
+      <%%= submit_tag "Logout", {:class => "submit"} %>
+      <%%= link_to "Update Details", {:controller => :<%= singular_name %>, :action => :edit} %>
+      <%%= link_to "Home", {:controller => :<%= singular_name %>, :action => :home} %>
+    </p>
+  <%% end %>
+
+<%% end %>

@@ -1,0 +1,105 @@
+<% # encoding: UTF-8 %>
+Your Don't be a tourist booking confirmation – you're coming with us!!
+
+***Please do not reply to this email***
+
+If you have any questions, check out the 'Questions' section or get in touch via the 'Contact us' page at www.dontbeatourist.co.uk.
+
+Hi <%= @booking.user.name %>
+
+Thank you for your payment, your booking has been confirmed – you're coming with us!!
+
+On the day of the trip, you don't need to bring this booking confirmation email with you (save the paper!), but you will need to bring your photo ID (e.g. passport, driving license, student card, etc), and so will each person you have booked for.
+
+Here's a summary of your booking(s):
+
+Name: <%= @booking.user.name %>
+Booking Date: <%= @booking.created_at.strftime('%d %B %Y') %>
+Booking Reference number: <%= @booking.id %>
+
+<% for trip in @booking.trips %>
+<%= trip.name %>
+<%= trip.length_dates %>
+<% if trip.facebook_url && trip.facebook_url.strip != '' %>
+Get Excited: <%= trip.facebook_url %>
+<% end %>
+<% bookings = @booking.booking_items.select{|y| y.trip == trip } %>
+
+Number of Travellers: <%= bookings.length -%>
+<% count = 0 %>
+
+<% for booking_item in bookings %>
+<% count += 1 %>
+Traveller <%= count -%>
+Name: <%= booking_item.first_name %> <%= booking_item.last_name %>
+Gender: <%= booking_item.gender %>
+Pickup & Dropoff: <%= booking_item.pickup_dropoff %>
+
+Cost
+Total Cost: <%= number_to_currency booking_item.subtotal, :unit => "£" %>
+Trip Base Price: <%= number_to_currency booking_item.trip.price(booking_item.buyer_type), :unit => "£" %>
+Upgrade: <%= booking_item.upgrade ? "Yes - Extra #{number_to_currency booking_item.trip.upgrade_price, :unit => "£"}":"No" %>
+Extras:
+<% if booking_item.products.length > 0 %>
+<% for product in booking_item.products %>
+<%= product.name %> - Extra <%= number_to_currency product.price, :unit => "£" %><% end %><% else %>
+None
+<% end %>
+<% end %>
+<% end %>
+
+Total Payment
+Payment Method: <%= @booking.booking_type.titleize %>
+Payment Received: <%= @booking.booking_status.titleize %>
+Total Cost: <%= number_to_currency @booking.total, :unit => "£" %>
+
+
+**********************IMPORTANT INFORMATION - Please read carefully************************
+
+Pick-up times / places
+You can find detailed information about the pick-up times and places by logging into www.dontbeatourist.co.uk/user/login, and clicking on 'view my bookings' then 'view map'.
+•  Look out for a coach with our 'Don't be a tourist' sign in the front window
+•  Please be at the pick-up point 10 minutes before the pick-up time
+•  Pick-up times may vary 10 minutes depending on traffic
+•  Don't be a late, we cannot wait!
+
+What to bring with you
+On all Don't be a tourist trips, we get off the coach to experience and explore as much as possible, so here are some essentials:
+•  Warm waterproof jacket (you're in the UK!!)
+•  Warm clothes (hat, scarf, jumper, warm socks, especially if in autumn or winter)
+•  Comfortable shoes (we'll doing lots of walking)
+•  Snacks for the journey on the first day (we'll also be stopping at places where you can buy food/drink)
+•  Towel
+•  Toiletries (shower gel, toothpaste, etc)
+•  Your student card (for discount into places)
+•  Your camera!!
+•  You DON'T need to bring bedding as this is provided
+
+Visas & Travel Documents
+For all trips outside the UK, it is your responsibility to ensure you have a valid passport and, if you are not a British Citizen or hold an EU passport, to ensure that you have any relevant visas that may be required.
+
+Applying for a visa is your responsibility and is not included in the price of the tour, but we do provide information to help you on the "News"; section of our website.
+
+Travelling with Friends?
+If you have made separate bookings but would like to stay in the same dorm room as your friends, contact us at least 48 hours prior to departure. We can't guarantee it, but we'll try our best to put you in the same room. We need full names, all reference numbers of those travelling, and the name and date of your trip.
+
+Baggage Allowance
+Baggage is restricted to one reasonably sized suitcase or backpack no heavier than 15kg and one small carry-on bag per passenger. If you don't need it, leave it.
+
+Insurance
+There is no travel insurance cover included in this booking. We strongly recommend you arrange satisfactory insurance. Don't be a tourist accepts no responsibility for the loss or damage to personal belongings or liability for personal injury/death excluded the full extent permitted by the law.
+
+Cancellations and Changes
+The contact details on our website (www.dontbeatourist.co.uk/web/contact) should be used if you want to change your travel date or wish to make a cancellation. Cancellation of your booking must be in writing to Don't be a tourist and signed by the person who made the original booking. When written notification has been received by Don't be a tourist a fee will be levied to cover the administration costs incurred (25% of the total booking price being the minimum fee). If the reason for your cancellation is covered under your insurance policy, you may be able to make a claim under that policy.
+
+If you wish to change your departure date, or wish to change to another Don't be a tourist trip, we will do our best to accommodate any changes you may want to make but we cannot guarantee to do so. Any changes must be notified to us in writing and signed by the person who made the original booking. A change cannot normally be made later than 14 days prior to departure.
+
+**********************************************************************************************************
+
+If you have any questions, don't hesitate to contact us at Don't be a tourist.
+
+We are looking forward to seeing you!
+
+The team at Don't be a tourist.
+
+P.S. If you're on Facebook, don't forget to attend our trip event on our Don't be a tourist group page so you can see who else is coming with us!

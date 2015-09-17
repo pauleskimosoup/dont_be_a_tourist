@@ -1,0 +1,13 @@
+<h1><%= @page_title = "View Trip Groups" -%></h1>
+
+<p>
+  <%= link_to "Add new trip group", :action => "new" %>
+</p>
+
+<% if @trip_groups_pages.count != 0 -%>
+
+  <%= admin_table({:columns => [["Name", lambda{|x| link_to "#{x.name}", x, :target => "_blank"}, :name]],
+    :list => @trip_groups,
+    :pages => @trip_groups_pages
+  })%>
+<% end %>

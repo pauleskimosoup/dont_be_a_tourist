@@ -1,0 +1,74 @@
+<% @page_title = "Your bookings" %>
+
+<div id="content">
+
+<% if @cart.trip_instances.length > 0 %>
+  <% trips = @cart.trip_instances.collect{|x| x.trip}.uniq %>
+  <h1>Your bookings</h1>
+  <% count = 0 %>
+  <% for trip in trips %>
+    <h2><%= trip.name %></h2>
+    <p><span  class="date_highlight"><%= trip.length_dates %></span></p>
+    [ <%= link_to "add another person to this trip", {:controller => :trip, :action => :personalize, :id => trip.id} %> ]
+    <% bookings = @cart.trip_instances.select{|y| y.trip == trip } %>
+    <% for trip_instance in bookings %>
+      <% count += 1 %>
+
+      <p>
+      <strong>Name:</strong> <%= trip_instance.name %><br />
+      <strong>Total Cost:</strong> <%= trip_instance.totalf %><br />
+      </p>
+      <!-- toggle zone -->
+      <div id="<%= "trip_instance_#{count}" %>" style='display:none'>
+        <h3>Your Details</h3>
+        <p>
+        <strong>Sex:</strong> <%= trip_instance.sex %><br />
+        <strong>Pickup &amp; Dropoff:</strong> <%= trip_instance.pickup_dropoff %><br />
+        </p>
+        <h3>Cost</h3>
+        <p>
+        <strong>Trip Base Price:</strong> <%= trip_instance.trip.pricef %><br />
+        <strong>Upgrade:</strong> <%= trip_instance.upgrade ? "Yes - Extra #{trip_instance.trip.upgrade_pricef}":"No" %><br />
+        <% if trip_instance.products.length > 0 %>
+        <strong>Extras:</strong>
+        <% for product in trip_instance.products %>
+          <%= product.name %> - Extra <%= product.pricef %>
+        <% end %>
+        <% end %>
+      </p>
+      </div>
+      <!-- end of toggle zone -->
+
+      <!-- toggle buttons -->
+      <%= link_to_remote (image_tag "admin/more.gif", {:id => "trip_instance_#{count}_more_button", :border=>"0", :align=>"left", :hspace=>"5", :vspace=>"0", :alt=>"see more details"}), :url => "show_more?trip=#{count}" %>
+      <%= link_to_remote (image_tag "admin/less.gif", {:id => "trip_instance_#{count}_less_button", :border=>"0", :align=>"left", :style => "display:none", :hspace=>"5", :vspace=>"0", :alt=>"see less details"}), :url => "show_more?trip=#{count}" %>
+      <span class="font_small">
+      [ <%= link_to "edit", :controller => :trip, :action => :edit, :id => trip_instance.id %> ]
+          [ <%= link_to "remove", {:controller => :trip, :action => :delete, :id => trip_instance.id}, :confirm => "Are you sure you want to remove this booking?" %> ]
+    </span>
+      <% end %>
+  <% end %>
+<br />
+<br />
+
+<div class="hr"><hr /></div>
+
+  <h2>Grand total: <%= @cart.totalf %></h2>
+
+  <% form_for (@cart, :url => {:controller => :cart, :action => :update_notes} ) do |f|%>
+
+  <p>
+  <%= f.submit "PAY NOW", :class => 'submit' %>
+  </p>
+
+  <% end %>
+
+<% else %>
+  <p>You currently have no trips booked.</p>
+<% end %>
+
+
+</div>
+<div class="right">
+<%= render :partial => 'web/right_cart', :locals => {:cart => @cart} %>
+</div>

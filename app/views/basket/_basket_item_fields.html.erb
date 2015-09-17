@@ -1,0 +1,41 @@
+<%# encoding: UTF-8 %>
+
+<tr class="<%= f.object.is_valid? ? "valid" : "invalid" %>">
+
+<td style="color:<%= f.object.gender == "Male" ? "#000000" : "#000000" %>;">
+  <strong><%= f.object.gender.titleize %></strong>
+</td>
+
+<td>
+  <%= f.text_field :first_name, :class=>"short" %>
+</td>
+
+<td>
+  <%= f.text_field :last_name, :class=>"short" %>
+</td>
+
+<td>
+  <% options = options_for_select([["Student (Student ID required) - #{number_to_currency f.object.trip.price("Student"), :unit => "£"}", 'Student'],["Adult - #{number_to_currency f.object.trip.price("Adult"), :unit => "£"}", 'Adult']]) %>
+  <%= f.select :buyer_type, options %>
+</td>
+
+<td>
+  <% if f.object.trip.upgrade? %>
+    <%= f.select :upgrade, [['No',false],["Yes - #{number_to_currency f.object.trip.upgrade_price, :unit => "£"}",true]] %>
+  <% else %>
+    n/a
+  <% end %>
+</td>
+
+<td>
+  <% pickup_dropoff_times = f.object.trip.pickup_dropoff_times.sort_by{|x| x.pickup_time}.reject{|x| x.places_left == 0} %>
+  <p>
+    <%= f.collection_select :pickup_dropoff_time_id, pickup_dropoff_times, :id, :name_pickup_time_dropoff_time_with_places_left, {:class => "radio", :multiple => false} %>
+  </p>
+</td>
+
+<td>
+  <%= f.check_box :_destroy, :class=>"checkbox" %>
+</td>
+
+</tr>

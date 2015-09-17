@@ -1,0 +1,26 @@
+<% # encoding: UTF-8 %>
+Payment has been received for the below booking
+
+  <% for trip in @booking.trips %>
+  <%= trip.name %>
+  <%= trip.length_dates %>
+  <% if trip.facebook_url && trip.facebook_url.strip != '' %>
+Get Excited: <%= trip.facebook_url %>
+  <% end %>
+
+Bookings
+  <% bookings = @booking.booking_items.select{|y| y.trip == trip } %>
+  <% for booking_item in bookings %>
+  Name: <%= booking_item.first_name %> <%= booking_item.last_name %>
+  Gender: <%= booking_item.gender %>
+  Pickup & Dropoff: <%= booking_item.pickup_dropoff %>
+  Total Cost: <%= number_to_currency booking_item.subtotal, :unit => "£" %>
+  Trip Price: <%= number_to_currency booking_item.trip.price(booking_item.buyer_type), :unit => "£" %>
+  Upgrade: <%= booking_item.upgrade ? "Yes - Extra #{number_to_currency(booking_item.trip.upgrade_price, :unit => "£")}":"No" %>
+  Extras:
+  <% if booking_item.products.length > 0 %><% for product in booking_item.products %>
+  <%= product.name %> - Extra <%= product.price %>GBP
+  <% end %><% else %>None<% end %>
+  <% end %>
+  <% end %>
+

@@ -1,0 +1,54 @@
+<% @include_tinymce_script = true %>
+<%= javascript_include_tag :defaults %>
+
+<%= f.error_messages %>
+
+<%= f.hidden_field :trip_id %>
+
+<p>
+  <%= f.label :day %>
+  <%= f.select :day, options_for_select(DayItinerary.days, :selected => f.object.day) %>
+</p>
+
+<p>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+</p>
+
+<p>
+  <%= f.label :summary %>
+  <%= f.tinymce_text_area :summary %>
+</p>
+
+<p>
+  <%= f.label :content %>
+  <%= f.tinymce_text_area :content %>
+</p>
+
+<p>
+  <%= f.label :highlights %>
+  <%= f.tinymce_text_area :highlights %>
+</p>
+
+<p>
+  <%= f.select(:activity_ids,
+    @trip.activities.uniq.map { |x| [x.name, x.id] },
+    {}, { :multiple => true, :style => "height:190px; width: 300px;"}
+  ) %>
+
+</p>
+
+
+
+<p>
+  <%= f.label :display %>
+  <%= f.check_box :display, :class=>"checkbox" %>
+</p>
+
+<p>
+  <% if @day_itinerary.new_record? %>
+  <%= f.submit "Create", :class => 'submit' %>
+  <% else %>
+  <%= f.submit "Update", :class => 'submit' %>
+  <% end %>
+</p>

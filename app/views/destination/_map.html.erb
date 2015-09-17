@@ -1,0 +1,11 @@
+<div class="right_our_trips_stretch">
+  <div class="padding">
+    <h2>Location</h2>
+    <% if @destination.map %>
+      <p align="center"><%= thumbnail_tag @destination.map, :width => 273, :alt => "Map", :border => "0", :hspace => "0", :vspace => "0", :style=>"border:1px solid #000000;"%></p>
+    <% else %>
+      Destination map coming soon!
+    <% end %>
+  </div>
+  <%= image_tag "right_bg_sm_stretch_bottom.gif", :alt => " ", :border => "0", :hspace => "0", :vspace => "0" %>
+</div>

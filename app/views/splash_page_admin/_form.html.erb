@@ -1,0 +1,61 @@
+<% form_for(splash_page, :url => {:id => params[:id]}, :html => {:method => "post", :multipart => true}) do |f| %>
+    
+  <% field_set_tag 'Basic Informartion' do -%>
+  <p>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+  </p>
+
+  <p>
+    <%= f.label :summary %>
+    <%= f.text_area :summary %>
+  </p>
+  <% end -%>
+  
+  <% field_set_tag 'Details' do -%>
+  
+  <% @include_tinymce_script = true %>
+    
+  <p>
+    <%= f.label :main_content %>
+    <%= f.tinymce_text_area :main_content %>
+  </p>
+
+    
+  <p>
+    <%= f.label :picture1_id, 'Thumbnail Image' %>
+    <%= f.comprehensive_image_field :picture1_id %>
+  </p>
+  
+  <p>
+    <%= f.label :picture2_id, 'Splash Page Image' %>
+    <%= f.comprehensive_image_field :picture2_id %>
+  </p>
+  <% end -%>
+  
+  <% field_set_tag 'Linked Promo Codes' do -%>
+    <p>What promo codes does this splash page relate to?</p>
+    
+    <p>
+      <%= select_tag "splash_page[promo_code_ids][]", options_from_collection_for_select(PromoCode.splash, :id, :description, @splash_page.promo_code_ids), :multiple => true %>
+    </p>
+  <% end -%>
+
+  <p>
+    <%= f.label :display %>
+    <%= f.check_box :display %>
+  </p>
+
+  <p>
+    <% if splash_page.new_record? %>
+    <%= f.submit "Create", :class => 'submit' %>
+    <% else %>
+    <%= f.submit "Update", :class => 'submit' %>
+    <% end %>
+  </p>
+<% end %>

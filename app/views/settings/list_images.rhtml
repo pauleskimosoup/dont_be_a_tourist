@@ -1,0 +1,27 @@
+<% @page_title = "View all images" -%>
+<% @page_type = "pictures" -%>
+
+<p>This is a list of all the images you have uploaded.</p>
+<div class="clear"></div>
+
+<% if @all_pictures.length != 0 %>
+
+  <%# the columns parameter is an array of column designators. each column designator is an array of [human_name, entry_spec, order]%>
+  <%# where entry_spec is either the name of a field or an array of strings + symbols which are used to construct the field entry %>
+  <%# and order is either nil or the name of the field to order by %>
+  <%= render :partial => "shared/admin_table", :locals => admin_table_params({:columns =>[["Thumbnail", lambda {|pic| thumbnail_tag(pic, :width => 66, :height => 66)}, nil],
+                                                                                          ["Image Title", 'image_alt', nil], 
+                                                                                          ["Last Updated", :last_updated_field, nil]],
+                                                                                :list_action => 'list_images',
+                                                                                :edit_action =>  'edit_image',
+                                                                                :delete_action =>  url_for(:action => "delete_image"),
+                                                                                :list => @pictures,
+                                                                                :pages => @picture_pages,
+                                                                                })%>
+
+
+  <% else %>
+
+  There are currently no images in the system.
+
+<% end %>

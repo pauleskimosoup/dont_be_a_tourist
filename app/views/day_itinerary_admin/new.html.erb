@@ -1,0 +1,5 @@
+<h1><%= @page_title = "Add Day Itinerary" -%></h1>
+
+<% form_for @day_itinerary, :url => {:controller => "day_itinerary_admin", :action => "create"}, :html => {:method => :post} do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>

@@ -1,0 +1,127 @@
+<fieldset>
+<legend>Basic Information</legend>
+<p>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</p>
+
+<p>
+  <%= f.label :trip_group_id %>
+  <%= f.select :trip_group_id, TripGroup.all.map{|x| [x.name, x.id]} %>
+</p>
+
+<p>
+  <%= f.label :box_width %>
+  <%= f.select :box_width, ["Standard", "Wide"] %>
+</p>
+
+
+<p>
+  <%= f.label "Universities" %>
+  <%= collection_select :trip, :university_ids, University.find_all_by_display(true), :id, :name, { :selected => trip.university_ids }, { :width => 300, :multiple => true, :size => 6, :name => 'trip[university_ids][]' } -%>
+</p>
+
+<p>
+  <%= f.label :category %>
+  <%= f.select :category, Trip.categories %>
+</p>
+
+<p>
+  <%= f.label 'Destinations' %><br />
+  <%= collection_select :trip, :destination_ids, Destination.find_all_by_display(true), :id, :name, { :selected => trip.destination_ids }, { :multiple => true, :size => 6, :name => 'trip[destination_ids][]' } -%>
+</p>
+
+<p>
+  <%= f.label 'Accomodation' %><br />
+  <%= collection_select :trip, :accommodation_ids, Accommodation.all, :id, :name, { :selected => trip.accommodation_ids }, { :multiple => true, :size => 6, :name => 'trip[accommodation_ids][]' } -%>
+</p>
+
+<p>
+  <%= f.label :start_date %><br />
+  <%= f.t_date_select :start_date %>
+</p>
+
+<p>
+  <%= f.label :end_date %><br />
+  <%= f.t_date_select :end_date %>
+  <br />
+</p>
+
+<p>
+  <%= f.label :bookable_places, "Booking places" %><br />
+  <%= f.text_field :bookable_places %>
+</p>
+
+<p>
+  <%= f.label :no_rooms %>
+  <%= f.check_box :no_rooms, :class => "checkbox" %>
+</p>
+
+<p>
+  <%= f.label :welcome_trip %>
+  <%= f.check_box :welcome_trip, :class => "checkbox" %>
+</p>
+</fieldset>
+
+<fieldset>
+<legend>Pricing</legend>
+<p>
+  <%= f.label :student_price, "Student Price (&pound;)" %>
+  <%= f.text_field :student_price %>
+</p>
+
+<p>
+  <%= f.label :adult_price, "Adult Price (&pound;)" %>
+  <%= f.text_field :adult_price %>
+</p>
+
+<p>
+  <%= f.label :deposit_price, "Deposit price (&pound;)" %><br />
+  (set to 0 disable deposits on this trip)<br />
+  <%= f.text_field :deposit_price %>
+</p>
+
+<p>
+  <%= f.label :upgrade_price, "Upgrade price (&pound;)" %><br />
+  (set to 0 for no upgrade on this trip)<br />
+  <%= f.text_field :upgrade_price %>
+</p>
+
+<p>
+  <%= f.label :upgrade_description %><br />
+  <%= f.text_field :upgrade_description %>
+</p>
+</fieldset>
+
+<fieldset>
+<legend>discount</legend>
+<p>
+  <%= f.label :group_booking_count, "How many people need to book on this trip to apply the group discount" %>
+  <%= f.text_field :group_booking_count %>
+</p>
+
+<p>
+  <%= f.label :group_booking_percentage, "Group booking discount (%)" %>
+  <%= f.text_field :group_booking_percentage %>
+</p>
+
+<p>
+  <%= f.label :early_bird_1_date %>
+  <%= f.t_date_select :early_bird_1_date %>
+</p>
+
+<p>
+  <%= f.label :early_bird_1_amount_off %>
+  <%= f.text_field :early_bird_1_amount_off %>
+</p>
+
+<p>
+  <%= f.label :early_bird_2_date %>
+  <%= f.t_date_select :early_bird_2_date %>
+</p>
+
+<p>
+  <%= f.label :early_bird_2_amount_off %>
+  <%= f.text_field :early_bird_2_amount_off %>
+</p>
+</fieldset>

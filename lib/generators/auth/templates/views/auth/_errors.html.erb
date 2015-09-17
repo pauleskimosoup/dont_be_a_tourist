@@ -1,0 +1,8 @@
+<div class="content">
+  <%% if flash[:notice] -%>
+        <p class="message"><%%= flash[:notice] %></p>
+  <%% end -%>
+  <%% if flash[:error_field] -%>
+        <%%= error_messages_for(flash[:error_field]) %>
+  <%% end %>
+</div>

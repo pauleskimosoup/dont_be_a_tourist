@@ -1,0 +1,85 @@
+<%= render "booking_steps" %>
+<% hide_flash -%>
+
+<h1><%= @page_title = "Your Basket" %></h1>
+
+<%- flash.each do |name, msg| -%>
+  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+<%- end -%>
+
+<% if @current_basket.basket_items.length < 1 %>
+  Sorry, there are currently no items in your basket.  You can see our upcoming trips <%= link_to "here", :controller => "trip" %>
+<% else %>
+
+  <table>
+
+  <% for trip in @trips %>
+
+    <tr>
+      <th colspan=3><%= trip.name %> Bookings <%= link_to "[add more]", :action => "book", :trip_id => trip.id %></th>
+    </tr>
+
+    <% for basket_item in @current_basket.basket_items.select{|x| x.trip == trip} %>
+      <%= render "basket_item/basket_item", :basket_item => basket_item %>
+    <% end %>
+
+  <% end %>
+
+  <tr>
+    <td colspan=2><div align="right">Trips Subtotal:</div></td>
+    <td><%= number_to_currency(@current_basket.basket_items_total, :unit => "&pound;") %></td>
+  </tr>
+
+  <tr>
+    <td colspan=2 ><div align="right">Booking Fee:</div></td>
+    <td><%= number_to_currency(@current_basket.booking_fee, :unit => "&pound;") %></td>
+  </tr>
+
+  <%= render 'discount' %>
+
+  <tr>
+  <td colspan=2 ><div align="right"><strong>Total:</strong></div></td>
+  <td><strong><%= number_to_currency(@current_basket.total, :unit => "&pound;") %></strong></td>
+  </tr>
+
+  </table>
+
+  <%= render "offer_setting/enter_promo_code" %>
+
+  <!-- BASKET IS VALID -->
+  <% if @current_basket.all_basket_items_valid? %>
+
+    <p>Are your booking details correct? If not <%= link_to "alter your booking here", {:action => "bookings"} %>.</p>
+    <% form_tag :controller => "basket", :action => "extras" do %>
+      <% if @current_basket.depositable? %>
+        <fieldset class="wide_labels">
+        <legend>Deposit</legend>
+            <p>
+              <%= radio_button_tag :deposit, "false", !@current_basket.deposit?, :class => "radio" %>
+              <%= label_tag "deposit_false", "Pay full price of trip (#{number_to_currency @current_basket.total, :unit => "&pound;"})" %>
+            </p>
+            <p>
+              <%= radio_button_tag :deposit, "true", @current_basket.deposit?, :class => "radio" %>
+              <%= label_tag "deposit_true", "Pay only deposits on trips (#{number_to_currency @current_basket.deposit_total, :unit => "&pound;"})" %>
+            </p>
+        </fieldset>
+      <% end %>
+      <p align="right">
+        <%= submit_tag "CONTINUE BOOKING", :class => "submit" %>
+      </p>
+    <% end %>
+
+  <!-- BASKET IS INVALID -->
+  <% else %>
+
+    <p class="message">One or more of your bookings is missing a family name or first name, we need this information before you can continue with your order...</p>
+    <p class="message">If your bookings are correct it may be that one of the trips you want to book a place on is full.</p>
+    <p align="right"><%= link_to "EDIT YOUR ORDER", {:action => "bookings"}, {:class=>"form_button"} %></p>
+
+  <% end %>
+
+<% end %>
+
+<% content_for :right do %>
+   <%= render :partial => 'web/right_selling_points' %>
+<% end %>

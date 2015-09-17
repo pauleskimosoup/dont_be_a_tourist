@@ -1,0 +1,9 @@
+<%% @page_title = @<%= file_name %>.name %>
+
+<% for field in @model_fields %>
+<p>
+<%= field.name %>: <%%= <%= file_name + "." + field.name %> %>
+</p>
+<% end %>
+
+<%%= link_with_params "Go back", :action => 'list' %>

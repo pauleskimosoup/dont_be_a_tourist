@@ -1,0 +1,7 @@
+<div class="bread_crumbs">
+  <% if @trip %>
+      <%= link_to 'Past Trips', :controller => :web, :action => :past_trips %> > <%= @trip.name %>
+    <% elsif @destination %>
+      <%= link_to 'Past Trips', :controller => :web, :action => :past_trips %> > <%= @destination.name %>
+    <% end %>
+</div>

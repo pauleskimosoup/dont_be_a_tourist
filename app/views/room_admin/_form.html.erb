@@ -1,0 +1,15 @@
+<%= f.error_messages %>
+
+<p>
+  <%= f.label :places %>
+  <%= f.text_field :places %>
+  <%= f.hidden_field :trip_id %>
+</p>
+
+<p>
+  <% if @room.new_record? %>
+  <%= f.submit "Create", :class => 'submit' %>
+  <% else %>
+  <%= f.submit "Update", :class => 'submit' %>
+  <% end %>
+</p>

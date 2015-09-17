@@ -1,0 +1,16 @@
+<p class="fields">
+  <%= f.label :pickup_id %><br />
+  <%= f.select :pickup_id, options_for_select(Pickup.all.collect{|x| [x.name, x.id]}, :selected => f.object.pickup_id), :prompt => "Please select a location..." %><br />
+  
+  <%= f.label :pickup_time %>
+  <%= f.text_field :pickup_time, :style=>"width: 100px;" %><br />
+  
+  <%= f.label :dropoff_time %>
+  <%= f.text_field :dropoff_time, :style=>"width: 100px;" %><br />
+  <% current_limit = f.object.limit? ? f.object.limit : 0 %>
+  <%= f.label :limit %>
+  <%= f.text_field :limit, :value => current_limit, :style=>"width: 100px;" %><br/>
+  
+  <%= f.hidden_field :_destroy %>
+  <%= link_to_remove_fields "remove", f %>
+</p>

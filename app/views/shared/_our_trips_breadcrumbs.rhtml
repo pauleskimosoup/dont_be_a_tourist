@@ -1,0 +1,7 @@
+<div class="bread_crumbs">
+  <% if params[:controller] == 'trip' && @trip %>
+    <%= link_to 'Our Trips', :controller => :trip, :action => :list %> > <%= @trip.name %>
+  <% elsif params[:controller] == 'destination' && @destination %>
+    <%= link_to 'Destinations', :controller => :destination, :action => :list %> > <%= @destination.name %>
+  <% end %>
+</div>

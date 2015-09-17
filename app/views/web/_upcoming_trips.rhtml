@@ -1,0 +1,13 @@
+<% destination ||= nil %>
+
+<h2>Upcoming <%= destination.name %> Trips</h2>
+<% trips = destination.trips.select{|x| x.display == true && x.start_date > Date.today}.sort{|x,y| x.start_date <=> y.start_date}[0..9] %>
+<% if trips.length > 0 %>
+  <% for trip in trips %>
+    <p><%= link_to trip.name, {:controller => :trip, :action => :show, :id => trip.id}, {:class=>"large_link"} %></p>
+    <p class="date_highlight"><%= link_to trip.length_dates, {:controller => :trip, :action => :show, :id => trip.id} %></p>
+    <hr />
+  <% end %>
+<% else %>
+  <p>Trips coming soon!</p>
+<% end %>

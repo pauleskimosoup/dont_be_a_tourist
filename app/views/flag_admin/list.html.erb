@@ -1,0 +1,20 @@
+<h1><%= @page_title = "View All Flags" -%></h1>
+
+<p>
+  <%= link_to "Add a Flag", :controller => "flag_admin", :action => "new" %>
+</p>
+
+<% if @flags.count != 0 -%>
+  <%= admin_table({:columns =>
+    [
+      :name, 
+      :country_code, 
+      ["Flag", lambda{|x| image_tag "http://www.geognos.com/api/en/countries/flag/#{x.country_code}.png", :width => 50}, nil],
+      ["Display", lambda{|x| x.display? ? "Yes" : "No" }, "display"]
+    ],
+    :list => @flags,
+    :pages => @flag_pages
+  })%>
+<% else %>
+  There are currently no Flags in the system.
+<% end %>

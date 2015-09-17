@@ -1,0 +1,35 @@
+<h1><%= @page_title = "View All Bookings" -%></h1>
+
+<div id="search">
+<% form_tag({}, :method => "GET") do %>
+  <%= text_field_tag(:search, (session[@list_name] || {})[:search]) %><%= submit_tag 'Search', :class => 'submit' %>
+  <%= link_to "Clear", :search => "" %>
+<% end %>
+</div>
+
+<% if @booking_pages.count != 0 -%>
+
+  <%= admin_table({:columns =>[
+    ['Ref Num', lambda{|x| x.id }, 'bookings.id'],
+    ['User', lambda{|x| link_to x.user.name_booked, :controller => :user_admin, :action => :edit, :id => x.user.id if x.user}, 'users.name'],
+    :booking_type,
+    :booking_status,
+    ["Note", lambda{|x| x.notes? ? "yes" : "no" }, nil],
+    ['Bookings', lambda{|x| x.booking_items.length }, nil],
+    ['View', lambda{|x| link_to 'View', :controller => :booking_admin, :action => :list, :id => x.id}, nil]
+    ],
+    :list => @bookings,
+    :pages => @booking_pages,
+    :list_action => :list_bookings,
+    :delete_action => nil,
+    :edit_action => nil
+  })%>
+
+<% else -%>
+
+  There are currently no Bookings in the system.
+
+<% end -%>
+
+
+
