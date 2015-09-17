@@ -1,2 +1,2 @@
-<%= raw @trip.youtube_embed_code %>
-<%= raw @trip.promotional_phrase %>
+<%= raw @trip.youtube_embed_code if @trip.youtube_embed_code %>
+<%= raw @trip.promotional_phrase if @trip.promotional_phrase %>
