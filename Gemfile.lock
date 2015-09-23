@@ -1,7 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    SystemTimer (1.2.3)
     actionmailer (2.3.18)
       actionpack (= 2.3.18)
     actionpack (2.3.18)
@@ -63,7 +62,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  SystemTimer (= 1.2.3)
   calendar_date_select (~> 1.15)
   createsend (= 2.5.1)
   friendly_id (= 3.2.1.1)
@@ -79,6 +77,3 @@ DEPENDENCIES
   rdoc
   restful_authentication (~> 1.1.6)
   rmagick (~> 2.15.4)
-
-BUNDLED WITH
-   1.10.3
