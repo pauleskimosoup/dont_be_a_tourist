@@ -129,13 +129,12 @@ class TripAdminController < ApplicationController
       first_in_booking = true
       current_booking_id = 0
       @bookings.sort_by{|x| x.booking.id}.each do |b|
-
         if b.booking.id != current_booking_id
           current_booking_id = b.booking.id
           booking_ref = b.booking.id
-          phone = b.booking.user.phone
-          email = b.booking.user.email
-          university = b.booking.user.university
+          phone = b.booking.user.phone if b.booking.user.present?
+          email = b.booking.user.email if b.booking.user.present?
+          university = b.booking.user.university if b.booking.user.present?
           booking_type = b.booking.booking_type
           booking_status = b.booking.booking_status
           received = b.booking.paid
@@ -210,18 +209,33 @@ class TripAdminController < ApplicationController
       index = 0
       @bookings.each do |b|
         index += 1
-        body << [index,
-                 b.pickup_dropoff,
-                 b.first_name,
-                 b.last_name,
-                 b.gender[0, 1],
-                 b.booking.user.phone,
-                 '',
-                 '',
-                 '',
-                 b.products.collect{|p| p.name}.to_sentence,
-                 b.booking.discount_code_name,
-                 b.booking.notes]
+        if b.booking.user.present?
+          body << [index,
+                   b.pickup_dropoff,
+                   b.first_name,
+                   b.last_name,
+                   b.gender[0, 1],
+                   b.booking.user.phone,
+                   '',
+                   '',
+                   '',
+                   b.products.collect{|p| p.name}.to_sentence,
+                   b.booking.discount_code_name,
+                   b.booking.notes]
+        else
+          body << [index,
+                   b.pickup_dropoff,
+                   b.first_name,
+                   b.last_name,
+                   b.gender[0, 1],
+                   '',
+                   '',
+                   '',
+                   '',
+                   b.products.collect{|p| p.name}.to_sentence,
+                   b.booking.discount_code_name,
+                   b.booking.notes]
+        end
       end
     end
 
