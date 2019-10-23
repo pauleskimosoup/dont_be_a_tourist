@@ -53,7 +53,7 @@
   <% form_tag({:action => "payment_confirm"}, :html => {:method => :post}) do %>
 
     <p>
-      <%= check_box_tag :terms_and_conditions, "1", {}, :class=>"checkbox" %>
+      <%= check_box_tag :terms_and_conditions, "1", false, :required => true, :class=>"checkbox"  %>
       I agree to the <%= link_to 'terms and conditions', {:controller => :web, :action => :terms}, :popup => true %>
     </p>
 

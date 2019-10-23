@@ -7,7 +7,7 @@ gem "rdoc"
 gem 'paperclip', '~> 2.7.5'
 gem "friendly_id", "3.2.1.1"
 gem "createsend", "2.5.1"
-gem "SystemTimer", "1.2.3"
+# gem "SystemTimer", "1.2.3"
 gem 'calendar_date_select', '~> 1.15'
 gem "prawn", "0.8.4"
 gem "prawn-core", "0.8.4"

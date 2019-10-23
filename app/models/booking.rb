@@ -49,7 +49,8 @@ class Booking < ActiveRecord::Base
   end
 
   def paypal_url(return_url, notify_url)
-    business = 'nevil@dontbeatourist.co.uk'
+    business = 'hello@dontbeatourist.co.uk'
+    #business = 'nevil@dontbeatourist.co.uk'
     #business = 'seller_1284561622_biz@eskimosoup.co.uk'
 
     values = {
